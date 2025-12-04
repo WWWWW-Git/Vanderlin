@@ -345,7 +345,7 @@
 	icon_state = "tiebtail"
 	specuse = list(SPEC_ID_TIEFLING)
 	color_key_defaults = list(KEY_SKIN_COLOR)
-
+/* Stonekeep Edit
 /datum/sprite_accessory/tail/triton
 	name = "Triton Bell"
 	icon = 'icons/mob/sprite_accessory/tails/triton.dmi'
@@ -370,3 +370,94 @@
 	icon = 'icons/mob/sprite_accessory/tails/medicator.dmi'
 	icon_state = "vulture"
 	specuse = list(SPEC_ID_MEDICATOR)
+*/
+
+// STONEKEEP CONTENT BELOW
+//TODO: Customizable shell color
+/datum/sprite_accessory/tail/kappa
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Undine shell"
+	icon_state = "kappav"
+	specuse = list("abyssariad", "Kappa", "Undine")
+	gender = NEUTER
+	default_colors = "#044D1D" // Placeholder until color select is set up
+	// Once shells can be customized, the following should be the pre-selectable colors:
+	// #044d1d = Bogman
+	// #3c966e = Lushman
+	// #1d8c74 = Chrysanfolk
+	// #13727d = Riverfolk
+	// #074778 = Seadweller
+	// #201e96 = Saltstained
+	// #420963 = Orchid
+	// #8c348c = Amaranth
+	// #856d18 = Goldstrive
+
+/datum/sprite_accessory/tail/onetail
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Fox tail"
+	icon_state = "onetail"
+	specuse = list("abyssariad", "Changeling", "changeling")
+	gender = NEUTER
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+/datum/sprite_accessory/tail/twotails
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Two Foxtails"
+	icon_state = "twotails"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+/datum/sprite_accessory/tail/threetails
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Three Foxtails"
+	icon_state = "threetails"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+/datum/sprite_accessory/tail/tengu
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Tengu wings"
+	icon_state = "tenguv"
+	color_key_defaults = list(KEY_HAIR_COLOR)// STONEKEEP CONTENT BELOW
+//TODO: Customizable shell color
+/datum/sprite_accessory/tail/kappa
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Undine shell"
+	icon_state = "kappav"
+	specuse = list("abyssariad", "Kappa", "Undine")
+	gender = NEUTER
+	default_colors = "#044D1D" // Placeholder until color select is set up
+	// Once shells can be customized, the following should be the pre-selectable colors:
+	// #044d1d = Bogman
+	// #3c966e = Lushman
+	// #1d8c74 = Chrysanfolk
+	// #13727d = Riverfolk
+	// #074778 = Seadweller
+	// #201e96 = Saltstained
+	// #420963 = Orchid
+	// #8c348c = Amaranth
+	// #856d18 = Goldstrive
+
+/datum/sprite_accessory/tail/onetail
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Fox tail"
+	icon_state = "onetail"
+	specuse = list("abyssariad", "Changeling", "changeling")
+	gender = NEUTER
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+/datum/sprite_accessory/tail/twotails
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Two Foxtails"
+	icon_state = "twotails"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+/datum/sprite_accessory/tail/threetails
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Three Foxtails"
+	icon_state = "threetails"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+/datum/sprite_accessory/tail/tengu
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Tengu wings"
+	icon_state = "tenguv"
+	color_key_defaults = list(KEY_HAIR_COLOR)

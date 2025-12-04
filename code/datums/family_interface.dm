@@ -1046,111 +1046,93 @@
 			interface.show_interface()
 
 /proc/generate_test_family_new()
-	// Create founder
-	var/mob/living/carbon/human/species/kobold/founder = new()
-	founder.real_name = "Lord [pick("Stark", "Lannister", "Targaryen", "Baratheon")]"
+	var/mob/living/carbon/human/founder = new()
+	founder.real_name = "Clan Head [pick("Seiryu","Kurogane","Akagane","Hinode","Higanbana","Ravencrown","Stormwind","Thornwick")]"
 	founder.gender = MALE
 	var/datum/heritage/H = new(founder, null, null)
 	SSfamilytree.families |= H
 
-	// Add spouse
-	var/mob/living/carbon/human/species/kobold/spouse = new()
-	spouse.real_name = "Lady [H.housename]"
+	var/mob/living/carbon/human/spouse = new()
+	spouse.real_name = "Consort [H.housename]"
 	spouse.gender = FEMALE
 	var/datum/family_member/spouse_member = H.CreateFamilyMember(spouse)
 	H.MarryMembers(H.founder, spouse_member)
 
-	// Add children
 	var/num_children = rand(2, 4)
 	for(var/i in 1 to num_children)
 		var/mob/living/carbon/human/child = new()
 		child.gender = prob(50) ? MALE : FEMALE
-		child.real_name = "[pick(child.gender == MALE ? list("Jon", "Robb", "Bran") : list("Sansa", "Arya", "Lyanna"))] [H.housename]"
+		child.real_name = "[pick(child.gender == MALE ? list("Kotaro","Genji","Riku","Haru") : list("Mei","Aiko","Ling","Hana"))] [H.housename]"
 		H.AddToFamily(child, H.founder, spouse_member, prob(20))
 
 	return H
 
 /proc/generate_large_dynasty()
-	// Create founder
-	var/mob/living/carbon/human/species/kobold/founder = new()
-	var/dynasty_names = list("Dragonheart", "Ironhold", "Goldmane", "Stormwind", "Nightfall", "Brightblade", "Shadowmere", "Flamecrest", "Thornwick", "Ravencrown")
+	var/mob/living/carbon/human/founder = new()
+	var/dynasty_names = list("Seiryu","Kurogane","Akagane","Hinode","Higanbana","Stormwind","Brightblade","Shadowmere","Thornwick","Ravencrown")
 	var/house_name = pick(dynasty_names)
-	founder.real_name = "Emperor [pick("Alexander", "Magnus", "Augustus", "Maximilian", "Constantine")] [house_name] the Great"
+	founder.real_name = "Shogun [pick("Takeda","Minamoto","Ashina","Imagawa","Hojo","Li Ming","Zhao","Sun Jian","Wang","Cao")] [house_name]"
 	founder.gender = MALE
 	var/datum/heritage/H = new(founder, null, null)
 	SSfamilytree.families |= H
 
-	// Add primary spouse
-	var/mob/living/carbon/human/species/kobold/spouse = new()
-	spouse.real_name = "Empress [pick("Victoria", "Isabella", "Catherine", "Anastasia", "Theodora")] [house_name]"
+	var/mob/living/carbon/human/spouse = new()
+	spouse.real_name = "Primary Consort [house_name]"
 	spouse.gender = FEMALE
 	var/datum/family_member/spouse_member = H.CreateFamilyMember(spouse)
 	H.MarryMembers(H.founder, spouse_member)
 
-	// Keep track of all generations
 	var/list/generations = list()
 	var/list/current_gen = list(H.founder)
 	generations += list(current_gen)
 
-	// Generate 6 generations
 	for(var/gen_num in 1 to 6)
 		var/list/next_gen = list()
 		for(var/datum/family_member/parent in current_gen)
-			// Skip if no spouse
 			if(!parent.spouses || !parent.spouses.len)
 				continue
 
-			// Determine number of children based on generation and status
 			var/num_children = get_children_count(gen_num, parent)
 
 			for(var/i in 1 to num_children)
 				var/mob/living/carbon/human/child = new()
 				child.gender = prob(50) ? MALE : FEMALE
 
-				// Generate appropriate name for generation and gender
 				var/child_name = get_generation_name(gen_num, child.gender, house_name)
 				child.real_name = child_name
 
-				// Add to family with chance of adoption
 				var/is_adopted = prob(get_adoption_chance(gen_num))
 				var/datum/family_member/child_member = H.AddToFamily(child, parent, parent.spouses[1], is_adopted)
 				next_gen += child_member
 
-				// Give children spouses based on generation marriage rates
 				if(prob(get_marriage_chance(gen_num)))
 					create_spouse_for_member(child_member, gen_num, house_name, H)
 
-		// Add some external marriages and adoptions for variety
 		add_external_connections(next_gen, gen_num, house_name, H)
-
-		// Store generation and move to next
 		generations += list(next_gen)
 		current_gen = next_gen
 
 	return H
 
 /proc/get_children_count(gen_num, datum/family_member/parent)
-	// Earlier generations have more children, later ones fewer
 	switch(gen_num)
-		if(1 to 3) return rand(2, 3)      // 3-8 children
-		if(4 to 6) return rand(2, 3)      // 2-6 children
-		if(7 to 9) return rand(1, 2)      // 1-4 children
-		if(10 to 12) return rand(0, 1)    // 1-3 children
+		if(1 to 3) return rand(2, 3)
+		if(4 to 6) return rand(2, 3)
+		if(7 to 9) return rand(1, 2)
+		if(10 to 12) return rand(0, 1)
 
 /proc/get_adoption_chance(gen_num)
-	// Adoption becomes more common in later generations
 	switch(gen_num)
-		if(1 to 4) return 5    // 5% chance
-		if(5 to 8) return 10   // 10% chance
-		if(9 to 12) return 15  // 15% chance
+		if(1 to 4) return 5
+		if(5 to 8) return 10
+		if(9 to 12) return 15
 
 /proc/get_marriage_chance(gen_num)
-	// Marriage rates vary by generation
 	switch(gen_num)
-		if(1 to 3) return 85   // 85% marriage rate
-		if(4 to 6) return 75   // 75% marriage rate
-		if(7 to 9) return 70   // 70% marriage rate
-		if(10 to 12) return 65 // 65% marriage rate
+		if(1 to 3) return 85
+		if(4 to 6) return 75
+		if(7 to 9) return 70
+		if(10 to 12) return 65
 
 /proc/get_generation_name(gen_num, gender, house_name)
 	var/male_titles = list()
@@ -1159,47 +1141,41 @@
 	var/female_names = list()
 
 	switch(gen_num)
-		if(1) // Princes and Princesses
-			male_titles = list("Prince")
-			female_titles = list("Princess")
-			male_names = list("Alexander", "William", "Edward", "Henry", "Charles", "Richard", "George", "Frederick")
-			female_names = list("Elizabeth", "Margaret", "Anne", "Victoria", "Catherine", "Mary", "Charlotte", "Sophia")
-
-		if(2) // Grand Dukes/Duchesses
-			male_titles = list("Grand Duke", "Archduke")
-			female_titles = list("Grand Duchess", "Archduchess")
-			male_names = list("Marcus", "Adrian", "Sebastian", "Nicholas", "Damien", "Theodore", "Maximilian", "Constantine")
-			female_names = list("Isabella", "Anastasia", "Gabrielle", "Evangeline", "Seraphina", "Valentina", "Arabella", "Cordelia")
-
-		if(3 to 4) // Dukes/Duchesses
-			male_titles = list("Duke", "Count")
-			female_titles = list("Duchess", "Countess")
-			male_names = list("Roderick", "Alaric", "Casimir", "Leander", "Octavius", "Percival", "Thaddeus", "Lysander")
-			female_names = list("Beatrice", "Celestine", "Isadora", "Penelope", "Rosalind", "Vivienne", "Genevieve", "Ophelia")
-
-		if(5 to 6) // Marquess/Marchioness
-			male_titles = list("Marquess", "Earl")
-			female_titles = list("Marchioness", "Countess")
-			male_names = list("Barnabas", "Crispin", "Dorian", "Evander", "Fitzroy", "Gareth", "Hadrian", "Ignatius")
-			female_names = list("Cordelia", "Daphne", "Estelle", "Felicity", "Guinevere", "Hermione", "Imogen", "Josephine")
-
-		if(7 to 8) // Barons/Baronesses
-			male_titles = list("Baron", "Viscount")
-			female_titles = list("Baroness", "Viscountess")
-			male_names = list("Jasper", "Kieran", "Leopold", "Montague", "Nigel", "Oswald", "Peregrine", "Quentin")
-			female_names = list("Katarina", "Lavinia", "Millicent", "Nadine", "Octavia", "Prudence", "Quintessa", "Rowena")
-
-		if(9 to 10) // Lords/Ladies
-			male_titles = list("Lord", "Sir")
-			female_titles = list("Lady", "Dame")
-			male_names = list("Rupert", "Silas", "Tobias", "Ulric", "Vincent", "Winthrop", "Xavier", "Yorick")
-			female_names = list("Sabrina", "Tabitha", "Ursula", "Veronica", "Winifred", "Ximena", "Yolanda", "Zelda")
-
-		else // Lower nobility
-			male_titles = list("Sir", "Master")
-			female_titles = list("Lady", "Mistress")
-			male_names = list("Aldric", "Balthazar", "Cedric", "Duncan", "Edmund", "Finnegan", "Gideon", "Hamish")
-			female_names = list("Adelaide", "Bernadette", "Clarissa", "Dorothea", "Estella", "Francesca", "Gwendolyn", "Henrietta")
+		if(1)
+			male_titles = list("Heir")
+			female_titles = list("Heir")
+			male_names = list("Kotaro","Genji","Riku","Haru","Takeshi","Shin","Ren","Masato")
+			female_names = list("Mei","Aiko","Ling","Hana","Yui","Naoko","Rina","Keiko")
+		if(2)
+			male_titles = list("Crown Heir","Senior Heir")
+			female_titles = list("Crown Heir","Senior Heir")
+			male_names = list("Akira","Daichi","Hiro","Kenta","Sora","Makoto","Yori","Kazuo")
+			female_names = list("Aya","Emi","Kaori","Mika","Sachiko","Sumire","Yuna","Reika")
+		if(3 to 4)
+			male_titles = list("Daimyo","Shugo")
+			female_titles = list("Daimyo","Onna-bugeisha")
+			male_names = list("Yoshitsune","Noboru","Masaki","Jiro","Kenji","Nobu","Ryo","Isamu")
+			female_names = list("Tomoe","Chie","Akane","Haruka","Kasumi","Miyo","Sayuri","Nana")
+		if(5 to 6)
+			male_titles = list("Hatamoto","Chujo")
+			female_titles = list("Hatamoto","Onna-bugeisha")
+			male_names = list("Kei","Shiro","Tadashi","Yasuo","Toru","Hajime","Koji","Minoru")
+			female_names = list("Asami","Fumiko","Hikari","Kumi","Misaki","Nori","Sakura","Yoko")
+		if(7 to 8)
+			male_titles = list("Gokenin","Bushi")
+			female_titles = list("Gokenin","Onna-bugeisha")
+			male_names = list("Eiji","Goro","Hayato","Jun","Katsuo","Naoto","Shinji","Tatsuya")
+			female_names = list("Ami","Hiroko","Kana","Noriko","Rie","Satomi","Takara","Yuri")
+		if(9 to 10)
+			male_titles = list("Monogashira","Sensei")
+			female_titles = list("Monogashira","Sensei")
+			male_names = list("Rui","Shun","Taichi","Yuta","Ken","Satoru","Yuji","Kazu")
+			female_names = list("Akemi","Chiaki","Hina","Izumi","Mai","Noa","Saori","Yumi")
+		else
+			male_titles = list("Retainer","Officer")
+			female_titles = list("Retainer","Officer")
+			male_names = list("Aldric","Balthazar","Cedric","Duncan","Edmund","Finnegan","Gideon","Hamish")
+			female_names = list("Adelaide","Bernadette","Clarissa","Dorothea","Estella","Francesca","Gwendolyn","Henrietta")
 
 	var/title = pick(gender == MALE ? male_titles : female_titles)
 	var/name = pick(gender == MALE ? male_names : female_names)
@@ -1209,24 +1185,22 @@
 	var/mob/living/carbon/human/spouse = new()
 	spouse.gender = member.person.gender == MALE ? FEMALE : MALE
 
-	var/allied_houses = list("Westmarch", "Easthold", "Northgate", "Southport", "Silverbrook", "Goldenvale",
-					   "Redcliff", "Bluehaven", "Greenwood", "Blackstone", "Whitehall", "Greycastle")
+	var/allied_houses = list("Westmarch","Easthold","Northgate","Southport","Silverbrook","Goldenvale","Redcliff","Bluehaven","Greenwood","Blackstone","Whitehall","Greycastle","Hinode","Seiryu","Kurogane")
 	var/spouse_house = pick(allied_houses)
 
 	var/spouse_title
 	var/spouse_name
-	if(spouse.gender == MALE) {
-		spouse_title = pick("Duke", "Count", "Baron", "Lord", "Sir")
-		spouse_name = pick("Robert", "James", "Thomas", "George", "Francis", "Arthur", "Philip", "Anthony")
-	} else {
-		spouse_title = pick("Duchess", "Countess", "Baroness", "Lady", "Dame")
-		spouse_name = pick("Marie", "Sophie", "Charlotte", "Helena", "Louise", "Alice", "Beatrice", "Eugenie")
-	}
+	if(spouse.gender == MALE)
+		spouse_title = pick("Daimyo","Hatamoto","Lord","Officer")
+		spouse_name = pick("Robert","James","Thomas","George","Francis","Arthur","Philip","Anthony","Akira","Hiro","Kenji","Riku")
+	else
+		spouse_title = pick("Consort","Onna-bugeisha","Lady","Officer")
+		spouse_name = pick("Marie","Sophie","Charlotte","Helena","Louise","Alice","Beatrice","Eugenie","Mei","Aiko","Hana","Ling")
 
 	spouse.real_name = "[spouse_title] [spouse_name] of [spouse_house]"
 
 	var/datum/family_member/spouse_member = H.CreateFamilyMember(spouse)
-	spouse_member.generation = member.generation  // Ensure same generation
+	spouse_member.generation = member.generation
 	spouse_member.adoption_status = FALSE
 	H.MarryMembers(member, spouse_member)
 
@@ -1234,19 +1208,17 @@
 
 /proc/add_external_connections(list/generation, gen_num, house_name, datum/heritage/H)
 	if(prob(20))
-		var/mob/living/carbon/human/species/kobold/bastard = new()
+		var/mob/living/carbon/human/bastard = new()
 		bastard.gender = prob(50) ? MALE : FEMALE
-		bastard.real_name = "[pick("Snow", "Stone", "Rivers", "Hill")] [pick("the Bastard", "the Legitimized")]"
-
+		bastard.real_name = "[pick("Kotaro","Genji","Li Wei","Riku","Mei","Aiko","Ling","Hana")] of Clan [house_name]"
 		if(generation.len > 0)
 			var/datum/family_member/parent = pick(generation)
 			H.AddToFamily(bastard, parent, null, FALSE)
 
 	if(prob(15))
-		var/mob/living/carbon/human/species/kobold/ward = new()
+		var/mob/living/carbon/human/ward = new()
 		ward.gender = prob(50) ? MALE : FEMALE
-		ward.real_name = "Ward [pick("Blackwood", "Greycliff", "Redstone", "Thornfield", "Ashford")]"
-
+		ward.real_name = "Ward of Clan [pick("Blackwood","Greycliff","Redstone","Thornfield","Ashford","Higanbana","Hinode","Seiryu")]"
 		if(generation.len > 0)
 			var/datum/family_member/adoptive_parent = pick(generation)
 			if(adoptive_parent.spouses && adoptive_parent.spouses.len > 0)

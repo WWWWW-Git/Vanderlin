@@ -25,7 +25,7 @@
 /obj/item/organ/wings/flight/harpy
 	name = "harpy wings"
 	accessory_type = /datum/sprite_accessory/wings/large/harpyswept
-	flight_for_species = list(SPEC_ID_HARPY)
+	flight_for_species = list(SPEC_ID_DENMORIAN)
 
 /obj/effect/flyer_shadow
 	name = "humanoid shadow"

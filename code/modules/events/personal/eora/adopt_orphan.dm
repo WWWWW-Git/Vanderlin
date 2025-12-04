@@ -1,3 +1,5 @@
+//This better stay unticked forever. I will personally hunt down anyone who re-enables it.
+
 /datum/round_event_control/adoption_call
 	name = "Adoption Call"
 	track = EVENT_TRACK_PERSONAL
@@ -24,13 +26,13 @@
 			continue
 		if(!H.patron || !istype(H.patron, /datum/patron/divine/eora))
 			continue
-		if(H.age == AGE_CHILD)
+		if(H.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 			continue
 		recipient_found = TRUE
 		break
 
 	for(var/mob/living/carbon/human/child in GLOB.player_list)
-		if(child.age != AGE_CHILD || child.stat == DEAD || !child.client)
+		if(child.age != BLOOMING_ADULT || child.stat == DEAD || !child.client) //Stonekeep Edit: Young Adult
 			continue
 		if(!child.family_datum && (child.job == "Orphan" && istype(child.mind?.assigned_role, /datum/job/orphan)))
 			orphans++
@@ -52,12 +54,12 @@
 			continue
 		if(!H.patron || !istype(H.patron, /datum/patron/divine/eora))
 			continue
-		if(H.age == AGE_CHILD)
+		if(H.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 			continue
 		valid_targets += H
 
 	for(var/mob/living/carbon/human/child in GLOB.player_list)
-		if(child.age != AGE_CHILD || child.stat == DEAD || !child.client)
+		if(child.age != BLOOMING_ADULT || child.stat == DEAD || !child.client) //Stonekeep Edit: Young Adult
 			continue
 		if(!child.family_datum && (child.job == "Orphan" && istype(child.mind?.assigned_role, /datum/job/orphan)))
 			orphans++

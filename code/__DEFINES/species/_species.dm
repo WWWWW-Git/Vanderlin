@@ -1,3 +1,8 @@
+//Stonekeep Edit: FILE CHANGE
+//UPDATE TRIGGER ON THIS FILE!!!
+//For the ALTERNATIVE FILE used for KAIZOKU PROJECT
+//Check for code\__DEFINES\species\_species_kaizoku.dm
+
 #define SPEC_ID_HUMAN_SPACE "space_human"
 #define SPEC_ID_HUMEN "human"
 #define SPEC_ID_DWARF "dwarf"

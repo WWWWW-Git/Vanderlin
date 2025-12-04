@@ -11,7 +11,7 @@
 	Preform stick-ups, lurk in the alleys, and make sure your siblings don't invoke the ire of the Matron. She doesn't \
 	deserve the headache you give her."
 	outfit = /datum/outfit/urchinbrain
-	allowed_ages = list(AGE_CHILD)
+	allowed_ages = list(BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 	is_foreigner = FALSE
 
 	jobstats = list(

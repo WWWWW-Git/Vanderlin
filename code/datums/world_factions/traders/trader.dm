@@ -38,7 +38,7 @@
 	target.copy_overlays(dynamic_appearance, cut_old = TRUE)
 
 /obj/effect/mob_spawn/human/rakshari
-	mob_species = /datum/species/rakshari
+	mob_species = /datum/species/denmorian
 
 /obj/effect/mob_spawn/human/rakshari/trader
 	outfit = /datum/outfit/tailor

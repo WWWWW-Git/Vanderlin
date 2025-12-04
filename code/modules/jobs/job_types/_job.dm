@@ -74,7 +74,7 @@
 	/// Languages granted to the mob assigned to this job
 	var/list/languages
 
-	var/display_order = JDO_DEFAULT
+	var/display_order = KZ_DEFAULT
 
 	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK)
 	var/job_flags = JOB_SHOW_IN_ACTOR_LIST
@@ -184,8 +184,8 @@
 	/// Blacklisted from the actor
 
 	var/static/list/actors_list_blacklist = list(
-		/datum/job/adventurer,
-		/datum/job/pilgrim,
+		/datum/job/kaizoku/wanderer,
+		/datum/job/kaizoku/migrant,
 	)
 
 /datum/job/New()

@@ -11,13 +11,14 @@
 	var/datum/species/species =	dna?.species
 	if(!species)
 		return
-	var/mob/living/carbon/human/H = src
+	//var/mob/living/carbon/human/H = src //Stonekeep Edit: Not needed anymore.
 	if(stat < UNCONSCIOUS)
 		COOLDOWN_START(src, stress_indicator, 8 SECONDS)
 
 		var/list/offsets
 
 		if(public)
+			/* Stonekeep Edit: Children Removal
 			var/use_female_sprites = MALE_SPRITES
 			if(species)
 				if(species.sexes)
@@ -28,14 +29,16 @@
 					offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
 				else
 					offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
-
+					*/
 			var/mutable_appearance/appearance = mutable_appearance(icon_path, overlay_name, overlay_layer)
 			if(LAZYACCESS(offsets, OFFSET_HEAD))
 				appearance.pixel_x += offsets[OFFSET_HEAD][1]
 				appearance.pixel_y += offsets[OFFSET_HEAD][2] + 12
+
 			appearance.appearance_flags = RESET_COLOR
 			overlays_standing[OBJ_LAYER] = appearance
 			apply_overlay(OBJ_LAYER)
+
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), appearance), clear_time)
 			playsound(src, soundin, 15, FALSE, extrarange = -1, ignore_walls = FALSE)
 		else

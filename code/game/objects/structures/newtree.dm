@@ -19,6 +19,7 @@
 	var/underlay_base = "center-leaf"
 	var/num_underlay_icons = 2
 	var/tree_initalized = FALSE
+	var/fog_jelly_spawned = 0 //Stonekeep edit
 
 /obj/structure/flora/newtree/Initialize()
 	. = ..()
@@ -135,6 +136,25 @@
 		else
 			qdel(I)
 
+			// Stonekeep Edit: Start
+			if(fog_jelly_spawned < 2 && prob(2))
+				var/turf/candidate = null
+
+				if(locate(/obj/structure/flora/newbranch) in NT)
+					candidate = NT
+				else
+					for(var/dir in GLOB.cardinals)
+						var/turf/adj = get_step(NT, dir)
+						if(adj && locate(/obj/structure/flora/newbranch) in adj)
+							candidate = adj
+							break
+
+				if(candidate && !locate(/obj/structure/fauna/mindsmiter) in candidate)
+					new /obj/structure/fauna/mindsmiter(candidate)
+					fog_jelly_spawned++
+			// Stonekeep Edit: End
+
+
 	for(var/DI in GLOB.cardinals)
 		var/turf/B = get_step(src, DI)
 		for(var/obj/structure/flora/newbranch/BRANCH in B) //i straight up can't use locate here, it does not work
@@ -212,6 +232,20 @@
 				if(!locate(/obj/structure) in NT)
 					var/obj/structure/flora/newbranch/TC = new(NT)
 					TC.dir = D
+			// Stonekeep Edit: Start
+			if(fog_jelly_spawned < 2 && prob(2))
+				var/turf/candidate = null
+				for(var/dir in GLOB.cardinals)
+					var/turf/adj = get_step(NT, dir)
+					if(adj && locate(/obj/structure/flora/newbranch) in adj)
+						candidate = adj
+						break
+				if(!candidate)
+					candidate = NT
+				if(candidate && !locate(/obj/structure/fauna/mindsmiter) in candidate)
+					new /obj/structure/fauna/mindsmiter(candidate)
+					fog_jelly_spawned++
+			// Stonekeep Edit: End
 		else
 			if(prob(70))
 				if(isopenturf(NT))

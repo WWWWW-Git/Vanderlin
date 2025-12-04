@@ -38,7 +38,7 @@
 			if(cat_pawn.CanReach(M))
 				slap = TRUE
 
-		else if(racism_enabled && (isdarkelf(M) || ishalforc(M) || istiefling(M)))
+		else if(racism_enabled && (iself(M) || istiefling(M)))
 			should_hiss = TRUE
 			if(cat_pawn.CanReach(M))
 				slap = TRUE

@@ -88,7 +88,8 @@
 	if(!produce_ready)
 		return
 	apply_farming_fatigue(user, 4)
-	add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 2)
+	user.adjust_experience(/datum/skill/labor/farming, user.STAINT * 2) // STONEKEEP EDIT
+	// add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 2)
 
 	return_nutrients_to_soil()
 	var/farming_skill = user.get_skill_level(/datum/skill/labor/farming)
@@ -140,7 +141,7 @@
 			attacking_item = pick(seeds)
 
 	if(istype(attacking_item, /obj/item/neuFarm/seed)) //SLOP OBJECT PROC SHARING
-		playsound(src, pick('sound/foley/touch1.ogg','sound/foley/touch2.ogg','sound/foley/touch3.ogg'), 170, TRUE)
+		playsound(src, pick('sound/foley/touch1.ogg','sound/foley/touch2.ogg','sound/foley/touch3.ogg'), 100, TRUE)	// STONEKEEP EDIT
 		if(do_after(user, get_farming_do_time(user, 15), src))
 			if(old_item)
 				SEND_SIGNAL(old_item, COMSIG_TRY_STORAGE_TAKE, attacking_item, get_turf(user), TRUE)
@@ -241,14 +242,15 @@
 			apply_farming_fatigue(user, 20)
 			to_chat(user, span_notice("I rip out the weeds."))
 			deweed()
-			add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 0.2)
+			user.adjust_experience(/datum/skill/labor/farming, user.STAINT * 0.2) // STONEKEEP EDIT
+			// add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 0.2)
 		return TRUE
 	if(istype(attacking_item, /obj/item/weapon/hoe))
 		apply_farming_fatigue(user, 10)
 		to_chat(user, span_notice("I rip out the weeds with the [attacking_item]"))
 		deweed()
-		add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 0.2)
-		return TRUE
+		user.adjust_experience(/datum/skill/labor/farming, user.STAINT * 0.2) // STONEKEEP EDIT
+		// add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 0.2)		return TRUE
 	return FALSE
 
 /obj/structure/soil/proc/try_handle_flatten(obj/item/attacking_item, mob/user, params)
@@ -284,7 +286,8 @@
 			to_chat(user, span_notice("I remove the crop."))
 			playsound(src,'sound/items/seed.ogg', 100, FALSE)
 			uproot()
-			add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 0.2)
+			user.adjust_experience(/datum/skill/labor/farming, user.STAINT * 0.2) // STONEKEEP EDIT
+			// add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 0.2)
 		return
 	. = ..()
 

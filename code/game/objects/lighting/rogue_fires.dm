@@ -267,11 +267,13 @@
 					soundloop.start()
 				return TRUE
 
+/* STONEKEEP EDIT
 /obj/machinery/light/fueled/torchholder/Initialize()
 	if(torchy)
 		torchy = new torchy(src)
 		torchy.spark_act()
 	. = ..()
+*/
 
 /obj/machinery/light/fueled/torchholder/Destroy()
 	if(torchy)

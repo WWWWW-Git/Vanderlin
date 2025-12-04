@@ -2,12 +2,12 @@
 	if(!istype(user))
 		return
 	if(!HAS_TRAIT(src, TRAIT_TOLERANT))
-		if(!isdarkelf(user) && isdarkelf(src))
-			user.add_stress(/datum/stress_event/delf)
+		// if(!isdarkelf(user) && isdarkelf(src)) //Stonekeep Edit
+			// user.add_stress(/datum/stress_event/delf) //Stonekeep Edit
 		if(!istiefling(user) && istiefling(src))
 			user.add_stress(/datum/stress_event/tieb)
-		if(!ishalforc(user) && ishalforc(src))
-			user.add_stress(/datum/stress_event/horc)
+		// if(!ishalforc(user) && ishalforc(src)) //Stonekeep Edit
+			// user.add_stress(/datum/stress_event/horc) //Stonekeep Edit
 		if(user.has_flaw(/datum/charflaw/paranoid) && (STASTR - user.STASTR) > 1)
 			user.add_stress(/datum/stress_event/parastr)
 		if(HAS_TRAIT(src, TRAIT_FOREIGNER) && !HAS_TRAIT(user, TRAIT_FOREIGNER))
@@ -32,10 +32,10 @@
 			else
 				user.add_stress(/datum/stress_event/fellow_fishface)
 		else
-			if(user.age == AGE_CHILD)
-				user.add_stress(/datum/stress_event/fish_monster)
-			else
-				user.add_stress(/datum/stress_event/fishface)
+			// if(user.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
+				// user.add_stress(/datum/stress_event/fish_monster)
+
+			user.add_stress(/datum/stress_event/fishface)
 	if(HAS_TRAIT(src, TRAIT_OLDPARTY) && HAS_TRAIT(user, TRAIT_OLDPARTY) && user != src)
 		user.add_stress(/datum/stress_event/saw_old_party)
 
@@ -174,12 +174,11 @@
 				. += span_green("A fellow triton")
 
 		if(HAS_TRAIT(src, TRAIT_FISHFACE) && !HAS_TRAIT(user, TRAIT_FISHFACE))
-			var/mob/living/carbon/human/H = user
-			if(H.age == AGE_CHILD)
-				. += span_userdanger("IT'S A HORRIBLE MONSTER!!!")
-				user.emote("scream")
-			else
-				. += span_necrosis("That fish is ugly!")
+			// var/mob/living/carbon/human/H = user
+			// if(H.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
+				// . += span_userdanger("IT'S A HORRIBLE MONSTER!!!")
+				// user.emote("scream")
+			. += span_necrosis("That fish is ugly!")
 
 		if(real_name in GLOB.excommunicated_players)
 			. += span_userdanger("EXCOMMUNICATED!")
@@ -206,6 +205,9 @@
 		if(!is_bandit && (real_name in GLOB.outlawed_players))
 			. += span_userdanger("OUTLAW!")
 
+		if(mind && mind.special_role == "Tiefling Herald")	// STONEKEEP EDIT
+			. += "<span class='userdanger'>Has a evil aura!</span>"
+
 		var/list/known_frumentarii = user.mind?.cached_frumentarii
 		if(name in known_frumentarii)
 			. += span_greentext("<b>[m1] an agent of the court!</b>")
@@ -218,7 +220,7 @@
 				. += span_green("A member of the Thieves Guild.")
 
 			if((HAS_TRAIT(src, TRAIT_CABAL) && HAS_TRAIT(user, TRAIT_CABAL)) || (src.patron?.type == /datum/patron/inhumen/zizo && HAS_TRAIT(user, TRAIT_CABAL)))
-				. += span_purple("A fellow seeker of Her ascension.")
+				. += span_purple("A fellow wanderer on the path of ZIZO.")	// STONEKEEP EDIT
 
 		if(HAS_TRAIT(src, TRAIT_LEPROSY))
 			. += span_necrosis("A LEPER...")
@@ -647,8 +649,9 @@
 		if(skipface && user.has_flaw(/datum/charflaw/hunted) && user != src)
 			user.add_stress(/datum/stress_event/hunted)
 
-	if(!obscure_name && (flavortext || ((headshot_link || ooc_extra_link) && client?.patreon?.has_access(ACCESS_ASSISTANT_RANK)))) // only show flavor text if there is a flavor text and we show headshot
-		. += "<a href='?src=[REF(src)];task=view_flavor_text;'>Examine Closer</a>"
+	//Stonekeep Edit
+	/*if(!obscure_name && (flavortext || ((headshot_link || ooc_extra_link) && client?.patreon?.has_access(ACCESS_ASSISTANT_RANK)))) // only show flavor text if there is a flavor text and we show headshot
+		. += "<a href='?src=[REF(src)];task=view_flavor_text;'>Examine Closer</a>"*/
 
 	var/trait_exam = common_trait_examine()
 	if(!isnull(trait_exam))

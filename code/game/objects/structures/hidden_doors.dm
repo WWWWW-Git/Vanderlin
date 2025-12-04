@@ -52,22 +52,22 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 ///// DOOR TYPES //////
 /obj/structure/door/secret/vault
 	vip = list(
-	/datum/job/lord,
-	/datum/job/consort,
-	/datum/job/steward,
-	/datum/job/hand,
+	/datum/job/kaizoku/sovereign, //Stonekeep Edit
+	// /datum/job/consort,
+	// /datum/job/steward,
+	// /datum/job/hand,
 	)
 
 /obj/structure/door/secret/merchant
 	vip = list(
-		/datum/job/merchant,
+		/datum/job/kaizoku/quartermaster, //Stonekeep Edit
 	)
 
 /obj/structure/door/secret/wizard //for wizard tower
 	vip = list(
-		/datum/job/magician,
-		/datum/job/mageapprentice,
-		/datum/job/archivist,
+	//	/datum/job/magician,
+	//	/datum/job/mageapprentice,
+	//	/datum/job/archivist,
 	)
 	//make me look like an arcane door
 
@@ -281,11 +281,10 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 ///// KEEP DOORS /////
 /obj/structure/door/secret/keep
 	vip = list(
-		/datum/job/lord,
-		/datum/job/consort,
-		/datum/job/prince,
-		/datum/job/hand,
-		/datum/job/butler,
+		/datum/job/kaizoku/sovereign, //Stonekeep Edit
+		/datum/job/kaizoku/clanmember,
+		/datum/job/kaizoku/doyen,
+		/datum/job/kaizoku/menial,
 	)
 
 /obj/structure/door/secret/keep/Initialize()
@@ -325,9 +324,11 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 
 ///// THIEVES GUILD DOORS /////
 /obj/structure/door/secret/thieves_guild
+	/* We don't have that. Kids BEGONE.
 	vip = list(
 		/datum/job/matron,
 	)
+	*/
 	lang = /datum/language/thievescant
 
 /obj/structure/door/secret/thieves_guild/Initialize()

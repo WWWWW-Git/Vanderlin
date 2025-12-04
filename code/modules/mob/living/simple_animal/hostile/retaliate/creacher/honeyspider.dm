@@ -114,8 +114,8 @@
 		if(tame && owner == user)
 			return TRUE
 		var/realchance = tame_chance
-		if(is_species(user, /datum/species/elf/dark))
-			realchance += 15
+		// if(is_species(user, /datum/species/elf/dark)) //Stonekeep Edit
+		//	realchance += 15
 		if(realchance)
 			if(user.mind)
 				realchance += (user.get_skill_level(/datum/skill/labor/taming) * 20)

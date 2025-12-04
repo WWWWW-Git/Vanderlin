@@ -17,7 +17,10 @@
 		"Steward",
 		"Court Magician",
 		"Archivist",
-		"Town Elder"
+		"Town Elder",
+		"Sheriff",	// STONEKEEP EDIT // Kaizoku Change
+		"Court Wizard",	// STONEKEEP EDIT
+		"Village Elder" // STONEKEEP EDIT
 	)
 
 	base_antags = 1

@@ -562,14 +562,15 @@
 			return
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
-		if(H.gender == MALE)
-			species_icon = S.limbs_icon_m
+		if(H.body_type_limb_icon)
+			species_icon = H.body_type_limb_icon
 		else
-			species_icon = S.limbs_icon_f
-		if(H.age == AGE_CHILD)
-			species_icon = S.child_icon
-		species_flags_list = H.dna.species.species_traits
+			if(H.gender == MALE)
+				species_icon = S.limbs_icon_m
+			else
+				species_icon = S.limbs_icon_f
 
+		species_flags_list = H.dna.species.species_traits
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
@@ -581,9 +582,7 @@
 		should_draw_gender = S.sexes
 
 		species_color = ""
-
 		mutation_color = ""
-
 		dmg_overlay_type = S.damage_overlay_type
 
 	else if(animal_origin == MONKEY_BODYPART) //currently monkeys are the only non human mob to have damage overlays.

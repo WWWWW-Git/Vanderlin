@@ -120,11 +120,22 @@
 	sellprice = 6
 
 //a chest with a corpse in it
+//STONEKEEP EDIT. THE OG VANDERLIN CODE IS BREAKING WITH OURS.
 /obj/structure/closet/crate/chest/neu_iron/corpse/Initialize()
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human/species/rousman(get_turf(src))
+	. = ..()
+	spawn(0)
+		SpawnCorpse()
+	return .
+
+/obj/structure/closet/crate/chest/neu_iron/corpse/proc/SpawnCorpse()
+	if(QDELETED(src))
+		return
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human/species/rousman(T)
 	H.cure_husk()
 	H.update_body()
 	H.update_body_parts()
-	H.death(TRUE) //Kills the new mob
+	H.death(TRUE)
 	H.forceMove(src)
-	. = ..()

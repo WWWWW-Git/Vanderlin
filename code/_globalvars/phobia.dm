@@ -70,9 +70,9 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/head/jester,
 		/obj/item/clothing/pants/tights/colored/jester,
 	)),
-	"lizards" = typecacheof(list(
-		/obj/item/organ/tail/kobold,
-	)),
+	//"lizards" = typecacheof(list(
+	//	/obj/item/organ/tail/kobold,
+	//)),
 	"spiders" = typecacheof(list(
 		/obj/structure/spider,
 	)),
@@ -93,14 +93,15 @@ GLOBAL_LIST_INIT(phobia_turfs, list(
 	)),
 ))
 
+//stonekeep edit
 GLOBAL_LIST_INIT(phobia_species, list(
-	"birds" = typecacheof(list(
-		/datum/species/harpy,
-		/datum/species/medicator,
-	)),
-	"lizards" = typecacheof(list(
-		/datum/species/kobold,
-	)),
+	//"birds" = typecacheof(list(
+	//	/datum/species/harpy,
+	//	/datum/species/medicator,
+	//)),
+	//"lizards" = typecacheof(list(
+	//	/datum/species/kobold,
+	//)),
 	"undead" = typecacheof(list(
 		/datum/species/zizombie,
 	))

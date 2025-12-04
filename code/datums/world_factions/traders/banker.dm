@@ -1,5 +1,5 @@
 /obj/effect/mob_spawn/human/rakshari
-	mob_species = /datum/species/rakshari
+	mob_species = /datum/species/denmorian
 
 /obj/effect/mob_spawn/human/rakshari/banker
 	outfit = /datum/outfit/tailor

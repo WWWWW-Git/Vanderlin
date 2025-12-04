@@ -70,7 +70,7 @@
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	var/canread = user.can_read(src, TRUE)
 	var/contents
-	var/datum/job/lord/ruler_job = SSjob.GetJobType(/datum/job/lord)
+	var/datum/job/kaizoku/sovereign/ruler_job = SSjob.GetJobType(/datum/job/kaizoku/sovereign)
 	contents += "<center>[ruler_job.get_informed_title(SSticker.rulermob)]'s DECREES<BR>"
 
 	contents += "-----------<BR><BR></center>"

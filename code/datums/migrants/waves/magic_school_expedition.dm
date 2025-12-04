@@ -68,7 +68,7 @@
 	tutorial = "When the call went out for daring pupils to join a great overland trek from Kingsfield, you eagerly volunteered, visions of adventure, discovery, and excitement dancing in your mind. \
 	Of course, the creatures that lurk along the road seem just as eager... though perhaps for very different reasons."
 	outfit = /datum/outfit/magic_student
-	allowed_ages = list(AGE_CHILD)
+	allowed_ages = list(BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 	allowed_races = RACES_PLAYER_NONEXOTIC
 	allowed_patrons = list(/datum/patron/divine/noc)
 

@@ -12,7 +12,7 @@
 		SPEC_ID_HALF_ORC,\
 		SPEC_ID_TIEFLING,\
 )
-	allowed_ages = list(AGE_ADULT, AGE_CHILD)
+	allowed_ages = list(AGE_ADULT, BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 	total_positions = 1
 	cmode_music = 'sound/music/cmode/nobility/combat_noble.ogg'
 	outfit = /datum/outfit/wretch/reject

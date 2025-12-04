@@ -169,10 +169,11 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	if(!user.cmode)
+	// STONEKEEP EDIT: DEATH TO SLAPCRAFT
+	/*if(!user.cmode)
 		if(user.try_recipes(src, I, user))
 			user.changeNext_move(CLICK_CD_FAST)
-			return TRUE
+			return TRUE */
 	if(I.obj_flags_ignore)
 		return I.attack_atom(src, user)
 	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_atom(src, user))
@@ -190,7 +191,7 @@
 		if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
 			adf = round(adf * 1.4)
 		if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-			adf = round(adf * 0.6)
+			adf = round(adf * 0.6) // Inf.Trigger: Requires balancing/Reformulation.
 	user.changeNext_move(adf)
 
 	for(var/obj/item/clothing/worn_thing in get_equipped_items(include_pockets = TRUE))//checks clothing worn by src.
@@ -490,7 +491,8 @@
 						dullfactor = 0.2
 					else
 						dullfactor = 0.45 + (lumberskill * 0.15)
-						lumberjacker.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (lumberjacker.STAINT*0.2))
+						lumberjacker.adjust_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5)) // STONEKEEP EDIT
+						//lumberjacker.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (lumberjacker.STAINT*0.2))
 					cont = TRUE
 				if(BCLASS_CHOP)
 					//Additional damage for axes against trees.

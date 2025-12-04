@@ -204,6 +204,7 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 	sleep(10 SECONDS)
 	dreamer.clear_fullscreen("wakeup")
 
+/* Slop removal ; Stonekeep Edit
 /datum/antagonist/maniac/proc/spawn_trey_liam()
 	var/turf/spawnturf
 	var/obj/effect/landmark/treyliam/trey = locate(/obj/effect/landmark/treyliam) in GLOB.landmarks_list
@@ -228,6 +229,7 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 			break
 		return trey_liam
 	return
+*/
 
 /datum/antagonist/maniac/proc/wake_up()
 	if(GLOB.maniac_highlander) // another Maniac has TRIUMPHED before we could
@@ -255,6 +257,8 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 	// 		continue
 	// 	SEND_SOUND(connected_player, sound(null))
 	// 	SEND_SOUND(connected_player, 'sound/villain/dreamer_win.ogg')
+
+	/* //Stonekeep Edit. No imersion breakings slop, thank you very much.
 	var/mob/living/carbon/human/trey_liam = spawn_trey_liam()
 	if(trey_liam)
 		owner.adjust_triumphs(4) // Adjust triumphs here instead of at roundend
@@ -291,9 +295,11 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 			to_chat(trey_liam, slop)
 			sleep(3 SECONDS)
 		to_chat(trey_liam, span_big(span_deadsay("I have to go back, I have to go back, I have to go back to Vanderlin.")))
+
 	else
 		INVOKE_ASYNC(src, GLOBAL_PROC_REF(cant_wake_up), dreamer)
 		cull_competitors(dreamer)
+	*/
 	// sleep(15 SECONDS)
 	// to_chat(world, span_deadsay("<span class='reallybig'>The Maniac has TRIUMPHED!</span>"))
 	// SSticker.declare_completion()

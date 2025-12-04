@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	var/punch_damage = 0
 
 	/// Native language for accents
-	var/native_language = "Imperial"
+	var/native_language = "Imperial" // ROGTODO - Stonekeep Edit - Change this into default language on Fog Islands.
 	/// Accent based of the language
 	var/accent_language
 	/// For races that can have more than one Accent such as the Half-Drow and Half-Elf
@@ -826,23 +826,22 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	H.remove_overlay(ABOVE_BODY_FRONT_LAYER)
 
 	var/datum/species/species = H.dna?.species
+
 	var/use_female_sprites = FALSE
 	var/list/offsets
+
 	if(species)
 		if(species.sexes)
 			if(H.gender == FEMALE && !species.swap_female_clothes || H.gender == MALE && species.swap_male_clothes)
 				use_female_sprites = FEMALE_BOOB
-		if(use_female_sprites)
-			offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-		else
-			offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+
+	use_female_sprites = use_female_sprites
 
 	var/list/standing = list()
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
 	if(HD && !(HAS_TRAIT(H, TRAIT_HUSK)) && !HD.skeletonized)
-		// lipstick
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
@@ -853,11 +852,11 @@ GLOBAL_LIST_EMPTY(patreon_races)
 
 		if(species?.hairyness)
 			var/limb_icon
-			// Not use_female_sprites for limb icons
 			if(H.gender == MALE)
 				limb_icon = species.limbs_icon_m
 			else
 				limb_icon = species.limbs_icon_f
+
 			var/mutable_appearance/bodyhair_overlay = mutable_appearance(limb_icon, "[species?.hairyness]", -BODY_LAYER)
 			bodyhair_overlay.color = H.get_hair_color()
 			standing += bodyhair_overlay
@@ -885,7 +884,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			hide_bottom = H.wear_pants.flags_inv & HIDEUNDIESBOT
 
 		if(H.underwear)
-			if(H.age == AGE_CHILD)
+			//Stonekeep Edit: Young Adult
+			/*
+			if(H.age == BLOOMING_ADULT)
 				hide_top = FALSE
 				hide_bottom = FALSE
 
@@ -893,7 +894,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 					H.underwear = "FemYoungling"
 				else
 					H.underwear = "Youngling"
-
+			*/
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
 
 			if(underwear)

@@ -4,7 +4,7 @@
 	name = "leech"
 	desc = "A disgusting, blood-sucking parasite."
 	icon = 'icons/roguetown/items/surgery.dmi'
-	icon_state = "leech"
+	icon_state = "leech_alt"	// STONEKEEP EDIT
 	baitpenalty = 0
 	isbait = TRUE
 	fishloot = list(/obj/item/reagent_containers/food/snacks/fish/carp = 5,

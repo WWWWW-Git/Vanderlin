@@ -120,7 +120,7 @@
 /datum/migrant_role/advclass/mercenary
 	name = "Mercenary"
 	migrant_job = /datum/job/mercenary
-	advclass_cat_rolls = list(CTAG_MERCENARY = 20)
+	advclass_cat_rolls = list(CTAG_SKMERCENARY = 20) // STONEKEEP EDIT
 
 /datum/migrant_wave/merc
 	name = "Band of Mercenaries"

@@ -1,4 +1,4 @@
-SUBSYSTEM_DEF(librarian)
+SUBSYSTEM_DEF(librarian) // Inf.Trigger: Requires balancing/Reformulation.
 	name = "Librarian"
 	init_order = INIT_ORDER_PATH
 	flags = SS_NO_FIRE

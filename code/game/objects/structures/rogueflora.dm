@@ -314,6 +314,8 @@
 /obj/structure/flora/grass/Initialize()
 	. = ..()
 	AddComponent(/datum/component/grass)
+	AddComponent(/datum/component/tick_infested, 7, 50) //Stonekeep edit.
+
 
 /obj/structure/flora/grass/Destroy()
 	if(isliving(usr) && HAS_TRAIT(usr, TRAIT_SEED_FINDER))

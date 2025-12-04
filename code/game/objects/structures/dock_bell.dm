@@ -9,7 +9,7 @@
 
 	COOLDOWN_DECLARE(ring_bell)
 	COOLDOWN_DECLARE(outsider_ring_bell)
-	var/static/approved_jobs = list(/datum/job/merchant, /datum/job/grabber, /datum/job/shophand)
+	var/static/approved_jobs = list(/datum/job/kaizoku/quartermaster, /datum/job/kaizoku/raider, /datum/job/kaizoku/seamen, /datum/job/kaizoku/sieger) //Stonekeep Edit.
 	max_integrity = 999999
 
 /obj/structure/dock_bell/examine(mob/user)

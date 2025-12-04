@@ -99,6 +99,7 @@
 		devotion.make_churching()
 		devotion.grant_to(cast_on)
 
+/* No kids allowed.
 /datum/action/cooldown/spell/undirected/list_target/convert_role/churchling/can_convert(mob/living/carbon/human/cast_on)
 	if(QDELETED(cast_on))
 		return FALSE
@@ -108,9 +109,10 @@
 	//only orphans who aren't apprentices
 	if(istype(cast_on.mind.assigned_role, /datum/job/orphan) && cast_on.is_apprentice())
 		return FALSE
-	if(cast_on.age != AGE_CHILD)
+	if(cast_on.age != BLOOMING_ADULT //Stonekeep Edit: Young Adult)
 		return FALSE
 	//need to see their damn face
 	if(!cast_on.get_face_name(null))
 		return FALSE
 	return TRUE
+*/

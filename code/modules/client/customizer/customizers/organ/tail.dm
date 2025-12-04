@@ -83,7 +83,7 @@
 		/datum/sprite_accessory/tail/lizard/spikes,
 		/datum/sprite_accessory/tail/rattlesnake
 		)
-
+/*
 /datum/customizer/organ/tail/harpy
 	customizer_choices = list(/datum/customizer_choice/organ/tail/harpy)
 	allows_disabling = TRUE
@@ -133,3 +133,54 @@
 	sprite_accessories = list(
 		/datum/sprite_accessory/tail/medicator
 	)
+*/
+// STONEKEEP CONTENT BELOW
+/datum/customizer/organ/tail/kappa
+	customizer_choices = list(/datum/customizer_choice/organ/tail/kappa)
+	allows_disabling = FALSE
+
+/datum/customizer_choice/organ/tail/kappa
+	name = "Undine shell"
+	organ_type = /obj/item/organ/tail/kappa
+	generic_random_pick = TRUE
+	sprite_accessories = list(/datum/sprite_accessory/tail/kappa)
+
+/obj/item/organ/tail/kappa
+	name = "Turtle Shell"
+	desc = "The hard back of an Undine."
+	accessory_type = /datum/sprite_accessory/tail/kappa
+
+// TENGU WINGS
+// These are tails as placeholders. If wings slots are able to be done successfully, refactor this into wings.
+/obj/item/organ/tail/wings
+	name = "Wings"
+	desc = "Wings, like those of zads, but enormous in size. Belonging to a Skylancer, most likely."
+	accessory_type = /datum/sprite_accessory/tail/tengu
+
+/datum/customizer/organ/tail/tengu
+	customizer_choices = list(/datum/customizer_choice/organ/tail/tengu)
+	allows_disabling = FALSE
+
+/datum/customizer_choice/organ/tail/tengu
+	name = "Skylancer wings"
+	organ_type = /obj/item/organ/tail/wings
+	generic_random_pick = TRUE
+	sprite_accessories = list(/datum/sprite_accessory/tail/tengu)
+
+
+
+// FOX TAILS
+/obj/item/organ/tail/kitsune
+	name = "Fox Tails"
+	accessory_type = /datum/sprite_accessory/tail/onetail
+
+/datum/customizer/organ/tail/kitsune
+	customizer_choices = list(/datum/customizer_choice/organ/tail/kitsune)
+
+/datum/customizer_choice/organ/tail/kitsune
+	name = "Fox Tails"
+	organ_type = /obj/item/organ/tail/kitsune
+	generic_random_pick = TRUE
+	sprite_accessories = list(/datum/sprite_accessory/tail/onetail,
+							/datum/sprite_accessory/tail/twotails,
+							/datum/sprite_accessory/tail/threetails)

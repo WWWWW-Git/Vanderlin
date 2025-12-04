@@ -3,13 +3,15 @@
 	var/name = "Skill"
 	var/desc = ""
 	var/list/int_reqs = list(5,7,9,12,14,17)
-
+// STONEKEEP EDIT: DEATH TO SLEEP LEVELING EDITION
+/*
 	var/dream_cost_base = 2
 	var/dream_cost_per_level = 0.5
 	var/dream_legendary_extra_cost = 1
 	var/list/specific_dream_costs
 	var/list/dreams
 	var/randomable_dream_xp = TRUE
+*/
 
 /datum/skill/proc/get_skill_speed_modifier(level)
 	return
@@ -17,6 +19,8 @@
 /datum/skill/proc/skill_level_effect(level, datum/mind/mind)
 	return
 
+// STONEKEEP EDIT: DEATH TO SLEEP LEVELING EDITION
+/*
 /datum/skill/proc/get_dream_cost_for_level(level)
 	if(length(specific_dream_costs) >= level)
 		return specific_dream_costs[level]
@@ -29,6 +33,7 @@
 	if(!dreams)
 		return null
 	return pick(dreams)
+*/
 
 /datum/skill/Topic(href, href_list) //This calls for the skill's description, when they click the ? in mind/print_levels
 	. = ..()

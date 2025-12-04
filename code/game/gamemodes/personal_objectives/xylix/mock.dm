@@ -26,8 +26,8 @@
 
 /datum/objective/personal/mock/monarch/on_mock_used(datum/source, mob/living/victim)
 	. = ..()
-	if((istype(victim.mind?.assigned_role, /datum/job/lord) || victim.job == "Monarch") && (source == owner.current))
-		to_chat(owner.current, span_greentext("You have mocked the monarch and completed the objective!"))
+	if((istype(victim.mind?.assigned_role, /datum/job/kaizoku/sovereign) || victim.job == "sovereign") && (source == owner.current))//Stonekeep Edit
+		to_chat(owner.current, span_greentext("You have mocked the sovereign and completed the objective!"))//Stonekeep Edit
 		owner.current.adjust_triumphs(triumph_count)
 		completed = TRUE
 		adjust_storyteller_influence(XYLIX, 20)
@@ -36,7 +36,7 @@
 
 /datum/objective/personal/mock/monarch/update_explanation_text()
 	. = ..()
-	explanation_text = "Viciously mock the monarch for Xylix!"
+	explanation_text = "Viciously mock the sovereign for Xylix!" //Stonekeep Edit
 
 /// Noble variant
 /datum/objective/personal/mock/noble

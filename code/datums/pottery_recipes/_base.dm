@@ -55,14 +55,16 @@
 	step_to_time.Cut(1,2)
 	var/amt2raise = (user.STAINT * 0.5) + (difficulty * 2)
 
-	user?.mind?.add_sleep_experience(skill, amt2raise, FALSE)
+	user?.adjust_experience(/datum/skill/craft/masonry, amt2raise, FALSE) //Stonekeep Edit
+	// user?.mind?.add_sleep_experience(/datum/skill/craft/masonry, amt2raise, FALSE)
 
 	if(!length(recipe_steps))
 		return TRUE
 
 /datum/pottery_recipe/proc/finish(mob/living/user)
 	var/amt2raise = (user.STAINT * 2) + (difficulty * 10)
-	user?.mind?.add_sleep_experience(skill, amt2raise, FALSE)
+	user?.adjust_experience(/datum/skill/craft/masonry, amt2raise, FALSE) //Stonekeep Edit
+	// user?.mind?.add_sleep_experience(/datum/skill/craft/masonry, amt2raise, FALSE)
 	return TRUE
 
 /datum/pottery_recipe/proc/generate_html(mob/user)

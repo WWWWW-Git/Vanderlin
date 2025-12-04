@@ -1,3 +1,8 @@
+//Stonekeep Edit: FILE CHANGE
+//UPDATE TRIGGER ON THIS FILE!!!
+//For the ALTERNATIVE FILE used for KAIZOKU PROJECT
+//Check for code\__DEFINES\jobs_kaizoku.dm
+
 #define JOB_AVAILABLE 0
 #define JOB_UNAVAILABLE_GENERIC 1
 #define JOB_UNAVAILABLE_BANNED 2

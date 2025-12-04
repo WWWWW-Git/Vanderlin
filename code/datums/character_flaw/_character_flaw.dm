@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Witless Pixie" = /datum/charflaw/witless_pixie,
 	"Random Flaw or No Flaw"=/datum/charflaw/randflaw,
 	"Guaranteed No Flaw (3 TRI)"=/datum/charflaw/noflaw,
+	"Love-Fiend"=/datum/charflaw/addiction/lovefiend,	//STONEKEEP EDIT
 ))
 
 /datum/charflaw
@@ -113,7 +114,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/randflaw
 	name = "Random Flaw"
-	desc = "Chooses a random flaw (50% chance for no flaw)"
+	desc = "Chooses a random flaw (70% chance for no flaw)" // STONEKEEP EDIT ; Edit: Might change it back to 50% tbh.
 	random_exempt = TRUE
 
 /datum/charflaw/randflaw/after_spawn(mob/user)
@@ -121,7 +122,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(prob(50))
+	if(prob(70)) // STONEKEEP EDIT ; Edit: Might change it back to 50% tbh.
 		H.get_random_flaw()
 	else
 		H.set_flaw(/datum/charflaw/eznoflaw)
@@ -773,10 +774,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	var/mob/living/carbon/human/H = user
 
-	// If they don't have lux randomize them
-	if(H.dna?.species?.id in RACES_PLAYER_LUXLESS)
-		H.get_random_flaw()
-		return
+	// If they don't have lux randomize them //All races have souls here.
+	// if(H.dna?.species?.id in RACES_PLAYER_LUXLESS)
+		// H.get_random_flaw()
+		// return
 	H.apply_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
 
 /datum/charflaw/witless_pixie

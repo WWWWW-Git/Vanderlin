@@ -1,3 +1,5 @@
+//Stonekeep Edit: File with removed content.
+
 /datum/status_effect/debuff
 	status_type = STATUS_EFFECT_REFRESH
 
@@ -225,7 +227,7 @@
 	icon_state = "uncookedfood"
 
 /datum/status_effect/debuff/uncookedfood/on_apply()
-	if(HAS_TRAIT(owner, TRAIT_NASTY_EATER) || HAS_TRAIT(owner, TRAIT_ORGAN_EATER))
+	if(HAS_TRAIT(owner, TRAIT_NASTY_EATER) || HAS_TRAIT(owner, TRAIT_ORGAN_EATER) || HAS_TRAIT(owner, TRAIT_CHANGELING_METABOLISM)) //Stonekeep edit
 		return FALSE
 	. = ..()
 	if(iscarbon(owner))
@@ -429,7 +431,7 @@
 	name = "Chilled"
 	desc = "I can barely feel my limbs!"
 	icon_state = "chilled"
-
+/*
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/vamp_dreams
@@ -437,7 +439,7 @@
 /atom/movable/screen/alert/status_effect/debuff/vamp_dreams
 	name = "Insight"
 	desc = "With some sleep in a coffin I feel like I could become better."
-	icon_state = "sleepy"
+	icon_state = "sleepy"*/
 
 /datum/status_effect/eorapacify
 	id = "eorapacify"

@@ -447,7 +447,7 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
 	if(last_devotion_check < world.time)
 		pick_most_influential()
-		last_devotion_check = world.time + 2 MINUTES
+		last_devotion_check = world.time + 10 MINUTES	// STONEKEEP EDIT 10 instead of 2 minutes apart to switch storyteller
 
 	if(SSticker.HasRoundStarted() && (world.time - SSticker.round_start_time) >= ROUNDSTART_VALID_TIMEFRAME)
 		can_run_roundstart = FALSE
@@ -1400,7 +1400,7 @@ SUBSYSTEM_DEF(gamemode)
 		STATS_MALE_POPULATION,
 		STATS_FEMALE_POPULATION,
 		STATS_OTHER_GENDER,
-		STATS_CHILD_POPULATION,
+		STATS_BLOOMING_POPULATION,
 		STATS_ADULT_POPULATION,
 		STATS_MIDDLEAGED_POPULATION,
 		STATS_ELDERLY_POPULATION,
@@ -1483,8 +1483,8 @@ SUBSYSTEM_DEF(gamemode)
 				else
 					record_round_statistic(STATS_OTHER_GENDER)
 			switch(human_mob.age)
-				if(AGE_CHILD)
-					record_round_statistic(STATS_CHILD_POPULATION)
+				if(BLOOMING_ADULT) //Stonekeep Edit: Young Adult
+					record_round_statistic(STATS_BLOOMING_POPULATION)
 				if(AGE_ADULT)
 					record_round_statistic(STATS_ADULT_POPULATION)
 				if(AGE_MIDDLEAGED)
@@ -1533,30 +1533,26 @@ SUBSYSTEM_DEF(gamemode)
 				record_round_statistic(STATS_ALIVE_NORTHERN_HUMANS)
 			if(isdwarf(human_mob))
 				record_round_statistic(STATS_ALIVE_DWARVES)
-			if(isdarkelf(human_mob))
-				record_round_statistic(STATS_ALIVE_DARK_ELVES)
-			if(issnowelf(human_mob))
+			if(iself(human_mob))
 				record_round_statistic(STATS_ALIVE_SNOW_ELVES)
-			if(ishalfelf(human_mob))
-				record_round_statistic(STATS_ALIVE_HALF_ELVES)
-			if(ishalfdrow(human_mob))
-				record_round_statistic(STATS_ALIVE_HALF_DROWS)
-			if(ishalforc(human_mob))
-				record_round_statistic(STATS_ALIVE_HALF_ORCS)
-			if(iskobold(human_mob))
-				record_round_statistic(STATS_ALIVE_KOBOLDS)
-			if(israkshari(human_mob))
-				record_round_statistic(STATS_ALIVE_RAKSHARI)
+			if(isgroveling(human_mob))
+				record_round_statistic(STATS_ALIVE_GROVELINGS)
+			if(isdenmorian(human_mob))
+				record_round_statistic(STATS_ALIVE_DENMORIANS)
+			if(isundine(human_mob))
+				record_round_statistic(STATS_ALIVE_UNDINES)
+			if(issunscorned(human_mob))
+				record_round_statistic(STATS_ALIVE_SUNSCORNED)
 			if(isaasimar(human_mob))
 				record_round_statistic(STATS_ALIVE_AASIMAR)
-			if(ishollowkin(human_mob))
-				record_round_statistic(STATS_ALIVE_HOLLOWKINS)
-			if(isharpy(human_mob))
-				record_round_statistic(STATS_ALIVE_HARPIES)
-			if(istriton(human_mob))
-				record_round_statistic(STATS_ALIVE_TRITONS)
-			if(ismedicator(human_mob))
-				record_round_statistic(STATS_ALIVE_MEDICATORS)
+			if(isogrun(human_mob))
+				record_round_statistic(STATS_ALIVE_OGRUNS)
+			if(isskylancer(human_mob))
+				record_round_statistic(STATS_ALIVE_SKYLANCERS)
+			if(ischangeling(human_mob))
+				record_round_statistic(STATS_ALIVE_CHANGELINGS)
+			if(isvessel(human_mob))
+				record_round_statistic(STATS_ALIVE_VESSELS)
 
 			// Chronicle statistics
 

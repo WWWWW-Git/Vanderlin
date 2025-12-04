@@ -33,8 +33,30 @@
 							V.add_stress(/datum/stress_event/dwarfshaved)
 				else
 					held_item.melee_attack_chain(user, src, params)
+		return
+	if(user == src)
+		if(usable_hands < 1)
+			return
+		if(!can_do_sex())	//STONEKEEP EDIT START
+			return
+		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
+			if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+				if(underwear == "Nude")
+					return
+				if(do_after(user, 30, target = src))
+					cached_underwear = underwear
+					underwear = "Nude"
+					update_body()
+					var/obj/item/undies/U
+					if(gender == MALE)
+						U = new/obj/item/undies(get_turf(src))
+					else
+						U = new/obj/item/undies/f(get_turf(src))
+					U.color = underwear_color
+					user.put_in_hands(U)	//STONEKEEP EDIT END
 
 /mob/living/carbon/human/Initialize()
+	sexcon = new /datum/sex_controller(src) //STONEKEEP EDIT
 	// verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -59,6 +81,7 @@
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
+	QDEL_NULL(sexcon)	//STONEKEEP EDIT
 	GLOB.human_list -= src
 	return ..()
 
@@ -246,6 +269,12 @@
 	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 220, 690)
 	popup.set_content(dat.Join())
 	popup.open()
+
+#ifdef MATURESERVER	//STONEKEEP EDIT START
+	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+		if(can_do_sex())
+			dat += "<tr><td><BR><B>Underwear:</B> <A href='?src=[REF(src)];undiesthing=1'>[underwear == "Nude" ? "Nothing" : "Remove"]</A></td></tr>"
+#endif	//STONEKEEP EDIT END
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
@@ -536,13 +565,15 @@
 		var/mob/living/carbon/coronated
 		coronated = src
 
-		var/datum/job/lord_job = SSjob.GetJobType(/datum/job/lord)
-		var/datum/job/consort_job = SSjob.GetJobType(/datum/job/consort)
+		var/datum/job/kaizoku/lord_job = SSjob.GetJobType(/datum/job/kaizoku/sovereign)
+		//var/datum/job/consort_job = SSjob.GetJobType(/datum/job/consort)
+		var/datum/job/consort_job = SSjob.GetJobType(/datum/job/kaizoku/clanmember) //Stonekeep Edit
 		for(var/mob/living/carbon/human/HL in GLOB.human_list)
 			//this sucks ass. refactor to locate the current ruler/consort
 			if(HL.mind)
 				if(is_lord_job(HL.mind.assigned_role) || is_consort_job(HL.mind.assigned_role))
-					HL.mind.set_assigned_role(SSjob.GetJobType(/datum/job/villager))
+					HL.mind.set_assigned_role(SSjob.GetJobType(/datum/job/kaizoku/citizen)) //Stonekeep Edit
+					HL.mind.set_assigned_role(SSjob.GetJobType(/datum/job/kaizoku/citizen))
 			//would be better to change their title directly, but that's not possible since the title comes from the job datum
 			if(HL.job == "Monarch")
 				HL.job = "Ex-Monarch"
@@ -552,7 +583,7 @@
 				consort_job?.remove_spells(HL)
 
 		var/new_title = (coronated.gender == MALE) ? SSmapping.config.monarch_title : SSmapping.config.monarch_title_f
-		coronated.mind.set_assigned_role(/datum/job/lord)
+		coronated.mind.set_assigned_role(/datum/job/kaizoku/sovereign)
 		lord_job?.get_informed_title(coronated, TRUE, new_title)
 		coronated.job = "Monarch" //Monarch is used when checking if the ruler is alive, not "King" or "Queen". Can also pass it on and have the title change properly later.
 		lord_job?.add_spells(coronated)
@@ -569,7 +600,7 @@
 			return
 		admin_title = new_title
 		if(is_lord_job(human_job))
-			var/datum/job/lord_job = SSjob.GetJobType(/datum/job/lord)
+			var/datum/job/kaizoku/lord_job = SSjob.GetJobType(/datum/job/kaizoku/sovereign)
 			lord_job?.get_informed_title(src, TRUE, new_title)
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)

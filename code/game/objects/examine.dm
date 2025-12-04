@@ -22,7 +22,7 @@
 				if(80 to 99)
 					. += "<span class='warning'>It's a little damaged.</span>"
 
-//	if(has_inspect_verb || (obj_integrity < max_integrity))
+//	if(has_inspect_verb || (atom_integrity < max_integrity))
 //		. += "<span class='notice'><a href='byond://?src=[REF(src)];inspect=1'>Inspect</a></span>"
 
 	if(price_text)

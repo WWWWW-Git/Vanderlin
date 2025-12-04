@@ -612,13 +612,14 @@
 	. = ..()
 	if(!user || !target)
 		return
+	/* Stonekeep Edit
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		playsound(target.loc, pick('sound/vo/hug.ogg'), 100, FALSE, -1)
 		if(israkshari(H))
 			if(prob(10))
 				H.emote("purr")
-
+	*/
 
 // ............... I ..................
 /datum/emote/living/idle
@@ -674,15 +675,17 @@
 			E.cursed_freak_out()
 
 		// anti pedophile logging
+		//Stonekeep Edit: These are blooming adults now, but I thank GOD they did this change on their own.
+		/*
 		var/log_msg
-		if(E.age == AGE_CHILD)
+		if(E.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 			log_msg = "[key_name(H)][ADMIN_FLW(H)] kissed [key_name(E)] [ADMIN_FLW(E)], a CHILD!"
-			if(H.age == AGE_CHILD)
+			if(H.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 				log_msg += " As a child."
 			else
 				log_msg += " As an adult."
 			message_admins(log_msg)
-
+		*/
 		var/do_change
 		if(target.loc == user.loc)
 			do_change = TRUE
@@ -858,14 +861,14 @@
 
 /datum/emote/living/preen/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
-	if(!isharpy(user))
+	if(!isskylancer(user))
 		return FALSE
 
 /datum/emote/living/preen/run_emote(mob/user, params, type_override, intentional, targetted)
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!isharpy(H))
+		if(!isskylancer(H))
 			return
 		var/time_left = COOLDOWN_TIMELEFT(src, time_to_next_preen)
 		if(time_left)
@@ -990,6 +993,7 @@
 	emote_type = EMOTE_VISIBLE
 	restraint_check = TRUE
 
+/* Stonekeep Edit: Young Adults
 /datum/emote/living/slap/adjacentaction(mob/user, mob/target)
 	. = ..()
 	if(!user || !target)
@@ -999,14 +1003,16 @@
 		var/mob/living/carbon/human/E = target
 		if(H.zone_selected == BODY_ZONE_PRECISE_GROIN)
 		// anti pedophile logging
+		// We don't need this anymore since we don't have children anymore.
 			var/log_msg
-			if(E.age == AGE_CHILD)
+			if(E.age == BLOOMING_ADULT //Stonekeep Edit: Young Adult)
 				log_msg = "[key_name(H)][ADMIN_FLW(H)] slapped [key_name(E)][ADMIN_FLW(E)] on the ass, a CHILD!"
-				if(H.age == AGE_CHILD)
+				if(H.age == BLOOMING_ADULT //Stonekeep Edit: Young Adult)
 					log_msg += " As a child."
 				else
 					log_msg += " As an adult."
 				message_admins(log_msg)
+*/
 
 /datum/emote/living/slap/run_emote(mob/user, params, type_override, intentional)
 	message_param = initial(message_param) // reset

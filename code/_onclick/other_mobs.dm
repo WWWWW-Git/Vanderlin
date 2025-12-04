@@ -104,7 +104,7 @@
 		var/datum/job/job = SSjob.GetJob(target.job)
 		if(length(user.return_apprentices()) >= user.return_max_apprentices())
 			return
-		if((target.age == AGE_CHILD || job?.type == /datum/job/vagrant) && target.mind && !target.is_apprentice())
+		if((job?.type == /datum/job/kaizoku/lowlife) && target.mind && !target.is_apprentice()) //Stonekeep Edit.
 			to_chat(user, span_notice("You offer apprenticeship to [target]."))
 			user.make_apprentice(target)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -158,8 +158,11 @@
 
 	var/nodmg = FALSE
 	var/dam2do = 10*(user.STASTR/20)
+	var/poisonkiss = FALSE
 	if(HAS_TRAIT(user, TRAIT_STRONGBITE))
 		dam2do *= 2
+	if(HAS_TRAIT(user, TRAIT_CHANGELING_METABOLISM)) //Stonekeep edit
+		poisonkiss = TRUE
 	if(!HAS_TRAIT(user, TRAIT_STRONGBITE))
 		if(!affecting.has_wound(/datum/wound/bite))
 			nodmg = TRUE
@@ -190,6 +193,11 @@
 		playsound(src, "smallslash", 100, TRUE, -1)
 		if(istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
+			if(poisonkiss)
+				if(prob(50)) // 50% chance of injecting venom on the victim.
+					to_chat(user, "<span class='greentext'>Your internal glands releases venom upon [src]</span>")
+					to_chat(src, "<span class='warning'>Argh! An burning sensation has spread on my veins!</span>")
+					src.reagents.add_reagent(/datum/reagent/poison/changelingtoxin, 5) // Inject 5 units of venomtoxin
 			if(user?.mind && mind)
 				if(user.dna?.species && istype(user.dna.species, /datum/species/werewolf))
 					if(caused_wound)
@@ -292,6 +300,88 @@
 				if(HAS_TRAIT(src, TRAIT_NO_BITE))
 					to_chat(src, span_warning("I can't bite."))
 					return
+				if(HAS_TRAIT(src, TRAIT_CHANGELING_METABOLISM) && ismob(A)) //Stonekeep edit
+					var/mob/living/L = A
+					if(L && (L.stat == DEAD || L.stat == UNCONSCIOUS))
+						changeNext_move(mmb_intent.clickcd)
+						face_atom(L)
+
+						var/devour_delay
+						if(L.stat == DEAD)
+							devour_delay = 60
+						else
+							devour_delay = 360
+
+						src.visible_message(span_danger("[src] begins grotesquely devouring [L]'s flesh"))
+						playsound(src.loc, 'sound/gore/flesh_eat_03.ogg', 50, 1)
+
+						if(do_after(src, devour_delay, target = L))
+							if(QDELETED(L))
+								return
+
+							var/obj/item/bodypart/limb
+							var/list/limb_list = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+							var/selected_zone = src.zone_selected
+
+							var/purifying = FALSE
+							if(istype(L, /mob/living/carbon/human))
+								var/mob/living/carbon/human/H = L
+								if((islist(H.faction) && (FACTION_ORCS in H.faction)) || (H.dna?.species?.id == "tiefling") || (H.mob_biotypes & MOB_UNDEAD))
+									purifying = TRUE
+
+							if(selected_zone in limb_list)
+								limb = L.get_bodypart(selected_zone)
+								if(limb)
+									limb.dismember()
+									playsound(src.loc, 'sound/combat/dismemberment/dismem (1).ogg', 50, 1)
+									qdel(limb)
+									if(purifying)
+										to_chat(src, span_bloody("Feast of the righteous, your teeth sink into blemished flesh. The abyss within is relished."))
+										src.reagents?.add_reagent(/datum/reagent/consumable/nutriment, SNACK_NUTRITIOUS)
+										src.apply_status_effect(/datum/status_effect/buff/foodbuff)
+									else
+										to_chat(src, span_bloody("Wallowing in guilt as you savour the untainted. This was not meant to be devoured."))
+										src.reagents?.add_reagent(/datum/reagent/consumable/nutriment, SNACK_DECENT)
+									return
+
+							for(var/zone in limb_list)
+								limb = L.get_bodypart(zone)
+								if(limb)
+									limb.dismember()
+									playsound(src.loc, 'sound/combat/dismemberment/dismem (1).ogg', 50, 1)
+									qdel(limb)
+									if(purifying)
+										to_chat(src, span_bloody("Feast of the righteous, your teeth sink into blemished flesh. The abyss within is relished."))
+										src.reagents?.add_reagent(/datum/reagent/consumable/nutriment, SNACK_NUTRITIOUS)
+										src.apply_status_effect(/datum/status_effect/buff/foodbuff)
+									else
+										to_chat(src, span_bloody("Wallowing in guilt as you savour the untainted. This was not meant to be devoured."))
+										src.reagents?.add_reagent(/datum/reagent/consumable/nutriment, SNACK_DECENT)
+									return
+
+							limb = L.get_bodypart(BODY_ZONE_CHEST)
+							if(limb)
+								if(!limb.dismember())
+									L.gib()
+								playsound(src.loc, 'sound/combat/dismemberment/dismem (1).ogg', 50, 1)
+								if(purifying)
+									to_chat(src, span_bloody("You devour the rest of the corruptive veil, unleashing what lies within."))
+									src.reagents?.add_reagent(/datum/reagent/consumable/nutriment, SNACK_NUTRITIOUS)
+									src.apply_status_effect(/datum/status_effect/buff/foodbuff)
+								else
+									to_chat(src, span_bloody("You collapse the body of the victim of a sorry fate. Their undeserving organs spill out."))
+									src.reagents?.add_reagent(/datum/reagent/consumable/nutriment, SNACK_DECENT)
+								return
+							to_chat(src, span_bloody("You tear into [L]'s flesh!"))
+							playsound(src.loc, 'sound/gore/flesh_eat_03.ogg', 50, 1)
+							if(hascall(L, "gib"))
+								L.gib()
+							else
+								qdel(L)
+							to_chat(src, span_bloody("Such simple creature does not bring you a proper feast."))
+							playsound(src.loc, 'sound/combat/dismemberment/dismem (1).ogg', 50, 1)
+							src.reagents?.add_reagent(/datum/reagent/consumable/nutriment, SNACK_DECENT)
+							return
 				changeNext_move(mmb_intent.clickcd)
 				face_atom(A)
 				A.onbite(src)
@@ -561,12 +651,26 @@
 		if(jextra)
 			throw_at(A, jrange, 1, src, spin = FALSE)
 			while(src.throwing)
+				if(GrabThatRopeMan()) //Stonekeep: Kaizoku edit. Major portion starts here
+					break
 				sleep(1)
+			if(held_rope)
+				return
 			throw_at(get_step(src, src.dir), 1, 1, src, spin = FALSE)
+			while(src.throwing)
+				if(GrabThatRopeMan())
+					break
+				sleep(1)
+			if(held_rope)
+				return //Stonekeep: Kaizoku edit; Major portion ends here
 		else
 			throw_at(A, jrange, 1, src, spin = FALSE)
 			while(src.throwing)
+				if(GrabThatRopeMan()) //Stonekeep edit.
+					break
 				sleep(1)
+			if(held_rope)
+				return //End of Stonekeep edit on this path.
 		if(isopenturf(src.loc))
 			var/turf/open/T = src.loc
 			if(T.landsound)

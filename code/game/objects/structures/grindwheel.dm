@@ -28,7 +28,8 @@
 					playsound(src,'sound/combat/hits/onwood/destroyfurniture.ogg', 100, FALSE)
 				else
 					new /obj/item/natural/wood/plank(get_turf(src))
-				user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
+				user.adjust_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5)) //Stonekeep edit
+				// user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
 				qdel(I)
 				return
 	. = ..()

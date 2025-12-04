@@ -1,3 +1,5 @@
+// DON'T EVEN TRY IT
+/*
 /datum/action/cooldown/spell/adopt_child
 	name = "Adopt Child"
 	button_icon_state = "love"
@@ -27,7 +29,7 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	if(cast_on.age != AGE_CHILD)
+	if(cast_on.age != BLOOMING_ADULT //SYoung Adulttonekeep Edit: )
 		to_chat(owner, span_warning("You can only adopt children!"))
 		reset_spell_cooldown()
 		return . | SPELL_CANCEL_CAST
@@ -80,3 +82,4 @@
 	to_chat(cast_on, span_love("You have been adopted by [owner.real_name]!"))
 
 	SEND_SIGNAL(owner, COMSIG_ORPHAN_ADOPTED, cast_on)
+*/

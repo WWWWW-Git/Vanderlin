@@ -346,7 +346,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 
 		create_item(crafter, initiator, found_optional_requirements, found_optional_wildcards, found_optional_reagents, items_to_delete)
 
-		initiator.mind?.add_sleep_experience(used_skill, initiator.STAINT * 0.5)
+		initiator.adjust_experience(used_skill, initiator.STAINT * 0.5) //Stonekeep Edit.
 		// Remove all tracked items
 		for(var/obj/item/item_to_delete in items_to_delete)
 			qdel(item_to_delete)

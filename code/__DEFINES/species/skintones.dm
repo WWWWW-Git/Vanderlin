@@ -1,3 +1,8 @@
+//Stonekeep Edit: FILE CHANGE
+//UPDATE TRIGGER ON THIS FILE!!!
+//For the ALTERNATIVE FILE used for KAIZOKU PROJECT
+//Check for code\__DEFINES\species\skintones_kaizoku.dm
+
 //skin tones defines
 
 //HALF ORC SKIN TONES

@@ -24,9 +24,9 @@
 	return ..()
 
 /obj/structure/fake_machine/hailer/attackby(obj/item/H, mob/user, params)
-	if(!HAS_TRAIT(user, TRAIT_BURDEN) && !is_gaffer_assistant_job(user.mind.assigned_role))
-		to_chat(user, span_danger("you can't feed the [src] without carrying his burden"))
-		return
+	// if(!HAS_TRAIT(user, TRAIT_BURDEN) && !is_gaffer_assistant_job(user.mind.assigned_role)) //Stonekeep Edit
+		// to_chat(user, span_danger("you can't feed the [src] without carrying his burden"))
+		// return
 	if(istype(H, /obj/item/reagent_containers/powder/salt)) //mmmm, salt.
 		to_chat(user, "<span class='notice'>the [src]'s tongue slips between its bronze teeth to lap at the salt in [user]'s hand, finishing with effectionate licks across their palm... gross </span>")
 		say("mmmpphh... grrrrrhh... hhhrrrnnn...")

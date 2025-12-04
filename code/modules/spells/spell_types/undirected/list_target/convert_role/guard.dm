@@ -7,9 +7,11 @@
 	recruitment_message = "Join the Garrison, %RECRUIT!"
 	accept_message = "I swear fealty to the Crown and its garrison!"
 
+/* Have to unfuck this first. Stonekeep edit
 /datum/action/cooldown/spell/undirected/list_target/convert_role/guard/on_conversion(mob/living/cast_on)
 	. = ..()
 	cast_on.verbs |= /mob/proc/haltyell
+*/
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/guard/forest
 	name = "Recruit Forest Guard"

@@ -64,7 +64,8 @@
 
 /obj/structure/wild_plant/proc/user_harvests(mob/living/user)
 	apply_farming_fatigue(user, 4)
-	add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 2)
+	user.adjust_experience(/datum/skill/labor/farming, user.STAINT * 2) // STONEKEEP EDIT
+	// add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 2)
 
 	var/farming_skill = user.get_skill_level(/datum/skill/labor/farming)
 	var/feedback = "I harvest the produce."

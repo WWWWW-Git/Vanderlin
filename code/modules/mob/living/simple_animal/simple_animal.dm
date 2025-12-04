@@ -374,10 +374,9 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
 	return
-
 /mob/living/simple_animal/MiddleClick(mob/living/user, params)
 	if(stat == DEAD)
-		var/obj/item/held_item = user.get_active_held_item()
+		var/obj/item/held_item = user?.get_active_held_item() // STONEKEEP EDIT:
 		if(held_item)
 			if((butcher_results || guaranteed_butcher_results) && held_item.get_sharpness() && held_item.wlength == WLENGTH_SHORT)
 				if(src.buckled && istype(src.buckled, /obj/structure/meathook))
@@ -387,6 +386,13 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 				visible_message("[user] begins to butcher [src].")
 				playsound(src, 'sound/foley/gross.ogg', 100, FALSE)
 				if(do_after(user, 3 SECONDS, src))
+					var/boon = 1 //Stonekeep Edit: Start
+					if(user)
+						boon = user.get_learning_boon(/datum/skill/labor/butchering)
+					var/amt2raise = 0
+					if(user)
+						amt2raise = user.STAINT
+					user.adjust_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE) // STONEKEEP EDIT: Ending
 					butcher(user)
 	..()
 
@@ -473,7 +479,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 				var/obj/item/reagent_containers/food/snacks/F = I
 				F.become_rotten()
 		if(user.mind)
-			user.mind.add_sleep_experience(/datum/skill/labor/butchering, user.STAINT * 0.5)
+			user.adjust_experience(/datum/skill/labor/butchering, (user.STAINT * 0.5))
 		playsound(src, 'sound/foley/gross.ogg', 70, FALSE)
 	if(head_butcher)
 		var/obj/item/natural/head/head = new head_butcher(Tsec)
@@ -875,7 +881,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			if(user.mind)
 				var/amt = user.get_skill_level(/datum/skill/misc/riding)
 				if(amt)
-					amt = clamp(amt, 0, 4) //higher speed amounts are a little wild. Max amount achieved at expert riding.
+					amt = clamp(amt, 0, 5) // STONEKEEP EDIT: Max amount achieved at Master riding.
 					riding_datum.vehicle_move_delay -= (amt/5 + 1.5)
 					riding_datum.vehicle_move_delay -= 3
 			if(loc != oldloc)

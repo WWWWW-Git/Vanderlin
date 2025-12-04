@@ -101,4 +101,4 @@
 		"MY GOD IS FREEDOM WHILE YOURS ARE SHACKLES!",
 		"RASHAN-KAHL WILL ENSLAVE YOU!"
 	)
-	allowed_races = list(SPEC_ID_RAKSHARI)
+	//allowed_races = list(SPEC_ID_RAKSHARI) //Stonekeep Edit

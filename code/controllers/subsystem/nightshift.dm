@@ -65,8 +65,8 @@ SUBSYSTEM_DEF(nightshift)
 	if(client)
 		refresh_looping_ambience()
 	if(todd == "dawn")
-		if(HAS_TRAIT(src, TRAIT_VAMP_DREAMS))
-			apply_status_effect(/datum/status_effect/debuff/vamp_dreams)
+		/*if(HAS_TRAIT(src, TRAIT_VAMP_DREAMS)) //Inf STONEKEEP EDIT
+			apply_status_effect(/datum/status_effect/debuff/vamp_dreams) */
 		if(HAS_TRAIT(src, TRAIT_NIGHT_OWL))
 			add_stress(/datum/stress_event/night_owl_dawn)
 
@@ -76,6 +76,8 @@ SUBSYSTEM_DEF(nightshift)
 		if(HAS_TRAIT(src, TRAIT_NOSTAMINA))
 			return ..()
 		if(HAS_TRAIT(src, TRAIT_NOSLEEP))
+			return ..()
+		if(HAS_TRAIT(src, TRAIT_DARKLING))	// STONEKEEP EDIT
 			return ..()
 		if(tiredness >= 100)
 			apply_status_effect(/datum/status_effect/debuff/sleepytime)

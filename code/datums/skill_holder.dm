@@ -207,7 +207,7 @@
 	var/boon = 1 // Can't teach an old dog new tricks. Most old jobs start with higher skill too.
 	if(H.age == AGE_OLD)
 		boon = 0.8
-	else if(H.age == AGE_CHILD)
+	else if(H.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 		boon = 1.1
 	boon += get_skill_level(skill) / 10
 	if(HAS_TRAIT(H, TRAIT_TUTELAGE)) //5% boost for being a good teacher
@@ -492,5 +492,5 @@
 				if(HAS_TRAIT(H, TRAIT_TUTELAGE)) //Base 50% of your xp is given to nearby apprentice
 					multiplier += 0.15
 			var/apprentice_amt = amt * 0.1 + multiplier
-			if(apprentice.mind.add_sleep_experience(skill, apprentice_amt, FALSE, FALSE))
+			if(apprentice.adjust_experience(skill, apprentice_amt, FALSE, FALSE)) //Stonekeep Edit
 				current.add_stress(/datum/stress_event/apprentice_making_me_proud)

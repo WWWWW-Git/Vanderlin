@@ -123,7 +123,7 @@
 		to_chat(src, span_warning("There are none capable of coronation in front of me."))
 		return
 
-	var/datum/job/lord_job = SSjob.GetJobType(/datum/job/lord)
+	var/datum/job/kaizoku/lord_job = SSjob.GetJobType(/datum/job/kaizoku/sovereign)
 	var/datum/job/consort_job = SSjob.GetJobType(/datum/job/consort)
 	for(var/mob/living/carbon/human/HL in GLOB.human_list)
 		//this sucks ass. refactor to locate the current ruler/consort

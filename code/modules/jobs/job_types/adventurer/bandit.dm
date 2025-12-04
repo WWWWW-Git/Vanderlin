@@ -1,11 +1,11 @@
 /datum/job/bandit //pysdon above there's like THREE bandit.dms now I'm so sorry. This one is latejoin bandits, the one in villain is the antag datum, and the one in the 'antag' folder is an old adventurer class we don't use. Good luck!
 	title = "Bandit"
-	tutorial = "Long ago you did a crime \
-	worthy of your bounty being hung on the wall outside of the local inn. \
-	You now live with your fellow free men in the bog, and generally get up to no good."
-	department_flag = OUTSIDERS
+	tutorial = "Long ago, you fucked up, your crime considered more serious than gangster activity. \
+	Now, you're being hunted down like an animal. There is eels on your body, \
+	no one believes you!"
+	department_flag = FACTION_VILLAIN
 	job_flags = (JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE | JOB_SHOW_IN_CREDITS)
-	display_order = JDO_BANDIT
+	display_order = KZ_BANDIT
 	faction = FACTION_NEUTRAL
 	total_positions = 6
 	spawn_positions = 4

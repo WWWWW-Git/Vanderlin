@@ -90,16 +90,20 @@ SUBSYSTEM_DEF(ticker)
 	var/last_bot_update = 0
 
 	var/list/no_ruler_lines = list(
-		"Set a Ruler to 'high' in your class preferences to start the game!",
-		"PLAY Ruler NOW!", "A Ruler is required to start.",
-		"Pray for a Ruler.", "One day, there will be a Ruler.",
-		"Just try playing Ruler.", "If you don't play Ruler, the game will never start.",
-		"We need at least one Ruler to start the game.",
-		"We're waiting for you to pick Ruler to start.",
-		"Still no Ruler is readied..",
-		"I'm going to lose my mind if we don't get a Ruler readied up.",
-		"No. The game will not start because there is no Ruler.",
-		"What's the point of Vanderlin without a Ruler?"
+		"Set a Daimyo to 'high' in your class preferences to begin the campaign!",
+		"The clan awaits for the Daimyo to claim the celestial throne.",
+		"The oceanic scrolls remains sealed until a leader comes to claim its tides.",
+		"This game cannot begin until the Thalassic Mandate is fulfilled.",
+		"Pray the ancestors send a Clan Sovereign.",
+		"One day, the stars will align for the true thalassic leader.",
+		"Just try playing as Daimyo, the sky serpents will be watching.",
+		"The retainers are awaiting for someone to rise to the throne.",
+		"The emperor gave this land to someone for a reason, you know.",
+		"Milord! The THALLASIC MANDATE remains UNFULFILLED!",
+		"Humen and Elven massagers to whoever picks the Daimyo role!",
+		"Milord! What is the point of KAIZOKU without an abyssal regent?!",
+		"I'm LOSING my SANITY, become an CLAN PATRIARCH NOW!!!",
+		"No leader? About time to choose an random hobo as the banner holder."
 		)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)

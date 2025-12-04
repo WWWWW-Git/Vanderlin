@@ -29,6 +29,10 @@
 		"Priest",
 		"Inquisitor",
 		"Adept",
+		"Sheriff",	// STONEKEEP EDIT // Kaizoku Change
+		"Court Wizard",	// STONEKEEP EDIT
+		"Village Elder" // STONEKEEP EDIT
 	)
+
 
 /datum/round_event/antagonist/solo/rebel

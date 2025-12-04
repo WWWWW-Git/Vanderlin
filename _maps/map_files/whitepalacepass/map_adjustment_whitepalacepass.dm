@@ -1,8 +1,10 @@
+//Completely commenting this one out, since unticking it wasn't enough.
+
 /*
 			< ATTENTION >
 	If you need to add more map_adjustment, check 'map_adjustment_include.dm'
 	These 'map_adjustment.dm' files shouldn't be included in 'dme'
-*/
+
 
 /datum/map_adjustment/whitepalacepass
 	map_file_name = "WhitePalacePass.dmm"
@@ -38,3 +40,4 @@
 	ages_adjust = list(
 		/datum/job/forestguard = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 	)
+*/

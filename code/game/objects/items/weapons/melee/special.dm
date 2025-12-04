@@ -67,7 +67,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/HU = user
 
-		if(!is_lord_job(HU.mind?.assigned_role))
+		if(!is_lord_job(HU.mind?.assigned_role)) //Stonekeep Edit; Kaizoku Change
 			to_chat(user, "<span class='danger'>The rod doesn't obey me.</span>")
 			return
 
@@ -84,11 +84,11 @@
 
 			if(!rod_jobs)
 				rod_jobs = GLOB.noble_positions | GLOB.garrison_positions | list(
-				/datum/job/jester::title,
-				/datum/job/servant::title,
-				/datum/job/adventurer/courtagent::title,
-				/datum/job/butler::title,
-				/datum/job/squire::title,
+				/datum/job/kaizoku/performer::title,
+				// /datum/job/servant::title,
+				// /datum/job/adventurer/courtagent::title,
+				/datum/job/kaizoku/menial::title,
+				// /datum/job/stonekeep/squire::title, //Stonekeep edit. Had to remove to compile. // Fix this later
 			)
 
 			if(!((H.mind?.assigned_role.title in rod_jobs)))
@@ -99,19 +99,19 @@
 				return
 
 			if(istype(user.used_intent, /datum/intent/lord_electrocute))
-				HU.visible_message(span_warning("[HU] electrocutes [H] with \the [src]."))
+				HU.visible_message("<span class='warning'>[HU] electrocutes [H] with \the [src].</span>")
 				user.Beam(target, icon_state = "lightning[rand(1, 12)]", time = 0.5 SECONDS) // LIGHTNING
 				playsound(user, 'sound/magic/lightningshock.ogg', 70, TRUE)
 				H.electrocute_act(5, src)
-				HU.log_message("has shocked [H.real_name] with the [src]!", LOG_ATTACK)
-				to_chat(H, span_danger("I'm electrocuted by the scepter!"))
+				HU.log_message("has shocked [H] with the [src]!", LOG_ATTACK)
+				to_chat(H, "<span class='danger'>I'm electrocuted by the scepter!</span>")
 				COOLDOWN_START(src, scepter, 20 SECONDS)
 				return
 
 			if(istype(user.used_intent, /datum/intent/lord_silence))
 				HU.visible_message(span_warning("[HU] silences [H] with \the [src]."))
 				H.set_silence(20 SECONDS)
-				HU.log_message("has silenced [H.real_name] with the [src]!", LOG_ATTACK)
+				HU.log_message("[HU] has silenced [H] with the master's rod!", LOG_ATTACK)
 				to_chat(H, span_danger("I'm silenced by the scepter!"))
 				COOLDOWN_START(src, scepter, 10 SECONDS)
 				return

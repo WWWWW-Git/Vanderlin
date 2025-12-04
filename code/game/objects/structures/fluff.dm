@@ -924,6 +924,7 @@
 	var/current = 0
 	var/objective = /obj/item/organ/ears
 
+/* //Stonekeep Edit.
 /obj/structure/fluff/statue/spider/examine(mob/user)
 	. = ..()
 	if(isdarkelf(user))
@@ -947,6 +948,7 @@
 				qdel(W)
 				return TRUE
 	..()
+*/
 
 /obj/structure/fluff/statue/evil
 	name = "idol"
@@ -954,6 +956,7 @@
 	icon_state = "evilidol"
 	icon = 'icons/roguetown/misc/structure.dmi'
 
+/* STONEKEEP EDIT
 /obj/structure/fluff/statue/evil/attackby(obj/item/W, mob/user, params)
 	if(user.mind)
 		var/datum/antagonist/bandit/B = user.mind.has_antag_datum(/datum/antagonist/bandit)
@@ -1006,7 +1009,7 @@
 				playsound(loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
 				qdel(W)
 				return
-	..()
+	..()*/
 
 /obj/structure/fluff/psycross
 	name = "pantheon cross"
@@ -1110,7 +1113,7 @@
 		return ..()
 
 	var/is_priest = is_priest_job(user.mind.assigned_role)
-	var/is_eoran_acolyte = is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora)
+	var/is_eoran_acolyte = is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora) //Remember to change This. Stonekeep Edit
 	if(!is_priest && !is_eoran_acolyte && !HAS_TRAIT(user, TRAIT_SECRET_OFFICIANT))
 		return ..()
 
@@ -1156,9 +1159,9 @@
 		return FALSE
 
 	// Groom checks
-	if(groom.age == AGE_CHILD)
-		to_chat(user, span_warning("[groom.real_name] is a child!"))
-		return FALSE
+	// if(groom.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
+		// to_chat(user, span_warning("[groom.real_name] is a child!")) //Blooming Adults are 18 years old or above. They can marry.
+		// return FALSE
 	if(groom.stat == DEAD)
 		to_chat(user, span_warning("[groom.real_name] is dead!"))
 		return FALSE
@@ -1170,9 +1173,9 @@
 		return FALSE
 
 	// Bride checks
-	if(bride.age == AGE_CHILD)
-		to_chat(user, span_warning("[bride.real_name] is a child!"))
-		return FALSE
+	// if(bride.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
+		// to_chat(user, span_warning("[bride.real_name] is a child!")) //Blooming Adults are 18 years old or above. They can marry.
+		// return FALSE
 	if(bride.stat == DEAD)
 		to_chat(user, span_warning("[bride.real_name] is dead!"))
 		return FALSE
@@ -1370,9 +1373,9 @@
 		return
 	if(!ring_destroyed)
 		return
-	if(is_gaffer_assistant_job(user.mind?.assigned_role))
-		to_chat(user, span_danger("It is not mine to have..."))
-		return
+	// if(is_gaffer_assistant_job(user.mind?.assigned_role)) // Stonekeep Edit
+		// to_chat(user, span_danger("It is not mine to have..."))
+		// return
 	to_chat(user, span_danger("As you extend your hand over to the glowing ring, you feel a shiver go up your spine, as if unseen eyes turned to glare at you..."))
 	var/gaffed = alert(user, "Will you bear the burden? (Be the next Gaffer)", "YOUR DESTINY", "Yes", "No")
 

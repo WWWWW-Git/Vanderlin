@@ -19,7 +19,7 @@
 	if(completed)
 		return
 
-	if(target.job == "Beggar" || istype(target.mind?.assigned_role, /datum/job/vagrant))
+	if(target.job == "Low-life" || istype(target.mind?.assigned_role, /datum/job/kaizoku/lowlife))
 		to_chat(owner.current, span_greentext("You've hugged a beggar, completing Eora's objective!"))
 		owner.current.adjust_triumphs(triumph_count)
 		completed = TRUE

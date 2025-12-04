@@ -313,7 +313,8 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 				new /obj/effect/decal/cleanable/debris/stone(get_turf(src))
 			playsound(src.loc, 'sound/foley/smash_rock.ogg', 100)
 			qdel(src)
-			user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/masonry, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*0.2))
 		return TRUE
 	. = ..()
 
@@ -413,7 +414,8 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		if(do_after(user, work_time))
 			new /obj/item/natural/stoneblock(get_turf(src.loc))
 			take_damage(max_integrity/2)
-			user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/masonry, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*0.2))
 		return TRUE
 	. = ..()
 

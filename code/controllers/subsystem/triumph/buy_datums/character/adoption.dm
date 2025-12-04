@@ -1,3 +1,4 @@
+/* Stonekeep Edit: Children REMOVAL
 /datum/triumph_buy/adoption
 	name = "Adoption Ability"
 	desc = "Gain an ability to adopt children and start your own family!"
@@ -13,3 +14,5 @@
 	. = ..()
 	H.add_spell(/datum/action/cooldown/spell/adopt_child)
 	on_activate()
+
+*/

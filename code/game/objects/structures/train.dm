@@ -11,13 +11,13 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/in_use = FALSE
 	var/static/list/uncryoable = list(
-		/datum/job/lord,
-		/datum/job/hand,
-		/datum/job/prince,
-		/datum/job/consort,
-		/datum/job/priest,
-		/datum/job/captain,//Rest of these roles cannot cryo, as they must ahelp first before leaving the round.
-		/datum/job/gaffer //opening up the slot will break the gaffer ring code
+		/datum/job/kaizoku/sovereign,
+		// /datum/job/hand,
+		// /datum/job/prince,
+		// /datum/job/consort,
+		// /datum/job/kaizoku/prophet,
+		// /datum/job/captain,//Rest of these roles cannot cryo, as they must ahelp first before leaving the round.
+		// /datum/job/gaffer //opening up the slot will break the gaffer ring code //Stonekeep Edit
 	)
 
 /obj/structure/train/MouseDrop_T(atom/dropping, mob/user)

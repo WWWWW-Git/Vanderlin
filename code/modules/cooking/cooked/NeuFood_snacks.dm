@@ -78,12 +78,13 @@
 			desc = "Roasted flesh flanked with a generous coating of ground pepper for intense flavor."
 			faretype = FARE_FINE
 			portable = FALSE
-			var/mutable_appearance/spice = mutable_appearance('icons/roguetown/items/food.dmi', "frysteak_spice")
+			var/mutable_appearance/spice = mutable_appearance('modular/stonekeep/icons/food.dmi', "frysteak_spice")	// STONEKEEP EDIT
 			overlays += spice
 			tastes = list("spicy red meat" = 2)
 			meal_properties()
 			bitesize = initial(bitesize)
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.5)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/cooked/herbsteak
@@ -434,5 +435,6 @@
 			overlays += spice
 			tastes = list("spicy birdmeat" = 2)
 			modified = TRUE
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.5)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
 	return ..()

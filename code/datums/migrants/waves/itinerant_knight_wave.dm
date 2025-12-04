@@ -81,7 +81,7 @@
 	tutorial = "You are the squire of an itinerant knight, they have taken you under their custody as you have shown great talents, if you keep it on, you might become a knight yourself."
 	outfit = /datum/outfit/itinerant_squire
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
-	allowed_ages = list(AGE_CHILD, AGE_ADULT)
+	allowed_ages = list(BLOOMING_ADULT, AGE_ADULT) //Stonekeep Edit: Young Adult
 
 	jobstats = list(
 		STATKEY_PER = 1,

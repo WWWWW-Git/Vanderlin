@@ -17,6 +17,7 @@
 /obj/item/organ/tail/cat
 	name = "cat tail"
 
+/*
 /obj/item/organ/tail/harpy
 	name = "harpy plumage"
 	accessory_type = /datum/sprite_accessory/tail/hawk
@@ -68,3 +69,4 @@
 /obj/item/organ/tail/triton
 	name = "triton bell"
 	accessory_type = /datum/sprite_accessory/tail/triton
+*/

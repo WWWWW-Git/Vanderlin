@@ -170,3 +170,70 @@
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/miqote,
 		)
+
+// STONEKEEP CONTENT BELOW
+/datum/customizer/organ/ears/oni
+	customizer_choices = list(/datum/customizer_choice/organ/ears/oni)
+	allows_disabling = FALSE
+
+/datum/customizer_choice/organ/ears/oni
+	name = "Ogrun ears"
+	organ_type = /obj/item/organ/ears/oni
+	generic_random_pick = TRUE
+	sprite_accessories = list(/datum/sprite_accessory/ears/oni)
+
+// Oni Ears
+/obj/item/organ/ears/oni
+	name = "ogrun ears"
+	accessory_type = /datum/sprite_accessory/ears/oni
+
+// TENGU EARS
+/obj/item/organ/ears/tengu
+	name = "Skylancer ears"
+	accessory_type = /datum/sprite_accessory/ears/tengu
+
+/datum/customizer/organ/ears/tengu
+	customizer_choices = list(/datum/customizer_choice/organ/ears/tengu)
+	allows_disabling = FALSE
+
+/datum/customizer_choice/organ/ears/tengu
+	name = "Skylancer ears"
+	organ_type = /obj/item/organ/ears/tengu
+	generic_random_pick = TRUE
+	sprite_accessories = list(/datum/sprite_accessory/ears/tengu)
+
+// KAPPA EARS
+/obj/item/organ/ears/kappa
+	name = "Undine ears"
+	accessory_type = /datum/sprite_accessory/ears/kappae
+
+/datum/customizer/organ/ears/kappa
+	customizer_choices = list(/datum/customizer_choice/organ/ears/kappa)
+	allows_disabling = FALSE
+
+/datum/customizer_choice/organ/ears/kappa
+	name = "Undine ears"
+	organ_type = /obj/item/organ/ears/kappa
+	generic_random_pick = TRUE
+	sprite_accessories = list(/datum/sprite_accessory/ears/kappae)
+
+
+// FOX EARS
+// Changeling ears organ
+/obj/item/organ/ears/kitsune_ears
+	name = "Fox Ears"
+	accessory_type = /datum/sprite_accessory/ears/kitsune_upright
+
+/datum/customizer/organ/ears/kitsune
+	customizer_choices = list(/datum/customizer_choice/organ/ears/kitsune_ears)
+	allows_disabling = FALSE
+
+// Foxears customizer choices
+/datum/customizer_choice/organ/ears/kitsune_ears
+	name = "Fox ears"
+	organ_type = /obj/item/organ/ears/kitsune_ears
+	generic_random_pick = TRUE
+	sprite_accessories = list(/datum/sprite_accessory/ears/kitsune_upright,
+							/datum/sprite_accessory/ears/kitsune_side,
+							/datum/sprite_accessory/ears/kitsune_thick,
+							/datum/sprite_accessory/ears/kitsune_onedown)

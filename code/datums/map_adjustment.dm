@@ -19,7 +19,7 @@
 	var/list/species_adjust
 	/// Jobs that have gender adjustments /datum/job = list(MALE, FEMALE)
 	var/list/sexes_adjust
-	/// Jobs that have age adjustments /datum/job = list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+	/// Jobs that have age adjustments /datum/job = list(BLOOMING_ADULT, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 	var/list/ages_adjust
 
 /// called on map config is loaded.

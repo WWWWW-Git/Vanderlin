@@ -12,7 +12,7 @@
 	min_pq = -5
 	bypass_lastclass = TRUE
 
-	allowed_ages = list(AGE_CHILD)
+	allowed_ages = list(BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 	allowed_races = RACES_PLAYER_ALL
 
 	outfit = /datum/outfit/innkeep_son

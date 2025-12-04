@@ -47,13 +47,13 @@ SUBSYSTEM_DEF(familytree)
 	var/list/preset_family_species = list(
 		/datum/species/human/northern,
 		/datum/species/elf,
-		/datum/species/elf/dark,
-		/datum/species/human/halfelf,
+	//	/datum/species/elf/dark,
+	//	/datum/species/human/halfelf,
 		/datum/species/dwarf/mountain,
 		/datum/species/tieberian,
 		/datum/species/aasimar,
-		/datum/species/rakshari,
-		/datum/species/halforc
+	//	/datum/species/rakshari,
+	//	/datum/species/halforc
 		)
 
 /datum/controller/subsystem/familytree/Initialize()
@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(familytree)
 /datum/controller/subsystem/familytree/proc/GetAgeValue(age_string)
 	// Convert age string to numeric value for comparison
 	switch(age_string)
-		if(AGE_CHILD)
+		if(BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 			return 0
 		if(AGE_ADULT)
 			return 1
@@ -104,9 +104,9 @@ SUBSYSTEM_DEF(familytree)
 /datum/controller/subsystem/familytree/proc/CanBeParentOf(parent_age, child_age)
 	// Parent must be at least one age category higher than child
 	// Exception: Adults can have Youngling children
-	if(parent_age == AGE_ADULT && child_age == AGE_CHILD)
+	if(parent_age == AGE_ADULT && child_age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 		return TRUE
-	if(parent_age == AGE_MIDDLEAGED && (child_age == AGE_CHILD || child_age == AGE_ADULT))
+	if(parent_age == AGE_MIDDLEAGED && (child_age == BLOOMING_ADULT || child_age == AGE_ADULT)) //Stonekeep Edit: Young Adult
 		return TRUE
 	if(parent_age == AGE_OLD && child_age != AGE_OLD && child_age != AGE_IMMORTAL)
 		return TRUE
@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(familytree)
 
 /datum/controller/subsystem/familytree/proc/DetermineAppropriateRole(datum/heritage/house, mob/living/carbon/human/person, adopted = FALSE)
 	// For children, always make them children
-	if(person.age == AGE_CHILD)
+	if(person.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 		return "child"
 
 	// Look for potential parents (older members who could be parents)
@@ -163,7 +163,7 @@ SUBSYSTEM_DEF(familytree)
 			AssignToHouse(H)
 
 		if(FAMILY_NEWLYWED)
-			if(H.age == AGE_CHILD)
+			if(H.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 				AssignToHouse(H)
 				return
 			else
@@ -172,7 +172,7 @@ SUBSYSTEM_DEF(familytree)
 		if(FAMILY_FULL)
 			if(H.virginity)
 				return
-			if(H.age == AGE_CHILD)
+			if(H.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 				AssignToHouse(H)
 				return
 			AssignToFamily(H)
@@ -439,7 +439,7 @@ SUBSYSTEM_DEF(familytree)
 		// Check if there's a potential spouse
 		var/has_single_adult = FALSE
 		for(var/datum/family_member/member in house.members)
-			if(member.person && member.person.age != AGE_CHILD && !member.spouses.len)
+			if(member.person && member.person.age != BLOOMING_ADULT && !member.spouses.len) //Stonekeep Edit: Young Adult
 				// Check setspouse compatibility
 				if(H.setspouse && member.person.real_name == H.setspouse)
 					eligible_houses.Insert(1, house) // High priority
@@ -465,7 +465,7 @@ SUBSYSTEM_DEF(familytree)
 	for(var/datum/heritage/house in eligible_houses)
 		// Find a spouse
 		for(var/datum/family_member/member in house.members)
-			if(member.person && member.person.age != AGE_CHILD && !member.spouses.len)
+			if(member.person && member.person.age != BLOOMING_ADULT && !member.spouses.len) //Stonekeep Edit: Young Adult
 				// Check compatibility
 				var/compatible = FALSE
 				if(H.setspouse && member.person.real_name == H.setspouse)

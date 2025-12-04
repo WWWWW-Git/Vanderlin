@@ -1048,21 +1048,19 @@
 		return
 	if(is_priest_job(M.mind.assigned_role))
 		return
+
 	var/appointment_type = browser_alert(usr, "Are you sure you want to anoint [M.real_name] as the new Priest?", "Confirmation", DEFAULT_INPUT_CHOICES)
 	if(appointment_type == CHOICE_NO)
 		return
 
-	var/datum/job/priest_job = SSjob.GetJobType(/datum/job/priest)
-	//demote the old priest
+	var/datum/job/priest_job = SSjob.GetJobType(/datum/job/kaizoku/prophet)
+
 	for(var/mob/living/carbon/human/HL in GLOB.human_list)
-		//TODO: this fucking sucks, just locate the priest
 		if(!HL.mind)
 			continue
-
 		if(is_priest_job(HL.mind.assigned_role))
-			HL.mind.set_assigned_role(/datum/job/villager)
+			HL.mind.set_assigned_role(/datum/job/kaizoku/citizen)
 			HL.job = "Ex-Priest"
-
 
 			HL.verbs -= /mob/living/carbon/human/proc/coronate_lord
 			HL.verbs -= /mob/living/carbon/human/proc/churchexcommunicate
@@ -1073,20 +1071,35 @@
 			HL.cleric?.excommunicate()
 
 	priest_job?.add_spells(M)
-	M.mind.set_assigned_role(/datum/job/priest)
-	M.job = "Priest"
-	M.set_patron(/datum/patron/divine/astrata)
+	M.mind.set_assigned_role(/datum/job/kaizoku/prophet)
+	M.job = "Prophet"
+
+	var/abyssanctum_person = FALSE // Stonekeep Edit:
+	if(istype(M.patron, /datum/patron/abyssanctum/purifier) || istype(M.patron, /datum/patron/abyssanctum/curator))
+		abyssanctum_person = TRUE
+	else if(istype(M.patron, /datum/devotion/abyssanctum/purifier))
+		abyssanctum_person = TRUE
+
+	if(!abyssanctum_person)
+		var/list/_abyssanctum_patron_choices = list(
+			/datum/patron/abyssanctum/purifier,
+			/datum/patron/abyssanctum/curator
+		)
+		M.set_patron(pick(_abyssanctum_patron_choices))
+
 	var/holder = M.patron?.devotion_holder
 	if(holder)
 		var/datum/devotion/devotion = new holder()
 		devotion.make_priest()
 		devotion.grant_to(M)
+
 	M.verbs |= /mob/living/carbon/human/proc/coronate_lord
 	M.verbs |= /mob/living/carbon/human/proc/churchexcommunicate
 	M.verbs |= /mob/living/carbon/human/proc/churchcurse
 	M.verbs |= /mob/living/carbon/human/proc/churchannouncement
+
 	removeomen(OMEN_NOPRIEST)
-	priority_announce("Astrata has anointed [M.real_name] as the new head of the Church of the Ten!", title = "Astrata Shines!", sound = 'sound/misc/bell.ogg')
+	priority_announce("Abyssor has uplifted [M.real_name] as the true prophet to guide the champions! ASCEND!", title = "Abyssor raises once more!", sound = 'sound/misc/bell.ogg')
 
 /datum/admins/proc/fix_death_area()
 	set category = "GameMaster"

@@ -1,3 +1,8 @@
+//Stonekeep Edit: FILE CHANGE
+//UPDATE TRIGGER ON THIS FILE!!!
+//For the ALTERNATIVE FILE used for KAIZOKU PROJECT
+//Check for code\modules\client\preferences\_preferences_kaizoku.dm
+
 GLOBAL_LIST_EMPTY(preferences_datums)
 
 GLOBAL_LIST_EMPTY(chosen_names)

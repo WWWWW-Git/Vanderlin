@@ -51,7 +51,7 @@
 
 /datum/job/clinicapprentice/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	if(spawned.age != AGE_CHILD)
+	if(spawned.age != BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 		spawned.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
 		spawned.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 		spawned.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)

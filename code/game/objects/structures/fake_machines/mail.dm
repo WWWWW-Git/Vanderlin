@@ -113,18 +113,18 @@ GLOBAL_LIST_EMPTY(letters_sent)
 		coin_loaded = FALSE
 		update_appearance(UPDATE_OVERLAYS)
 
-/obj/structure/fake_machine/mail/attackby(obj/item/P, mob/user, params)
+/obj/structure/fake_machine/mail/attackby(obj/item/P, mob/user, params) //Temporary removal for overhaul later
 	if(istype(P, /obj/item/merctoken))
 		if(!ishuman(user))
 			to_chat(user, span_warning("I do not know what this is, and I do not particularly care."))
 
 		var/mob/living/carbon/human/H = user
-		if(is_merchant_job(H.mind.assigned_role) || is_gaffer_job(H.mind.assigned_role))
-			to_chat(H, span_warning("This is of no use to me - I may give this to a mercenary so they may send it themselves."))
-			return
-		if(!is_mercenary_job(H.mind.assigned_role))
-			to_chat(H, span_warning("I can't make use of this - I do not belong to the Guild."))
-			return
+		// if(is_merchant_job(H.mind.assigned_role) || is_gaffer_job(H.mind.assigned_role))
+			// to_chat(H, span_warning("This is of no use to me - I may give this to a mercenary so they may send it themselves."))
+			// return
+		// if(!is_mercenary_job(H.mind.assigned_role))
+			// to_chat(H, span_warning("I can't make use of this - I do not belong to the Guild."))
+			// return
 		if(H.tokenclaimed)
 			to_chat(H, span_warning("I have already received my commendation. There's always next month to look forward to."))
 			return

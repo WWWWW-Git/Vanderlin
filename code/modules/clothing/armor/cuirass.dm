@@ -74,7 +74,7 @@
 	desc = "More form over function, this armor is fit for demonstration of might rather than open combat. The aged gilding slowly tarnishes away."
 	icon_state = "shadowplate"
 	item_state = "shadowplate"
-	allowed_race = list(SPEC_ID_ELF, SPEC_ID_DROW)
+	allowed_race = list(SPEC_ID_ELF) //Stonekeep Edit
 
 /obj/item/clothing/armor/cuirass/copperchest
 	name = "heart protector"

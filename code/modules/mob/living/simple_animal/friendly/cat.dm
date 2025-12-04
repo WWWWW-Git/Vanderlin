@@ -178,7 +178,7 @@
 	if(stat != DEAD)
 		// Handle racist reaction if enabled
 		if(ai_controller.blackboard[BB_CAT_RACISM])
-			if((isdarkelf(M)) || ishalforc(M) || istiefling(M) || (M.mind && M.mind.has_antag_datum(/datum/antagonist/vampire)))
+			if((iself(M)) || istiefling(M) || (M.mind && M.mind.has_antag_datum(/datum/antagonist/vampire))) //Stonekeep Edit
 				visible_message("<span class='notice'>\The [src] hisses at [M] and recoils in disgust.</span>")
 				icon_state = "[icon_living]"
 				set_resting(FALSE)

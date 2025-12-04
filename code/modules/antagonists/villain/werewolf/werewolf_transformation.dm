@@ -91,8 +91,8 @@
 		return
 	var/mob/living/carbon/human/species/werewolf/W = new (get_turf(user))
 
-	if(user.age == AGE_CHILD)
-		W.age = AGE_CHILD
+	if(user.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
+		W.age = BLOOMING_ADULT //Stonekeep Edit: Young Adult
 
 	W.set_patron(user.patron)
 	W.limb_destroyer = TRUE

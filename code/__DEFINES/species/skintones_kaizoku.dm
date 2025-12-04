@@ -1,0 +1,139 @@
+//skin tones defines
+
+//DWARF SKIN TONES
+#define SKIN_COLOR_PLATINUM "ffe0d1"//White - Pale
+#define SKIN_COLOR_AURUM "fcccb3" //White - Tan
+#define SKIN_COLOR_QUICKSILVER "edc6b3" //White - Tan
+#define SKIN_COLOR_BRASS "e2b9a3" //White 4
+#define SKIN_COLOR_IRON "d9a284" //Middle-eastern
+#define SKIN_COLOR_MALACHITE "c69b83" //Middle-eastern
+#define SKIN_COLOR_OBSIDIAN "3b2e27" //Black
+#define SKIN_COLOR_BRIMSTONE "271f1a" //Black 2
+#define SKIN_COLOR_CERARGYRITE "74708b" //Blue
+
+//DARK ELF SKIN TONES
+#define SKIN_COLOR_MAGGOT "9796a9" //Pale blue
+#define SKIN_COLOR_COCOON "897489" //Pale purple
+#define SKIN_COLOR_ASHEN "938f9c" //Pale grey
+#define SKIN_COLOR_SPIDER_VENOM "737373" //Deep grey
+#define SKIN_COLOR_JACKPOISON "6a616d" //Grey-purple
+#define SKIN_COLOR_HOMUNCULUS "5f5f70" //Grey-blue
+#define SKIN_COLOR_ARACHNID_ICHOR "2F2F38" //Black-blue
+#define SKIN_COLOR_GLOOMHAVEN "897489" //Pink
+
+//ELF SKIN TONES
+#define SKIN_COLOR_SNOW_ELF "fff0e9" //Pale as SHIT!
+#define SKIN_COLOR_PLAIN_ELF "fcccb3" //White 2
+#define SKIN_COLOR_MOUNTAIN_ELF "edc6b3" //White 3
+#define SKIN_COLOR_COASTAL_ELF "e2b9a3" //White 4
+#define SKIN_COLOR_WOOD_ELF "c9a893" //Mediterranean 1
+#define SKIN_COLOR_SEA_ELF "ba9882" //Mediterranean 2
+#define SKIN_COLOR_JUNGLE_ELF "ac8369" //Latin 2
+#define SKIN_COLOR_SAVANNAH_ELF "9c6f52" //Middle-east
+#define SKIN_COLOR_SAND_ELF "5d4c41" //Black 1
+#define SKIN_COLOR_CRIMSON_ELF "4e3729" //Black 2
+
+
+
+//HUMEN SKIN TONES
+#define SKIN_COLOR_ICECAP "fff0e9" //Pale as SHIT!!
+#define SKIN_COLOR_ARCTIC "ffe0d1" //White 1
+#define SKIN_COLOR_TUNDRA "fcccb3" //White 2
+#define SKIN_COLOR_CONTINENTAL "edc6b3" //White 3
+#define SKIN_COLOR_TEMPERATE "e2b9a3" //White 4
+#define SKIN_COLOR_COASTAL "d9a284" //Tan
+#define SKIN_COLOR_SUBTROPICAL "c9a893" //Mediterranean 1
+#define SKIN_COLOR_TROPICALDRY "ba9882" //Mediterranean 2
+#define SKIN_COLOR_TROPICALWET "ac8369" //Latin
+#define SKIN_COLOR_DESERT "9c6f52" //Middle-east
+#define SKIN_COLOR_CRIMSONLANDS "4e3729" //Black
+//delf
+#define SKIN_COLOR_MUSHROOM_MINDED "897489" //Mid purple
+#define SKIN_COLOR_CAVE_ATTUNED "5f5f70" // Dark purple
+#define SKIN_COLOR_FUNGUS_STAINED "897489" //Pink
+
+//AASIMAR SKIN TONES
+#define SKIN_COLOR_CORAL "ff96d6" //Pink
+#define SKIN_COLOR_SOAPSTONE "c7f9cc" //Seafoam green
+#define SKIN_COLOR_LIMESTONE "e6e4d8" //Tan
+#define SKIN_COLOR_SILVER "94B9C0" //Ice grey, at least that's what microsoft paint says
+#define SKIN_COLOR_COPPER "b87333" //Orange
+#define SKIN_COLOR_GOLD "d4af37" //Gold
+#define SKIN_COLOR_RUST "B71F1F" //Dark red
+#define SKIN_COLOR_ONYX "19132a" //Black
+#define SKIN_COLOR_LAPIS "26619C" //Deep blue
+#define SKIN_COLOR_BASALT "474a4c" //Dark grey
+#define SKIN_COLOR_MARBLE "E6E6E6" //White
+#define SKIN_COLOR_LARIMAR "a9ded1" //Cyan
+#define SKIN_COLOR_AMAZONITE "b6f1f2" //also Cyan
+#define SKIN_COLOR_ZINC "daeaeb" //Light aqua
+
+//TIEFLING SKIN TONES
+#define SKIN_COLOR_CRIMSON_LAND "cd2042" //Bright red
+#define SKIN_COLOR_ZANGUINE "862E3F" //Dark violet
+#define SKIN_COLOR_SUNSTAINED "99401B" //Dark orange
+#define SKIN_COLOR_SUNDERED "D25E31" //Orange
+#define SKIN_COLOR_ARCANA "702845" //Dark violet
+#define SKIN_COLOR_FLAYER "450e47" //Purple!
+#define SKIN_COLOR_ZARCONUM "BA6A92" //Pink!
+#define SKIN_COLOR_ABYSS "41577C" //Navy blue
+#define SKIN_COLOR_ASH "A0AFC9" //Pale blue
+#define SKIN_COLOR_CASTILLIAN	"cc5757" //Pale red
+#define SKIN_COLOR_ASTURIAS	"a23737" //Clay red
+#define SKIN_COLOR_VAQUERO	"a74a4a" //Earthly red
+#define SKIN_COLOR_ARLENNETH "9197C5" //Lavendar blue
+
+// SPECIAL SKIN TONES
+/// Sickly green
+#define SKIN_COLOR_ROT "878f79"
+
+
+//stonekeep bit
+
+//DWARF SKIN TONES
+#define DWARF_MERCUR "ba9980"
+#define DWARF_BRASS "d3b19f"
+#define DWARF_FERRO "bc8d74"
+#define DWARF_PHOSPHORITE "967e70"
+#define DWARF_OBSIDIAN "665855"
+#define DWARF_QUARTZ "70685f"
+#define DWARF_GRENZDWARF "ffe0d1"
+
+//DEFAULT ABYSSARIAD SKIN TONES
+#define SKIN_COLOR_OATHBOUND_MUQIAN "ffe0d1"
+#define SKIN_COLOR_OATHBOUND_KAIZOKU "fcccb3"
+#define SKIN_COLOR_OATHBOUND_SHUHEN "edc6b3"
+#define SKIN_COLOR_OATHBOUND_LINYOU "e2b9a3"
+#define SKIN_COLOR_OATHBOUND_DUSTWALKER "d9a284"
+#define SKIN_COLOR_WARPCASTER_MUQIAN "c9a893"
+#define SKIN_COLOR_WARPCASTER_KAIZOKU "ba9882"
+#define SKIN_COLOR_WARPCASTER_SHUHEN "99745d"
+#define SKIN_COLOR_WARPCASTER_LINYOU "745441"
+#define SKIN_COLOR_WARPCASTER_DUSTWALKER "302017"
+
+//SKYLANCER UNIQUE SKIN TONE
+#define SKIN_COLOR_PEPPERSBLOW "771111"
+
+//OGRE SKIN TONES
+#define SKIN_COLOR_DEFIANCE "bb5155" //RED DEFAULT
+#define SKIN_COLOR_DEFIANCE_SANGUINE "771111"
+#define SKIN_COLOR_STABILITY "6a9479"
+#define SKIN_COLOR_STABILITY_INTELLECT "286940"
+#define SKIN_COLOR_AUDACY "aa8e3a"
+#define SKIN_COLOR_AUDACY_MYSTERY "635834"
+#define SKIN_COLOR_BLANK_PURIFICATED "d8e1e2"
+
+
+//UNDINE SKIN TONES
+#define SKIN_COLOR_SWAMPCLAN "728400" //GREEN DEFAULT
+#define SKIN_COLOR_JUNGLECLAN "7a5e1b"
+#define SKIN_COLOR_LEAFCLAN "5ea889"
+#define SKIN_COLOR_BOGCLAN "1b7a5e"
+#define SKIN_COLOR_FORESTCLAN "5FB098"
+#define SKIN_COLOR_SHADOWCLAN "60609e"
+#define SKIN_COLOR_FIREBLOOMCLAN "E26846"
+#define SKIN_COLOR_ABYSSALCLAN "a198b8"
+
+//Orc shet
+
+#define SKIN_COLOR_GROONN "50715C" //Mint

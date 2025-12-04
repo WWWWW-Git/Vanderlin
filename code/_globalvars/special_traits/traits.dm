@@ -154,7 +154,7 @@
 /datum/special_trait/corn_fed/on_apply(mob/living/carbon/human/character, silent)
 	character.change_stat(STATKEY_CON, 2)
 	character.change_stat(STATKEY_INT, -2)
-
+/* Temporary Stonekeep Edit
 /datum/special_trait/darkmagic
 	name = "Practitioner of forbidden magic"
 	greet_text = span_notice("Noc's path is weak, I have seen the light and practiced magic these fools call forbidden.")
@@ -857,6 +857,7 @@
 	character.mind.special_items["Psycross"] = psycross
 	character.mind.special_items["Helmet"] = helmet
 
+
 /datum/special_trait/meow
 	name = "Meow"
 	greet_text = span_boldwarning("What?")
@@ -900,4 +901,4 @@
 	character.grant_language(/datum/language/beast)
 	character.add_spell(/datum/action/cooldown/spell/undirected/howl/call_of_the_moon, silent = TRUE)
 	ADD_TRAIT(character, TRAIT_NASTY_EATER, "[type]") // eat the raw meat
-
+*/

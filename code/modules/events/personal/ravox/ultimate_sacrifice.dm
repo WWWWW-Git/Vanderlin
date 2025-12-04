@@ -21,7 +21,7 @@
 			continue
 		if(!H.patron || !istype(H.patron, /datum/patron/divine/ravox))
 			continue
-		if(H.age == AGE_CHILD)
+		if(H.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 			continue
 		return TRUE
 
@@ -35,7 +35,7 @@
 			continue
 		if(!human_mob.patron || !istype(human_mob.patron, /datum/patron/divine/ravox))
 			continue
-		if(human_mob.age == AGE_CHILD)
+		if(human_mob.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 			continue
 		valid_targets += human_mob
 

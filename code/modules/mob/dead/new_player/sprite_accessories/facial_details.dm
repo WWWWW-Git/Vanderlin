@@ -6,7 +6,7 @@
 	use_static = TRUE
 	layer = BODY_LAYER
 	default_colors = list("FFFFFF")
-	specuse = list(SPEC_ID_HUMEN, SPEC_ID_DWARF, SPEC_ID_ELF, SPEC_ID_AASIMAR, SPEC_ID_TIEFLING, SPEC_ID_HALF_ORC)
+	specuse = list(SPEC_ID_HUMEN, SPEC_ID_DWARF, SPEC_ID_ELF, SPEC_ID_AASIMAR, SPEC_ID_TIEFLING, SPEC_ID_VESSEL, SPEC_ID_SUNSCORNED, SPEC_ID_OGRUN, SPEC_ID_UNDINE, SPEC_ID_CHANGELING, SPEC_ID_SKYLANCER, SPEC_ID_GROVELING, SPEC_ID_DENMORIAN)
 
 /datum/sprite_accessory/detail/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_FACE)

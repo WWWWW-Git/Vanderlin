@@ -30,7 +30,7 @@
 /datum/job/advclass/pick_everything
 	title = "Pick-Classes"
 	tutorial = "This will open up another menu when you spawn allowing you to pick from any class as long as its not disabled."
-	allowed_races = ALL_RACES_LIST
+	allowed_races = RACES_PLAYER_ALL
 	total_positions = 0
 
 /datum/job/advclass/pick_everything/after_spawn(mob/living/carbon/human/spawned, client/player_client)

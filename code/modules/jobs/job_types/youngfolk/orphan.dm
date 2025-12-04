@@ -13,7 +13,7 @@
 	bypass_lastclass = TRUE
 
 	allowed_races = RACES_PLAYER_ALL
-	allowed_ages = list(AGE_CHILD)
+	allowed_ages = list(BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 
 	outfit = /datum/outfit/orphan
 	can_have_apprentices = FALSE

@@ -395,103 +395,125 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 		GLOB.allmig_positions,
 	)
 
-	for(var/list/category in omegalist)
-		if(!SSjob.name_occupations[category[1]])
+	for(var/category_raw in omegalist)
+		if(!islist(category_raw))
+			continue
+		var/list/category = category_raw
+		if(!length(category))
+			continue
+
+		var/first_valid_job
+		for(var/j in category)
+			if(SSjob.name_occupations && (j in SSjob.name_occupations))
+				first_valid_job = j
+				break
+		if(!first_valid_job)
 			continue
 
 		var/list/available_jobs = list()
 		for(var/job in category)
+			if(!SSjob.name_occupations || !(job in SSjob.name_occupations))
+				continue
 			var/datum/job/job_datum = SSjob.name_occupations[job]
 			if(!job_datum)
 				continue
-			// Make sure hiv+ jobs always appear on list, even if unavailable
 			var/is_job_available = (IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
 			if(job_datum.always_show_on_latechoices)
 				is_job_available = TRUE
 			if(is_job_available)
 				available_jobs += job
 
-		if (length(available_jobs))
-			var/cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
-			var/cat_name = ""
-			switch (SSjob.name_occupations[category[1]].department_flag)
-				if (NOBLEMEN)
-					cat_name = "Nobles"
-				if (GARRISON)
-					cat_name = "Garrison"
-				if (SERFS)
-					cat_name = "Yeomanry"
-				if (CHURCHMEN)
-					cat_name = "Churchmen"
-				if (COMPANY)
-					cat_name = "Company"
-				if (PEASANTS)
-					cat_name = "Peasantry"
-				if (APPRENTICES)
-					cat_name = "Apprentices"
-				if (YOUNGFOLK)
-					cat_name = "Young Folk"
-				if (OUTSIDERS)
-					cat_name = "Outsiders"
+		if(!length(available_jobs))
+			continue
 
-			dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
-			dat += "<legend align='center' style='font-weight: bold; color: [cat_color]'>[cat_name]</legend>"
-			//TODO: This also fucking sucks.
-			if(has_world_trait(/datum/world_trait/skeleton_siege))
-				dat += "<a class='job command' href='byond://?src=[REF(src)];SelectedJob=Skeleton'>BECOME AN EVIL SKELETON</a>"
-				dat += "</fieldset><br>"
-				column_counter++
-				if(column_counter > 0 && (column_counter % 3 == 0))
-					dat += "</td><td valign='top'>"
-			if(has_world_trait(/datum/world_trait/goblin_siege))
-				dat += "<a class='job command' href='byond://?src=[REF(src)];SelectedJob=Goblin'>BECOME A GOBLIN</a>"
-				dat += "</fieldset><br>"
-				column_counter++
-				if(column_counter > 0 && (column_counter % 3 == 0))
-					dat += "</td><td valign='top'>"
-			if(has_world_trait(/datum/world_trait/rousman_siege))
-				dat += "<a class='job command' href='byond://?src=[REF(src)];SelectedJob=Rousman'>BECOME A ROUSMAN</a>"
-				dat += "</fieldset><br>"
-				column_counter++
-				if(column_counter > 0 && (column_counter % 3 == 0))
-					dat += "</td><td valign='top'>"
-			if(has_world_trait(/datum/world_trait/death_knight))
-				dat += "<a class='job command' href='byond://?src=[REF(src)];SelectedJob=Death Knight'>JOIN THE VAMPIRE LORD AS A DEATH KNIGHT</a>"
-				dat += "</fieldset><br>"
-				column_counter++
-				if(column_counter > 0 && (column_counter % 3 == 0))
-					dat += "</td><td valign='top'>"
+		var/datum/job/first_job_datum = SSjob.name_occupations[first_valid_job]
+		var/cat_color = first_job_datum ? first_job_datum.selection_color : "#FFFFFF"
+		var/cat_name = ""
+		switch (first_job_datum ? first_job_datum.department_flag : null)
+			if (FACTION_GOVERNMENT)
+				cat_name = "Court"
+			if (FACTION_MILITARY)
+				cat_name = "Army"
+			if (FACTION_CITIZENS)
+				cat_name = "Citizen"
+			if (FACTION_ABYSSANCTUM)
+				cat_name = "Temple"
+			if (FACTION_IMPERIAL)
+				cat_name = "Navy"
+			if (FACTIONLESS)
+				cat_name = "Outsiders"
+			if (FACTION_MALEFACTORS)
+				cat_name = "Gangs"
+			if (FACTION_VILLAIN)
+				cat_name = "Invaders"
 
-			if(has_world_trait(/datum/world_trait/skeleton_siege) || has_world_trait(/datum/world_trait/death_knight) || has_world_trait(/datum/world_trait/rousman_siege) || has_world_trait(/datum/world_trait/goblin_siege))
-				break
-			for(var/job in available_jobs)
-				var/datum/job/job_datum = SSjob.name_occupations[job]
-				if(job_datum)
-					if(job_datum.scales && job_datum.enabled)
-						var/new_slots = job_datum.get_total_positions()
-						if(new_slots > job_datum.spawn_positions)
-							job_datum.set_spawn_and_total_positions(get_total_town_members())
-					var/command_bold = ""
-					if(job in GLOB.noble_positions)
-						command_bold = " command"
-					var/used_name = job_datum.title
-					if(client.prefs.gender == FEMALE && job_datum.f_title)
-						used_name = job_datum.f_title
-					if(job_datum in SSjob.prioritized_jobs)
-						dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[used_name] ([job_datum.current_positions])</span></a>"
-					else
-						dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[used_name] ([job_datum.current_positions])</a>"
+		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
+		dat += "<legend align='center' style='font-weight: bold; color: [cat_color]'>[cat_name]</legend>"
 
+		if(has_world_trait(/datum/world_trait/skeleton_siege))
+			dat += "<a class='job command' href='byond://?src=[REF(src)];SelectedJob=Skeleton'>BECOME AN EVIL SKELETON</a>"
 			dat += "</fieldset><br>"
 			column_counter++
-			if(column_counter > 0 && (column_counter % 4 == 0))
+			if(column_counter > 0 && (column_counter % 3 == 0))
 				dat += "</td><td valign='top'>"
+			continue
+
+		if(has_world_trait(/datum/world_trait/goblin_siege))
+			dat += "<a class='job command' href='byond://?src=[REF(src)];SelectedJob=Goblin'>BECOME A GOBLIN</a>"
+			dat += "</fieldset><br>"
+			column_counter++
+			if(column_counter > 0 && (column_counter % 3 == 0))
+				dat += "</td><td valign='top'>"
+			continue
+
+		if(has_world_trait(/datum/world_trait/rousman_siege))
+			dat += "<a class='job command' href='byond://?src=[REF(src)];SelectedJob=Rousman'>BECOME A ROUSMAN</a>"
+			dat += "</fieldset><br>"
+			column_counter++
+			if(column_counter > 0 && (column_counter % 3 == 0))
+				dat += "</td><td valign='top'>"
+			continue
+
+		if(has_world_trait(/datum/world_trait/death_knight))
+			dat += "<a class='job command' href='byond://?src=[REF(src)];SelectedJob=Death Knight'>JOIN THE VAMPIRE LORD AS A DEATH KNIGHT</a>"
+			dat += "</fieldset><br>"
+			column_counter++
+			if(column_counter > 0 && (column_counter % 3 == 0))
+				dat += "</td><td valign='top'>"
+			continue
+
+		for(var/job in available_jobs)
+			if(!SSjob.name_occupations || !(job in SSjob.name_occupations))
+				continue
+			var/datum/job/job_datum = SSjob.name_occupations[job]
+			if(!job_datum)
+				continue
+			if(job_datum.scales && job_datum.enabled)
+				var/new_slots = job_datum.get_total_positions()
+				if(new_slots > job_datum.spawn_positions)
+					job_datum.set_spawn_and_total_positions(get_total_town_members())
+			var/command_bold = ""
+			if(job in GLOB.noble_positions)
+				command_bold = " command"
+			var/used_name = job_datum.title
+			if(client.prefs.gender == FEMALE && job_datum.f_title)
+				used_name = job_datum.f_title
+			if(job_datum in SSjob.prioritized_jobs)
+				dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[used_name] ([job_datum.current_positions])</span></a>"
+			else
+				dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[used_name] ([job_datum.current_positions])</a>"
+
+		dat += "</fieldset><br>"
+		column_counter++
+		if(column_counter > 0 && (column_counter % 4 == 0))
+			dat += "</td><td valign='top'>"
+
 	dat += "</td></tr></table></center>"
 	dat += "</div></div>"
 	var/datum/browser/popup = new(src, "latechoices", "Choose Class", 720, 580)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(jointext(dat, ""))
-	popup.open(FALSE) // 0 is passed to open so that it doesn't use the onclose() proc
+	popup.open(FALSE)
 
 /// Creates, assigns and returns the new_character to spawn as. Assumes a valid mind.assigned_role exists.
 /mob/dead/new_player/proc/create_character(atom/destination)
@@ -529,6 +551,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 		return
 	new_character.key = key		//Manually transfer the key to log them in
 	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+	new_character.can_do_sex()	//STONEKEEP EDIT
 	var/area/joined_area = get_area(new_character.loc)
 	if(joined_area)
 		joined_area.on_joining_game(new_character)

@@ -37,11 +37,11 @@
 		Stun(50)
 
 	if(mind)
-		mind.sleep_adv.add_stress_cycle(get_stress_amount())
+		// mind.sleep_adv.add_stress_cycle(get_stress_amount()) // STONEKEEP EDIT
 		for(var/datum/antagonist/A in mind.antag_datums)
 			A.on_life(src)
 
-	handle_vamp_dreams()
+	//handle_vamp_dreams() //Stonekeep Edit
 	if(IsSleeping())
 		if(health > 0)
 			remove_status_effect(/datum/status_effect/debuff/trainsleep)
@@ -49,12 +49,12 @@
 			if(has_status_effect(/datum/status_effect/debuff/dreamytime))
 				remove_status_effect(/datum/status_effect/debuff/dreamytime)
 				if(mind)
-					mind.sleep_adv.advance_cycle()
+					// mind.sleep_adv.advance_cycle() STONEKEEP EDIT
 					if(!mind.antag_datums || !mind.antag_datums.len)
 						allmig_reward++
 						to_chat(src, span_danger("Nights Survived: \Roman[allmig_reward]"))
-						if(allmig_reward > 0 && allmig_reward % 2 == 0)
-							adjust_triumphs(1)
+						//if(allmig_reward > 0 && allmig_reward % 2 == 0) // Kaizoku Edit + Kaizoku Change
+						//	adjust_triumphs(1)
 	if(!HAS_TRAIT(src, TRAIT_STASIS))
 		if(HAS_TRAIT(src, TRAIT_LEPROSY))
 			if(MOBTIMER_FINISHED(src, MT_LEPERBLEED, 12 MINUTES))
@@ -93,6 +93,9 @@
 		set_typing_indicator(FALSE)
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
+
+	if(sexcon)	//STONEKEEP EDIT START
+		sexcon.process_sexcon(1 SECONDS)	//STONEKEEP EDIT END
 
 	if(stat != DEAD)
 		return 1
@@ -392,7 +395,9 @@
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
 
-/mob/living/carbon/human/proc/handle_vamp_dreams()
+/*
+
+/mob/living/carbon/human/proc/handle_vamp_dreams() //Start of Stonekeep Edit
 	if(!HAS_TRAIT(src, TRAIT_VAMP_DREAMS))
 		return
 	if(!mind)
@@ -409,7 +414,7 @@
 	if(coffin.opened)
 		return
 	remove_status_effect(/datum/status_effect/debuff/vamp_dreams)
-	mind.sleep_adv.advance_cycle()
+	mind.sleep_adv.advance_cycle() */ //End of Stonekeep Edit
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

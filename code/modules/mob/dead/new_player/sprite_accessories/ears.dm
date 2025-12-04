@@ -346,3 +346,53 @@
 	icon_state = "elf"
 	specuse = list(SPEC_ID_HUMEN)
 	color_key_defaults = list(KEY_SKIN_COLOR)
+
+// STONEKEEP CONTENT BELOW
+// Upright Fox ears
+/datum/sprite_accessory/ears/kitsune_upright
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Upright Fox Ears"
+	icon_state = "ears_upright"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+// Side fox ears
+/datum/sprite_accessory/ears/kitsune_side
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Sideways Fox Ears"
+	icon_state = "ears_lying"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+// Thick fox ears
+/datum/sprite_accessory/ears/kitsune_thick
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Thick Fox Ears"
+	icon_state = "ears_thick"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+// One-down fox ears
+/datum/sprite_accessory/ears/kitsune_onedown
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Curious Fox Ears"
+	icon_state = "ears_stoned"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+
+/datum/sprite_accessory/ears/oni
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Ogrun"
+	icon_state = "ears_oni"
+	color_key_defaults = list(KEY_SKIN_COLOR)
+
+
+/datum/sprite_accessory/ears/tengu
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Skylancer ears"
+	icon_state = "ears_tengu"
+	color_key_defaults = list(KEY_HAIR_COLOR)
+
+
+/datum/sprite_accessory/ears/kappae
+	icon = 'modular/kaizoku/icons/body_details/attachment.dmi'
+	name = "Kappae"
+	icon_state = "kappae"
+	color_key_defaults = list(KEY_SKIN_COLOR)

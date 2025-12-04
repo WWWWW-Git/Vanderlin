@@ -13,7 +13,8 @@
 
 /obj/item/natural/head/examine(mob/user)
 	. = ..()
-	if(headprice > 0 && (HAS_TRAIT(user, TRAIT_BURDEN) || is_gaffer_assistant_job(user.mind.assigned_role)))
+	// if(headprice > 0 && (HAS_TRAIT(user, TRAIT_BURDEN) || is_gaffer_assistant_job(user.mind.assigned_role))) //stonekeep edit
+	if(headprice > 0 && (HAS_TRAIT(user, TRAIT_BURDEN)))
 		. += "<span class='info'>HEADEATER value: [headprice]</span>"
 
 /obj/item/bodypart/head
@@ -28,7 +29,8 @@
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()
-	if(headprice > 0 && (HAS_TRAIT(user, TRAIT_BURDEN) || is_gaffer_assistant_job(user.mind.assigned_role)))
+	// if(headprice > 0 && (HAS_TRAIT(user, TRAIT_BURDEN) || is_gaffer_assistant_job(user.mind.assigned_role)))
+	if(headprice > 0 && (HAS_TRAIT(user, TRAIT_BURDEN))) //Stonekeep Edit - Temporary.
 		. += "<span class='info'>HEADEATER value: [headprice]</span>"
 
 /obj/item/painting/lorehead
@@ -44,7 +46,8 @@
 
 /obj/item/painting/lorehead/examine(mob/user)
 	. = ..()
-	if(headprice > 0 && (HAS_TRAIT(user, TRAIT_BURDEN) || is_gaffer_assistant_job(user.mind.assigned_role)))
+	// if(headprice > 0 && (HAS_TRAIT(user, TRAIT_BURDEN) || is_gaffer_assistant_job(user.mind.assigned_role))) //Stonekeep Edit - Temporary
+	if(headprice > 0 && (HAS_TRAIT(user, TRAIT_BURDEN)))
 		. += "<span class='info'>HEADEATER value: [headprice]</span>"
 
 /obj/structure/fake_machine/headeater
@@ -68,9 +71,11 @@
 		to_chat(user, span_danger("It seems uninterested by the [H]"))
 		return
 
+	/* Temporary stonekeep Edit
 	if(!HAS_TRAIT(user, TRAIT_BURDEN) && !is_gaffer_assistant_job(user.mind.assigned_role))
 		to_chat(user, span_danger("you can't feed the [src] without carrying his burden"))
 		return
+	*/
 
 	if(istype(H, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/E = H
@@ -88,6 +93,7 @@
 			qdel(A)
 			return
 
+	/* Temporary removal. Stonekeep Edit.
 	if(istype(H, /obj/item/painting/lorehead) && is_gaffer_job(user.mind.assigned_role)) //this will hopefully be more thematic when the HEAD EATER is in its real form
 		var/obj/item/painting/lorehead/D = H
 		if(D.headprice > 0)
@@ -96,7 +102,7 @@
 			budget2change(D.headprice, user)
 			qdel(D)
 			return
-
+	*/
 	if(istype(H, /obj/item/painting/lorehead))
 		var/obj/item/painting/lorehead/Y = H
 		if(Y.headprice > 0)

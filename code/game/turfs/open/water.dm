@@ -716,7 +716,7 @@
 		return
 	if(isliving(AM) || isitem(AM))
 		if(!river_processing)
-			river_processing = addtimer(CALLBACK(src, PROC_REF(process_river)), 5, TIMER_STOPPABLE)
+			river_processing = addtimer(CALLBACK(src, PROC_REF(process_river)), 4, TIMER_STOPPABLE)	// STONEKEEP EDIT 5 to 4
 
 /turf/open/water/river/proc/process_river()
 	river_processing = null

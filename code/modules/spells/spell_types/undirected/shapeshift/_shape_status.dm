@@ -85,7 +85,8 @@
 /datum/status_effect/shapechange_mob/proc/on_mob_transformed(mob/living/source)
 	var/mob/living/revealed_mob = caster_mob
 	source.visible_message(span_warning("[revealed_mob] gets pulled back to their normal form!"))
-	restore_caster()
+	spawn(0)
+		restore_caster()
 	revealed_mob.Paralyze(10 SECONDS, ignore_canstun = TRUE)
 
 /// Restores the caster back to their human form.
@@ -111,7 +112,8 @@
 		stored_skills = null
 
 	if(kill_caster_after)
-		caster_mob.death()
+		spawn(0)
+			caster_mob.death()
 
 	after_unchange()
 	caster_mob = null
@@ -134,7 +136,8 @@
 	if(gibbed)
 		return
 
-	restore_caster()
+	spawn(0)
+		restore_caster()
 
 /// Signal proc for [COMSIG_LIVING_DEATH] from our caster.
 /// If our internal caster is killed, kill our owner, too (which causes the above signal).
@@ -148,7 +151,8 @@
 
 	// Otherwise our caster died, just make our mob die
 	else
-		owner.death()
+		spawn(0)
+			owner.death()
 
 /// Signal proc for [COMSIG_PARENT_QDELETING] from our caster, delete us / our owner if we get deleted
 /datum/status_effect/shapechange_mob/proc/on_caster_deleted(datum/source)
@@ -228,11 +232,13 @@
 	if(!QDELETED(source_spell) && source_spell.die_with_shapeshifted_form)
 		// (But if our spell says we should revert on death anyways, we'll also do that)
 		if(source_spell.revert_on_death)
-			restore_caster(kill_caster_after = TRUE)
+			spawn(0)
+				restore_caster(kill_caster_after = TRUE)
 		// Otherwise, we just do nothing - we dead
 		return
 
-	return ..() // Restore like normal
+	spawn(0)
+		..() // Restore like normal
 
 /datum/status_effect/shapechange_mob/from_spell/on_caster_death(datum/source)
 	var/datum/action/cooldown/spell/undirected/shapeshift/source_spell = source_weakref.resolve()
@@ -271,5 +277,6 @@
 	if(gibbed)
 		return
 
-	restore_caster(TRUE)
+	spawn(0)
+		restore_caster(TRUE)
 

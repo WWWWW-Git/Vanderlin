@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 	var/list/cached_frumentarii = list()
 
-	var/datum/sleep_adv/sleep_adv = null
+	// var/datum/sleep_adv/sleep_adv = null		STONEKEEP EDIT
 
 	/// List of personal objectives not tied to the antag roles
 	var/list/personal_objectives = list()
@@ -134,11 +134,11 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	soulOwner = src
 	martial_art = default_martial_art
 	set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
-	sleep_adv = new /datum/sleep_adv(src)
+	// sleep_adv = new /datum/sleep_adv(src) //Stonekeep Edit
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
-	QDEL_NULL(sleep_adv)
+	// QDEL_NULL(sleep_adv) //Stonekeep Edit
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
 	return ..()
@@ -769,6 +769,9 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	..()
 	last_mind = mind
 
+
+// STONEKEEP EDIT: DEATH TO SLEEP LEVELING EDITION
+
 /**
  * Gives experience to a skill during sleep
  * Vars:
@@ -776,13 +779,14 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
  ** amt - amount of experience to give
  ** silent - is the player notified of their skill change?
  ** check_apprentice - do apprentices recieve skill experience too?
-*/
+
 /datum/mind/proc/add_sleep_experience(skill, amt, silent = FALSE, check_apprentice = TRUE)
 	amt *= GLOB.sleep_experience_modifier
 	if(check_apprentice)
 		current.adjust_apprentice_exp(skill, amt, silent)
 	if(sleep_adv.add_sleep_experience(skill, amt, silent))
 		return TRUE
+*/
 
 /datum/mind/proc/add_personal_objective(datum/objective/O)
 	if(!istype(O))

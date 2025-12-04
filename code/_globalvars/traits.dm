@@ -170,6 +170,14 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"Seed Finder" = TRAIT_SEED_FINDER,
 		"Recruited" = TRAIT_RECRUITED,
 		"Recognized" = TRAIT_RECOGNIZED,
+		//Stonekeep Edit: Traits
+		"Islander" = TRAIT_KAIZOKU,
+		"Holy Devourer" = TRAIT_CHANGELING_METABOLISM,
+		"Filthy Desecrant" = TRAIT_DESECRANT,
+		"In Training" = TRAIT_INTRAINING,
+		"Admin Killgod" = TRAIT_ADMINTEST_CRIT,
+		"Heroic" = TRAIT_VILLAINOUS,
+		"Actual Hero" = TRAIT_HERO
 	),
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS
@@ -290,6 +298,15 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_POISON_RESILIENCE	= span_info("I'm more resilient to poisons."),
 	TRAIT_FORAGER = span_info("I can tell which jackberries are poisonous."),
 	TRAIT_SEED_FINDER = span_info("I find seeds more easily."),
+	//Stonekeep Edit: Traits below
+	TRAIT_KAIZOKU = span_info("Whether by birth or by learning, I've inherited the Islander ways."), //STONEKEEP EDIT
+	TRAIT_CHANGELING_METABOLISM = span_info("My metabolism breaks down demonic impurity. Now, I crave flesh rather than what is green."), // STONEKEEP EDIT
+	TRAIT_DESECRANT = span_info("I've forsaken honor and on the path of becoming Dai, for my soul is diseased."), // STONEKEEP EDIT
+	TRAIT_GOODLOVER = span_love("It's a lucky thing to share my bed."), //STONEKEEP EDIT
+	TRAIT_INTRAINING = "I'm going to be a hero someday! I can use training dummies more effectively than others.", //Stonekeep edit; No longer becoming a knight.
+	TRAIT_ADMINTEST_CRIT = span_info("ADMIN TOOL: Guaranteed chance to crit with every attack."),
+	TRAIT_VILLAINOUS = span_info("I am TOTALLY A HERO. I, the entity or nation I follow does NOTHING wrong."),
+	TRAIT_HERO = span_info("Either fate or my own choice has lead me here to do what is right."),
 ))
 
 /// value -> trait name, generated on use from trait_by_type global

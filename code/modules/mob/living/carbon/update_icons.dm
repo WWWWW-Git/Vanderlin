@@ -65,6 +65,7 @@
 /mob/living/carbon/update_inv_hands(hide_experimental = FALSE)
 	remove_overlay(HANDS_LAYER)
 	remove_overlay(HANDS_BEHIND_LAYER)
+
 	var/age = AGE_ADULT
 	var/datum/species/species
 	if(ishuman(src))
@@ -81,15 +82,13 @@
 
 	var/list/offsets
 	var/use_female_sprites = MALE_SPRITES
+
 	if(species)
 		if(species.sexes)
 			if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes)
 				use_female_sprites = FEMALE_SPRITES
 
-		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+	use_female_sprites = use_female_sprites
 
 	for(var/obj/item/I in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
@@ -107,6 +106,7 @@
 				else
 					I.screen_loc = ui_hand_position(get_held_index_of_item(I))
 			client.screen += I
+
 			if(observers && observers.len)
 				for(var/mob/dead/observe as anything in observers)
 					if(observe.client && observe.client.eye == src)
@@ -119,28 +119,36 @@
 
 		var/mutable_appearance/inhand_overlay
 		var/mutable_appearance/behindhand_overlay
+
 		if(I.experimental_inhand && !hide_experimental)
 			var/used_prop
 			var/list/prop
+
 			if(I.altgripped)
 				used_prop = "altgrip"
 				prop = I.getonmobprop(used_prop)
+
 			if(!prop && HAS_TRAIT(I, TRAIT_WIELDED))
 				used_prop = "wielded"
 				prop = I.getonmobprop(used_prop)
+
 			if(!prop)
 				used_prop = "gen"
 				prop = I.getonmobprop(used_prop)
+
 			if(I.force_reupdate_inhand)
 				if(I.onprop?[used_prop])
 					prop = I.onprop[used_prop]
 				else
 					LAZYSET(I.onprop, used_prop, prop)
+
 			if(!prop)
 				continue
+
 			var/flipsprite = FALSE
-			if(!(get_held_index_of_item(I) % 2 == 0)) //righthand
+			if(!(get_held_index_of_item(I) % 2 == 0))
 				flipsprite = TRUE
+
 			inhand_overlay = mutable_appearance(I.getmoboverlay(used_prop,prop,mirrored=flipsprite), layer=-HANDS_LAYER)
 			behindhand_overlay = mutable_appearance(I.getmoboverlay(used_prop,prop,behind=TRUE,mirrored=flipsprite), layer=-HANDS_BEHIND_LAYER)
 
@@ -152,11 +160,12 @@
 				inhand_overlay.pixel_y += offsets[OFFSET_HANDS][2]
 				behindhand_overlay.pixel_x += offsets[OFFSET_HANDS][1]
 				behindhand_overlay.pixel_y += offsets[OFFSET_HANDS][2]
+
 			hands += inhand_overlay
 			behindhands += behindhand_overlay
+
 			if(I.blocks_emissive != EMISSIVE_BLOCK_NONE)
 				var/mutable_appearance/emissive_front = emissive_blocker(I.getmoboverlay(used_prop,prop,mirrored=flipsprite), layer=-HANDS_LAYER, appearance_flags = NONE)
-
 				emissive_front.pixel_y = inhand_overlay.pixel_y
 				emissive_front.pixel_x = inhand_overlay.pixel_x
 
@@ -166,20 +175,25 @@
 
 				hands += emissive_front
 				behindhands += emissive_back
+
 		else
 			var/icon_file = I.lefthand_file
 			if(get_held_index_of_item(I) % 2 == 0)
 				icon_file = I.righthand_file
+
 			inhand_overlay = I.build_worn_icon(age = age, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+
 			if(LAZYACCESS(offsets, OFFSET_HANDS))
 				inhand_overlay.pixel_x += offsets[OFFSET_HANDS][1]
 				inhand_overlay.pixel_y += offsets[OFFSET_HANDS][2]
+
 			hands += inhand_overlay
 
-	update_inv_cloak() //cloak held items
+	update_inv_cloak()
 
 	overlays_standing[HANDS_BEHIND_LAYER] = behindhands
 	overlays_standing[HANDS_LAYER] = hands
+
 	apply_overlay(HANDS_BEHIND_LAYER)
 	apply_overlay(HANDS_LAYER)
 
@@ -297,21 +311,23 @@
 
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
+
 	if(handcuffed)
 		var/mutable_appearance/inhand_overlay = mutable_appearance('icons/roguetown/mob/bodies/cuffed.dmi', "[handcuffed.name]up", -HANDCUFF_LAYER)
+
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			var/datum/species/species = H.dna?.species
+
 			var/list/offsets
 			var/use_female_sprites = MALE_SPRITES
+
 			if(species)
 				if(species.sexes)
 					if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes)
 						use_female_sprites = FEMALE_SPRITES
-				if(use_female_sprites)
-					offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-				else
-					offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+
+			use_female_sprites = use_female_sprites
 
 			if(LAZYACCESS(offsets, OFFSET_HANDS))
 				inhand_overlay.pixel_x += offsets[OFFSET_HANDS][1]

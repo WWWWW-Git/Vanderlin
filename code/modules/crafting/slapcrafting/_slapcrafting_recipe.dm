@@ -245,7 +245,8 @@
 			if(craftdiff > 0) //difficult recipe
 				amt2raise += (craftdiff * 10)
 			if(amt2raise > 0)
-				user.mind.add_sleep_experience(skillcraft, amt2raise, FALSE)
+				user.adjust_experience(skillcraft, amt2raise, FALSE) // STONEKEEP EDIT
+				// user.mind.add_sleep_experience(skillcraft, amt2raise, FALSE)
 
 	if(craftsound)
 		playsound(get_turf(assembly), craftsound, 100, TRUE)

@@ -18,7 +18,7 @@
 	bypass_lastclass = TRUE
 	selection_color = "#0d6929"
 
-	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL, AGE_CHILD)
+	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL, BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 	allowed_races = RACES_PLAYER_GUARD
 	give_bank_account = 30
 	can_have_apprentices = FALSE
@@ -184,7 +184,7 @@
 	tutorial = "For your terrible orphan pranks and antics in the city, you were rounded up by the city's Watch and put to work in the infamous forest garrison. \n\n A ruffian by circumstance, a proven listener of war stories - you might just become more than a troublemaker."
 	outfit = /datum/outfit/forestguard/ruffian
 	category_tags = list(CTAG_FORGARRISON)
-	allowed_ages = list(AGE_CHILD)
+	allowed_ages = list(BLOOMING_ADULT) //Stonekeep Edit: Young Adult
 
 
 /datum/outfit/forestguard/ruffian/pre_equip(mob/living/carbon/human/H)

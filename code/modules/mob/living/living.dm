@@ -1343,58 +1343,42 @@
 /mob/living/proc/get_positioning_modifier(mob/living/target)
 	var/modifier = 1.0
 
-	// Check relative positions
 	var/their_dir = target.dir
 	var/approach_dir = get_dir(src, target)
 
-	// Behind target (they're not facing us)
 	if(approach_dir == their_dir || approach_dir == turn(their_dir, -45) || approach_dir == turn(their_dir, 45))
-		modifier += 0.3 // Significant advantage from behind
-
-	// Target is facing us directly
+		modifier += 0.3
 	else if(approach_dir == turn(their_dir, 180))
-		modifier -= 0.1 // Slight disadvantage when they see us coming
+		modifier -= 0.1
 
-	// Height advantage (standing vs lying)
 	if(body_position != LYING_DOWN && target.body_position == LYING_DOWN)
 		modifier += 0.35
 	else if(body_position == LYING_DOWN && target.body_position != LYING_DOWN)
 		modifier -= 0.35
 
 	if(ishuman(src))
-		var/mob/living/carbon/human/human = src
-		var/mob/living/carbon/human/target_human = target
-		var/target_height = FALSE
-		if(istype(target_human))
-			if(target_human.age == AGE_CHILD)
-				target_height = TRUE
-
-		if((human.age == AGE_CHILD) && (!HAS_TRAIT(target, TRAIT_TINY) || !target_height))
+		if(!HAS_TRAIT(target, TRAIT_TINY))
 			modifier -= 0.3
-
-		if(human.age != AGE_CHILD && (HAS_TRAIT(target, TRAIT_TINY) || target_height))
+		else
 			modifier += 0.5
 
-	// Environmental factors
 	var/turf/open/our_turf = get_turf(src)
 	var/turf/open/their_turf = get_turf(target)
 
-	// Against walls/corners limits escape options
 	var/wall_count = 0
 	for(var/turf/T in range(1, target))
 		if(isclosedturf(T))
 			wall_count++
 
-	if(wall_count >= 6) // Cornered
+	if(wall_count >= 6)
 		modifier += 0.25
-	else if(wall_count >= 3) // Against wall
+	else if(wall_count >= 3)
 		modifier += 0.15
 
-	// Difficult terrain
 	if(our_turf.slowdown > their_turf.slowdown)
-		modifier -= 0.1 // We're disadvantaged by terrain
+		modifier -= 0.1
 	else if(their_turf.slowdown > our_turf.slowdown)
-		modifier += 0.1 // They're disadvantaged
+		modifier += 0.1
 
 	return modifier
 
@@ -1513,7 +1497,7 @@
 	var/mob/living/L = pulledby
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if((HAS_TRAIT(H, TRAIT_NOSEGRAB) && !HAS_TRAIT(src, TRAIT_MISSING_NOSE)) || (HAS_TRAIT(H, TRAIT_EARGRAB) && age == AGE_CHILD))
+		if((HAS_TRAIT(H, TRAIT_NOSEGRAB) && !HAS_TRAIT(src, TRAIT_MISSING_NOSE)) || (HAS_TRAIT(H, TRAIT_EARGRAB))) //Stonekeep Edit: Young Adult
 			var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 			for(var/obj/item/grabbing/G in grabbedby)
 				if(G.limb_grabbed == head)

@@ -78,7 +78,8 @@
 	return
 
 /obj/item/contraption/proc/misfire(atom/A, mob/living/user)
-	user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT * 5))
+	user.adjust_experience(/datum/skill/craft/engineering, (user.STAINT * 5)) // STONEKEEP EDIT
+	// user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT * 5))
 	to_chat(user, span_info("Oh fuck."))
 	playsound(src, 'sound/misc/bell.ogg', 100)
 	addtimer(CALLBACK(src, PROC_REF(misfire_result), A, user), rand(5, 30))
@@ -216,7 +217,8 @@
 	charge_deduction(O, user, 1)
 	shake_camera(user, 1, 1)
 	playsound(src, 'sound/magic/swap.ogg', 100, TRUE)
-	user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT / 2))
+	user.adjust_experience(/datum/skill/craft/engineering, (user.STAINT / 2)) // STONEKEEP EDIT
+	// user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT / 2))
 	if(misfire_chance && prob(max(0, misfire_chance - user.stat_roll(STATKEY_LCK,2,10) - skill)))
 		misfire(O, user)
 	return
@@ -289,7 +291,8 @@
 		S.set_up(1, 1, front)
 		S.start()
 		return
-	user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT / 3))
+	user.adjust_experience(/datum/skill/craft/engineering, (user.STAINT / 3)) // STONEKEEP EDIT
+	// user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT / 3))
 	charge_deduction(O, user, 1)
 	flick(on_icon, src)
 	playsound(loc, 'sound/misc/machinevomit.ogg', 50, TRUE)

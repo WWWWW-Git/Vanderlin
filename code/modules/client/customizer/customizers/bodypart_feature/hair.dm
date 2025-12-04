@@ -213,7 +213,7 @@
 		/datum/sprite_accessory/hair/head/mysterious_elf,
 		/datum/sprite_accessory/hair/head/mystery,
 		/datum/sprite_accessory/hair/head/noblesse,
-		/datum/sprite_accessory/hair/head/orc,
+		// /datum/sprite_accessory/hair/head/orc, // Temporary stonekeep edit.
 		/datum/sprite_accessory/hair/head/performer,
 		/datum/sprite_accessory/hair/head/pix,
 		/datum/sprite_accessory/hair/head/plain,
@@ -306,6 +306,7 @@
 		/datum/sprite_accessory/hair/head/helmet,
 		)
 
+/* Stonekeep Edit.
 /datum/customizer/bodypart_feature/hair/head/humanoid/triton
 	customizer_choices = list(/datum/customizer_choice/bodypart_feature/hair/head/humanoid/triton)
 
@@ -338,7 +339,7 @@
 		/datum/sprite_accessory/hair/head/medicator/hook,
 		/datum/sprite_accessory/hair/head/medicator/crown,
 	)
-
+*/
 // ===== FACIAL HAIR
 
 /datum/customizer_entry/hair/facial
@@ -349,7 +350,7 @@
 
 /datum/customizer/bodypart_feature/hair/facial/is_allowed(datum/preferences/prefs)
 	var/datum/species/species = return_species(prefs)
-	if(prefs.age == AGE_CHILD && !(YOUNGBEARD in species.species_traits))
+	if(prefs.age == BLOOMING_ADULT && !(YOUNGBEARD in species.species_traits)) //Stonekeep Edit: Young Adult
 		return FALSE
 	return (prefs.gender == MALE) || istype(species, /datum/species/dwarf)
 

@@ -96,14 +96,16 @@ There are several things that need to be remembered:
 
 	var/list/offsets
 	var/limb_icon
-	var/is_child = (age == AGE_CHILD)
+	//Stonekeep Edit: Young Adult
+	/*
+	var/is_child = (age == BLOOMING_ADULT)
 	if(use_female_sprites)
 		offsets = is_child ? species.offset_features_child : species.offset_features_f
 		limb_icon = is_child ? species.child_dam_icon : species.dam_icon_f
 	else
 		offsets = is_child ? species.offset_features_child : species.offset_features_m
 		limb_icon = is_child ? species.child_dam_icon : species.dam_icon_m
-
+	*/
 	var/hidechest = TRUE
 	if(use_female_sprites)
 		var/obj/item/bodypart/CH = get_bodypart(BODY_ZONE_CHEST)
@@ -337,22 +339,13 @@ There are several things that need to be remembered:
 		update_hud_neck(wear_neck)
 		if(!(ITEM_SLOT_NECK & check_obscured_slots()))
 			var/datum/species/species = dna?.species
-
 			var/use_female_sprites = FALSE
+
 			if(species?.sexes)
 				if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes)
 					use_female_sprites = FEMALE_SPRITES
 
-			var/list/offsets
-			if(use_female_sprites)
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-			else
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
-
-			var/mutable_appearance/neck_overlay = wear_neck.build_worn_icon(age, NECK_LAYER, 'icons/roguetown/clothing/onmob/neck.dmi')
-			if(LAZYACCESS(offsets, OFFSET_NECK))
-				neck_overlay.pixel_x += offsets[OFFSET_NECK][1]
-				neck_overlay.pixel_y += offsets[OFFSET_NECK][2]
+			var/mutable_appearance/neck_overlay = wear_neck.build_worn_icon(age, NECK_LAYER, 'icons/roguetown/clothing/onmob/neck.dmi', use_female_sprites)
 			overlays_standing[NECK_LAYER] = neck_overlay
 
 	update_body()
@@ -372,22 +365,13 @@ There are several things that need to be remembered:
 		update_observer_view(wear_ring)
 
 		var/datum/species/species = dna?.species
-
 		var/use_female_sprites = FALSE
+
 		if(species?.sexes)
 			if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes)
 				use_female_sprites = FEMALE_SPRITES
 
-		var/list/offsets
-		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
-
-		var/mutable_appearance/ring_overlay = wear_ring.build_worn_icon(age, RING_LAYER, 'icons/roguetown/clothing/onmob/rings.dmi')
-		if(LAZYACCESS(offsets, OFFSET_RING))
-			ring_overlay.pixel_x += offsets[OFFSET_RING][1]
-			ring_overlay.pixel_y += offsets[OFFSET_RING][2]
+		var/mutable_appearance/ring_overlay = wear_ring.build_worn_icon(age, RING_LAYER, 'icons/roguetown/clothing/onmob/rings.dmi', use_female_sprites)
 		overlays_standing[RING_LAYER] = ring_overlay
 
 	apply_overlay(RING_LAYER)
@@ -426,13 +410,14 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown)
 				client.screen += gloves
 		update_observer_view(gloves, 1)
-
 		var/list/offsets
+		//Stonekeep Edit: Young Adult
+		/*
 		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
-
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_m
+		*/
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -486,11 +471,13 @@ There are several things that need to be remembered:
 				use_female_sprites = FEMALE_SPRITES
 
 		var/list/offsets
+		//Stonekeep Edit: Young Adult
+		/*
 		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
-
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_m
+		*/
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -545,11 +532,13 @@ There are several things that need to be remembered:
 				use_female_sprites = FEMALE_SPRITES
 
 		var/list/offsets
+		//Stonekeep Edit: Young Adult
+		/*
 		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
-
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_m
+		*/
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -581,7 +570,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_head(hide_nonstandard = FALSE)
 	remove_overlay(HEAD_LAYER)
 
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD))
 		return
 
 	if(client && hud_used)
@@ -594,27 +583,22 @@ There are several things that need to be remembered:
 			return
 
 		update_hud_head(head)
+
 		var/datum/species/species = dna?.species
 		var/use_female_sprites = FALSE
+
 		if(species?.sexes)
 			if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes)
 				use_female_sprites = FEMALE_SPRITES
-		var/list/offsets
-		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
 
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(age = age, default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi', coom = FALSE)
+		overlays_standing[HEAD_LAYER] = head.build_worn_icon(age, HEAD_LAYER, 'icons/roguetown/clothing/onmob/head.dmi', use_female_sprites)
 		var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
+
 		if(head_overlay)
-			if(LAZYACCESS(offsets, OFFSET_HEAD))
-				head_overlay.pixel_x += offsets[OFFSET_HEAD][1]
-				head_overlay.pixel_y += offsets[OFFSET_HEAD][2]
 			overlays_standing[HEAD_LAYER] = head_overlay
 
 	apply_overlay(HEAD_LAYER)
-	update_body() //hoodies
+	update_body()
 
 /mob/living/carbon/human/update_inv_belt(hide_experimental = FALSE)
 	remove_overlay(BELT_LAYER)
@@ -638,11 +622,13 @@ There are several things that need to be remembered:
 			use_female_sprites = FEMALE_SPRITES
 
 	var/list/offsets
-	if(use_female_sprites)
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-	else
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
-
+		//Stonekeep Edit: Young Adult
+		/*
+		if(use_female_sprites)
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_f
+		else
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_m
+		*/
 	var/racecustom
 	if(species?.custom_clothes)
 		if(species.custom_id)
@@ -755,7 +741,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_wear_mask()
 	remove_overlay(MASK_LAYER)
 
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD))
 		return
 
 	if(client && hud_used)
@@ -764,22 +750,18 @@ There are several things that need to be remembered:
 
 	if(wear_mask)
 		update_hud_wear_mask(wear_mask)
+
 		if(!(ITEM_SLOT_MASK & check_obscured_slots()))
-			var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = MASK_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/masks.dmi')
 			var/datum/species/species = dna?.species
 			var/use_female_sprites = FALSE
-			if(species.sexes)
+
+			if(species?.sexes)
 				if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes)
 					use_female_sprites = FEMALE_SPRITES
-			var/list/offsets
-			if(use_female_sprites)
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-			else
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+
+			var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(age, MASK_LAYER, 'icons/roguetown/clothing/onmob/masks.dmi', use_female_sprites)
+
 			if(mask_overlay)
-				if(LAZYACCESS(offsets, OFFSET_FACEMASK))
-					mask_overlay.pixel_x += offsets[OFFSET_FACEMASK][1]
-					mask_overlay.pixel_y += offsets[OFFSET_FACEMASK][2]
 				overlays_standing[MASK_LAYER] = mask_overlay
 
 	apply_overlay(MASK_LAYER)
@@ -800,8 +782,8 @@ There are several things that need to be remembered:
 		inv?.update_appearance()
 
 	var/datum/species/species = dna?.species
-
 	var/use_female_sprites = FALSE
+
 	if(species?.sexes)
 		if(gender == FEMALE && !species.swap_female_clothes)
 			use_female_sprites = FEMALE_BOOB
@@ -809,10 +791,6 @@ There are several things that need to be remembered:
 			use_female_sprites = FEMALE_SPRITES
 
 	var/list/offsets
-	if(use_female_sprites)
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-	else
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
 
 	if(backr)
 		if(backr.alternate_worn_layer == CLOAK_BEHIND_LAYER)
@@ -843,7 +821,7 @@ There are several things that need to be remembered:
 					LAZYADD(overcloaks, back_overlay)
 					LAZYADD(backbehind, behindback_overlay)
 			else
-				back_overlay = backr.build_worn_icon(age, BACK_LAYER, 'icons/roguetown/clothing/onmob/back_r.dmi')
+				back_overlay = backr.build_worn_icon(age, BACK_LAYER, 'icons/roguetown/clothing/onmob/back_r.dmi', use_female_sprites)
 				if(LAZYACCESS(offsets, OFFSET_BACK))
 					back_overlay.pixel_x += offsets[OFFSET_BACK][1]
 					back_overlay.pixel_y += offsets[OFFSET_BACK][2]
@@ -881,7 +859,7 @@ There are several things that need to be remembered:
 					LAZYADD(overcloaks, back_overlay)
 					LAZYADD(backbehind, behindback_overlay)
 			else
-				back_overlay = backl.build_worn_icon(age, BACK_LAYER, 'icons/roguetown/clothing/onmob/back_l.dmi')
+				back_overlay = backl.build_worn_icon(age, BACK_LAYER, 'icons/roguetown/clothing/onmob/back_l.dmi', use_female_sprites)
 				if(LAZYACCESS(offsets, OFFSET_BACK))
 					back_overlay.pixel_x += offsets[OFFSET_BACK][1]
 					back_overlay.pixel_y += offsets[OFFSET_BACK][2]
@@ -921,10 +899,13 @@ There are several things that need to be remembered:
 			use_female_sprites = FEMALE_SPRITES
 
 	var/list/offsets
-	if(use_female_sprites)
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-	else
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+		//Stonekeep Edit: Young Adult
+		/*
+		if(use_female_sprites)
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_f
+		else
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_m
+		*/
 
 	var/racecustom
 	if(species?.custom_clothes)
@@ -1005,11 +986,12 @@ There are several things that need to be remembered:
 		inv?.update_appearance()
 
 	if(wear_shirt)
-		wear_shirt.screen_loc = rogueui_shirt					//move the item to the appropriate screen loc
+		wear_shirt.screen_loc = rogueui_shirt
 		if(client && hud_used?.hud_shown)
-			if(hud_used.inventory_shown)			//if the inventory is open
-				client.screen += wear_shirt					//add it to client's screen
+			if(hud_used.inventory_shown)
+				client.screen += wear_shirt
 		update_observer_view(wear_shirt,1)
+
 		var/datum/species/species = dna?.species
 		var/armsindex = get_limbloss_index(ARM_RIGHT, ARM_LEFT)
 		var/hideboob = FALSE
@@ -1017,23 +999,32 @@ There are several things that need to be remembered:
 			hideboob = TRUE
 		if(cloak?.flags_inv & HIDEBOOB)
 			hideboob = TRUE
+
 		var/use_female_sprites = FALSE
 		if(species?.sexes)
 			if(gender == FEMALE && !species.swap_female_clothes)
 				use_female_sprites = hideboob ? FEMALE_SPRITES : FEMALE_BOOB
 			else if(gender == MALE && species.swap_male_clothes)
 				use_female_sprites = FEMALE_SPRITES
-		var/list/offsets
+
+		// var/list/offsets
+		//Stonekeep Edit: Young Adult
+		/*
 		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_m
+		*/
+
+		var/list/offsets = src.get_offset_features_for(species, use_female_sprites) // Stonekeep Edit: replacement
+
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
 				racecustom = species.custom_id
 			else
 				racecustom = species.id
+
 		var/mutable_appearance/shirt_overlay = wear_shirt.build_worn_icon(age, SHIRT_LAYER, coom = use_female_sprites, customi = racecustom, sleeveindex = armsindex)
 
 		if(LAZYACCESS(offsets, OFFSET_SHIRT))
@@ -1041,7 +1032,6 @@ There are several things that need to be remembered:
 			shirt_overlay.pixel_y += offsets[OFFSET_SHIRT][2]
 		overlays_standing[SHIRT_LAYER] = shirt_overlay
 
-		//add sleeve overlays, then offset
 		var/list/sleeves = list()
 		if(wear_shirt.sleeved && armsindex > 0)
 			sleeves = get_sleeves_layer(wear_shirt, armsindex, SHIRTSLEEVE_LAYER)
@@ -1052,13 +1042,6 @@ There are several things that need to be remembered:
 					S.pixel_x += offsets[OFFSET_SHIRT][1]
 					S.pixel_y += offsets[OFFSET_SHIRT][2]
 			overlays_standing[SHIRTSLEEVE_LAYER] = sleeves
-
-	update_body_parts(redraw = TRUE)
-	dna.species.handle_body(src)
-	update_body()
-
-	apply_overlay(SHIRT_LAYER)
-	apply_overlay(SHIRTSLEEVE_LAYER)
 
 /mob/living/carbon/human/update_inv_armor()
 	remove_overlay(ARMOR_LAYER)
@@ -1086,10 +1069,13 @@ There are several things that need to be remembered:
 			else if(gender == MALE && species.swap_male_clothes)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
+		//Stonekeep Edit: Young Adult
+		/*
 		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_m
+		*/
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species?.custom_id)
@@ -1143,10 +1129,13 @@ There are several things that need to be remembered:
 			if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
+		//Stonekeep Edit: Young Adult
+		/*
 		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = (age == BLOOMING_ADULT) ? species.offset_features_child : species.offset_features_m
+		*/
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -1183,7 +1172,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_mouth()
 	remove_overlay(MOUTH_LAYER)
 
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD))
 		return
 
 	if(client && hud_used)
@@ -1195,15 +1184,14 @@ There are several things that need to be remembered:
 		if(!(ITEM_SLOT_MOUTH & check_obscured_slots()))
 			var/datum/species/species = dna?.species
 			var/use_female_sprites = FALSE
+
 			if(species?.sexes)
 				if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes)
 					use_female_sprites = FEMALE_SPRITES
+
 			var/list/offsets
-			if(use_female_sprites)
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-			else
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
-			var/mutable_appearance/mouth_overlay = mouth.build_worn_icon(age, MOUTH_LAYER, 'icons/roguetown/clothing/onmob/mouth_items.dmi')
+
+			var/mutable_appearance/mouth_overlay = mouth.build_worn_icon(age, MOUTH_LAYER, 'icons/roguetown/clothing/onmob/mouth_items.dmi', use_female_sprites)
 			if(mouth_overlay)
 				if(LAZYACCESS(offsets, OFFSET_MOUTH))
 					mouth_overlay.pixel_x += offsets[OFFSET_MOUTH][1]
@@ -1329,8 +1317,8 @@ generate/load female uniform sprites matching all previously decided variables
 /obj/item/proc/build_worn_icon(age = AGE_ADULT, default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, coom = FALSE, customi = null, sleeveindex)
 	var/t_state
 	var/sleevejazz = sleevetype
-	if(age == AGE_CHILD)
-		coom = FALSE
+	// if(age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
+		// coom = FALSE
 	if(override_state)
 		t_state = override_state
 	else if(isinhands && item_state)
@@ -1346,9 +1334,9 @@ generate/load female uniform sprites matching all previously decided variables
 		if(sleevejazz)
 			sleevejazz += "_[customi]"
 	var/t_icon = mob_overlay_icon
-	if(age == AGE_CHILD)
-		if(!istype(src, /obj/item/clothing/head) && !istype(src, /obj/item/clothing/face) && !istype(src, /obj/item/clothing/cloak) && !istype(src, /obj/item/clothing/gloves) && !istype(src, /obj/item/clothing/neck))
-			t_state += "_child"
+	// if(age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
+		// if(!istype(src, /obj/item/clothing/head) && !istype(src, /obj/item/clothing/face) && !istype(src, /obj/item/clothing/cloak) && !istype(src, /obj/item/clothing/gloves) && !istype(src, /obj/item/clothing/neck))
+			// t_state += "_child"
 	if(!t_icon)
 		t_icon = default_icon_file
 
@@ -1654,30 +1642,24 @@ generate/load female uniform sprites matching all previously decided variables
 		return
 
 	var/obj/item/bodypart/HD = get_bodypart("head")
-
 	if(!istype(HD))
 		return
 
 	var/datum/species/species = dna?.species
-
 	var/use_female_sprites = MALE_SPRITES
 	if(species.sexes)
 		if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes)
 			use_female_sprites = FEMALE_SPRITES
 
-	var/list/offsets
-	if(use_female_sprites)
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-	else
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+	use_female_sprites = use_female_sprites
 
+	var/list/offsets
 	HD.update_limb()
 
 	add_overlay(HD.get_limb_icon())
 	update_damage_overlays()
 
 	if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
-		// lipstick
 		if(lip_style && (LIPS in species.species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
 			lip_overlay.color = lip_color

@@ -1,4 +1,4 @@
-/datum/job/gaffer
+/datum/job/gaffer //Stonekeep edit: I have no idea on what to do with this.
 	title = "Gaffer"
 	department_flag = SERFS
 	faction = "Station"

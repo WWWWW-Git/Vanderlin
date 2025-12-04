@@ -1,9 +1,13 @@
+//Completely commenting this one out since unticking it isn't enough.
+
 /*
 			< ATTENTION >
 	If you need to add more map_adjustment, check 'map_adjustment_include.dm'
 	These 'map_adjustment.dm' files shouldn't be included in 'dme'
 */
 
+
+/*
 /datum/map_adjustment/daftmarsh
 	map_file_name = "daftmarsh.dmm"
 	// Disabled for Daftmarsh.
@@ -36,3 +40,5 @@
 	ages_adjust = list(
 		/datum/job/forestguard = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 	)
+
+*/

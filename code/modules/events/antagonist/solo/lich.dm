@@ -24,7 +24,18 @@
 	restricted_roles = list(
 		"Monarch",
 		"Consort",
+		"Hand",
+		"Captain",
+		"Prince",
 		"Priest",
+		"Merchant",
+		"Forest Warden",
+		"Inquisitor",
+		"Adept",
+		"Royal Knight",
+		"Templar",
+		"Sheriff",	// STONEKEEP EDIT // Kaizoku Change
+		"Court Wizard",	// STONEKEEP EDIT
 	)
 
 /datum/round_event/antagonist/solo/lich

@@ -117,7 +117,8 @@
 				I.take_damage(50, BRUTE, "slash")
 				user.visible_message(span_warning("[user] damaged [I] due to a lack of skill!"))
 				playsound(src, 'sound/foley/cloth_rip.ogg', 50, TRUE)
-			user.mind.add_sleep_experience(/datum/skill/misc/sewing, (user.STAINT) / 2) // Only failing if we have no idea what we're doing
+			user.adjust_experience(/datum/skill/misc/sewing, (user.STAINT) / 2) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/misc/sewing, (user.STAINT) / 2) // Only failing if we have no idea what we're doing
 		return TRUE
 	return ..()
 

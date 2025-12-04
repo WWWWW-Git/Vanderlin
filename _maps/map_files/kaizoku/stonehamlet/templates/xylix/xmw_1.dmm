@@ -1,0 +1,230 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/decostone/moss/blue,
+/area/rogue/under/xylix)
+"d" = (
+/turf/open/floor/cobblemoss,
+/area/rogue/under/xylix)
+"f" = (
+/obj/structure/bars/pipe{
+	dir = 8
+	},
+/turf/open/floor/cobblemoss,
+/area/rogue/under/xylix)
+"s" = (
+/turf/closed/wall/mineral/decostone/moss/blue/long{
+	dir = 1
+	},
+/area/rogue/under/xylix)
+"y" = (
+/obj/structure/bars/pipe{
+	dir = 10
+	},
+/turf/open/floor/metal/barograte,
+/area/rogue/under/xylix)
+"B" = (
+/turf/closed/wall/mineral/decostone/moss/blue/end,
+/area/rogue/under/xylix)
+"C" = (
+/obj/machinery/light/fueled/firebowl,
+/turf/open/floor/blocks/moss,
+/area/rogue/under/xylix)
+"D" = (
+/turf/closed/wall/mineral/decostone/moss/blue/long,
+/area/rogue/under/xylix)
+"F" = (
+/turf/closed/wall/mineral/decostone/moss/blue/end{
+	dir = 1
+	},
+/area/rogue/under/xylix)
+"G" = (
+/obj/machinery/light/fueled/firebowl,
+/turf/open/floor/cobblemoss,
+/area/rogue/under/xylix)
+"H" = (
+/obj/structure/bars/pipe{
+	dir = 8
+	},
+/turf/closed/wall/mineral/decostone/moss/blue,
+/area/rogue/under/xylix)
+"P" = (
+/obj/structure/bars/pipe{
+	dir = 9
+	},
+/obj/structure/bars/pipe{
+	dir = 8
+	},
+/turf/open/floor/metal/barograte,
+/area/rogue/under/xylix)
+"V" = (
+/turf/open/floor/blocks/moss,
+/area/rogue/under/xylix)
+
+(1,1,1) = {"
+a
+D
+D
+a
+d
+V
+V
+d
+a
+D
+D
+D
+"}
+(2,1,1) = {"
+s
+C
+V
+d
+d
+d
+V
+d
+s
+a
+a
+a
+"}
+(3,1,1) = {"
+s
+d
+V
+d
+V
+V
+V
+V
+s
+a
+a
+a
+"}
+(4,1,1) = {"
+s
+d
+d
+a
+D
+D
+D
+D
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+s
+d
+V
+s
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+s
+d
+d
+a
+D
+D
+D
+D
+D
+D
+D
+a
+"}
+(7,1,1) = {"
+s
+d
+d
+d
+V
+V
+V
+V
+V
+d
+C
+s
+"}
+(8,1,1) = {"
+s
+G
+d
+d
+d
+d
+d
+V
+V
+d
+d
+s
+"}
+(9,1,1) = {"
+a
+D
+D
+a
+D
+D
+D
+D
+F
+d
+V
+s
+"}
+(10,1,1) = {"
+a
+a
+a
+s
+G
+V
+d
+d
+d
+V
+V
+s
+"}
+(11,1,1) = {"
+a
+a
+a
+s
+V
+V
+V
+V
+V
+d
+d
+s
+"}
+(12,1,1) = {"
+B
+D
+D
+H
+f
+P
+y
+d
+a
+D
+D
+a
+"}

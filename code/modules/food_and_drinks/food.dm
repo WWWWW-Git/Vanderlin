@@ -30,24 +30,28 @@
 		pixel_x = base_pixel_x + rand(-4, 4)
 		pixel_y = base_pixel_y + rand(-4, 4)
 
+
 /obj/item/reagent_containers/food/proc/checkLiked(fraction, mob/M)
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(foodtype & H.dna.species.toxic_food)
-				to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")
+				to_chat(H,"<span class='warning'>Argh! This clearly tastes like poison!</span>")
 				H.adjust_disgust(25 + 30 * fraction)
-				H.add_stress(/datum/stress_event/disgusting_food)
-			else if(foodtype & H.dna.species.disliked_food)
-				to_chat(H,"<span class='notice'>That didn't taste very good...</span>")
-				H.adjust_disgust(11 + 15 * fraction)
-				H.add_stress(/datum/stress_event/gross_food)
-			else if(foodtype & H.dna.species.liked_food)
-				to_chat(H,"<span class='notice'>I love this taste!</span>")
-				H.adjust_disgust(-5 + -2.5 * fraction)
-				H.add_stress(/datum/stress_event/favorite_food)
-			if((foodtype & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
-				H.add_stress(/datum/stress_event/breakfast)
+				H.add_stress(/datum/stress_event/disgusting_food, 15 SECONDS)
+			// STONEKEEP EDIT
+			if(HAS_TRAIT(H, TRAIT_CHANGELING_METABOLISM))
+				if(foodtype & MEAT) //If: Meat, short-circuits the rest.
+					to_chat(H, "<span class='notice'>The flavor of prey... exquisite.</span>")
+					H.adjust_disgust(-5 + -2.5 * fraction)
+				else if(foodtype & (GRAIN | VEGETABLES)) //If plant, bad.
+					to_chat(H, "<span class='warning'>What is this plant-ridden filth?</span>")
+					H.adjust_disgust(25 + 30 * fraction)
+				else //Anything else means free game.
+					to_chat(H, "<span class='notice'>Edible... but not satisfying.</span>")
+				last_check_time = world.time
+				return
 			last_check_time = world.time
+
 
 #undef STOP_SERVING_BREAKFAST

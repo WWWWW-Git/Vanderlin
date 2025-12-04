@@ -1,3 +1,8 @@
+//Stonekeep Edit: FILE CHANGE
+//UPDATE TRIGGER ON THIS FILE!!!
+//For the ALTERNATIVE FILE used for KAIZOKU PROJECT
+//Check for code\__HELPERS\round_statistics_kaizoku.dm
+
 // General statistics
 
 #define STATS_ALIVE_HALF_ELVES "alive_half_elves"

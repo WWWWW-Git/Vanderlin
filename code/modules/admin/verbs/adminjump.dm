@@ -222,7 +222,7 @@
 
 	var/mob/living/carbon/human/new_human = new (warp_place)
 
-	var/datum/outfit/outfit = new /datum/outfit/tailor
+	var/datum/outfit/outfit = new /datum/job/kaizoku/silkrunner //Stonekeep Edit
 	outfit.equip(new_human)
 
 	prefs.safe_transfer_prefs_to(new_human)

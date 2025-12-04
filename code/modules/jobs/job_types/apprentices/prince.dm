@@ -16,7 +16,7 @@
 		/datum/action/cooldown/spell/undirected/list_target/grant_title,
 	)
 
-	allowed_ages = list(AGE_ADULT, AGE_CHILD)
+	allowed_ages = list(AGE_ADULT, BLOOMING_ADULT //Stonekeep Edit: Young Adult)
 	cmode_music = 'sound/music/cmode/nobility/combat_noble.ogg'
 	advclass_cat_rolls = list(CTAG_HEIR = 20)
 
@@ -38,7 +38,7 @@
 
 /datum/job/advclass/heir
 	inherit_parent_title = TRUE
-	allowed_ages = list(AGE_ADULT, AGE_CHILD)
+	allowed_ages = list(AGE_ADULT, BLOOMING_ADULT //Stonekeep Edit: Young Adult)
 	allowed_races = RACES_PLAYER_ROYALTY
 
 /datum/job/advclass/heir/daring

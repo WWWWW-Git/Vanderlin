@@ -235,7 +235,8 @@
 
 			var/boon = user.get_learning_boon(/datum/skill/labor/butchering)
 			var/amt2raise = user.STAINT
-			user.mind.add_sleep_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE)
+			user.adjust_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE)
 			butchery_target.skinned = TRUE
 		return
 
@@ -334,4 +335,5 @@
 			butchery_target.gib()
 			var/boon = user.get_learning_boon(/datum/skill/labor/butchering)
 			var/amt2raise = user.STAINT
-			user.mind.add_sleep_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE)
+			user.adjust_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE)

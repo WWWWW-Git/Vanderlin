@@ -1,0 +1,217 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/decostone/moss/blue,
+/area/rogue/under/xylix)
+"d" = (
+/turf/open/floor/cobblemoss,
+/area/rogue/under/xylix)
+"p" = (
+/turf/closed/wall/mineral/decostone/moss/blue/end{
+	dir = 1
+	},
+/area/rogue/under/xylix)
+"s" = (
+/obj/structure/trap/shock,
+/turf/open/water/river{
+	dir = 1
+	},
+/area/rogue/under/xylix)
+"A" = (
+/turf/closed/wall/mineral/decostone/moss/blue/long,
+/area/rogue/under/xylix)
+"C" = (
+/obj/structure/trap/shock,
+/turf/open/water/river,
+/area/rogue/under/xylix)
+"D" = (
+/turf/open/water/river,
+/area/rogue/under/xylix)
+"E" = (
+/mob/living/carbon/human/species/rousman/ambush,
+/turf/open/floor/blocks/moss,
+/area/rogue/under/xylix)
+"J" = (
+/turf/closed/wall/mineral/decostone/moss/blue/long{
+	dir = 1
+	},
+/area/rogue/under/xylix)
+"K" = (
+/turf/closed/wall/mineral/decostone/moss/blue/end,
+/area/rogue/under/xylix)
+"V" = (
+/turf/open/water/river{
+	dir = 1
+	},
+/area/rogue/under/xylix)
+"Z" = (
+/turf/open/floor/blocks/moss,
+/area/rogue/under/xylix)
+
+(1,1,1) = {"
+a
+A
+A
+p
+d
+Z
+Z
+d
+K
+A
+A
+a
+"}
+(2,1,1) = {"
+J
+Z
+D
+D
+D
+D
+D
+D
+D
+D
+C
+J
+"}
+(3,1,1) = {"
+J
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+J
+"}
+(4,1,1) = {"
+J
+s
+V
+V
+V
+V
+V
+V
+V
+V
+Z
+J
+"}
+(5,1,1) = {"
+J
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+J
+"}
+(6,1,1) = {"
+J
+Z
+D
+D
+D
+D
+D
+D
+D
+D
+C
+J
+"}
+(7,1,1) = {"
+J
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+J
+"}
+(8,1,1) = {"
+J
+s
+V
+V
+V
+V
+V
+V
+Z
+V
+V
+J
+"}
+(9,1,1) = {"
+J
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+E
+Z
+Z
+J
+"}
+(10,1,1) = {"
+J
+D
+Z
+D
+D
+D
+D
+D
+D
+D
+C
+J
+"}
+(11,1,1) = {"
+J
+Z
+E
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+J
+"}
+(12,1,1) = {"
+a
+d
+Z
+d
+Z
+K
+A
+A
+A
+A
+A
+a
+"}

@@ -54,7 +54,6 @@
 
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/species = H.dna?.species
-
 	if(!species)
 		return
 
@@ -63,11 +62,9 @@
 		if(H.gender == FEMALE && !species.swap_female_clothes || H.gender == MALE && species.swap_male_clothes)
 			use_female_sprites = FEMALE_SPRITES
 
+	use_female_sprites = use_female_sprites
+
 	var/list/offsets
-	if(use_female_sprites)
-		offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
-	else
-		offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
 
 	if(LAZYACCESS(offsets, feature_key))
 		for(var/mutable_appearance/appearance as anything in appearance_list)

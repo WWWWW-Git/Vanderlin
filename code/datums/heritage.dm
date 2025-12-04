@@ -669,10 +669,10 @@
 	if(!child_species || !dad_species || !mom_species)
 		return FALSE
 
-	var/list/mixes = list(
-		"human+elf+" = /datum/species/human/halfelf,
-		"human+horc+" = /datum/species/halforc,
-	)
+	//var/list/mixes = list(
+	//	"human+elf+" = /datum/species/human/halfelf,
+	//	"human+horc+" = /datum/species/halforc,
+	//)
 
 	var/mix_text = ""
 
@@ -686,17 +686,17 @@
 		mix_text += "human+"
 	if(istype(dad_species, /datum/species/elf/snow) || istype(mom_species, /datum/species/elf/snow))
 		mix_text += "elf+"
-	if(istype(dad_species, /datum/species/elf/dark) || istype(mom_species, /datum/species/elf/dark))
-		mix_text += "darkelf+"
+	//if(istype(dad_species, /datum/species/elf/dark) || istype(mom_species, /datum/species/elf/dark)) //stonekeep edit
+		//mix_text += "darkelf+"
 	if(istype(dad_species, /datum/species/dwarf/mountain) || istype(mom_species, /datum/species/dwarf/mountain))
 		mix_text += "dwarf+"
 	if(istype(dad_species, /datum/species/tieberian) || istype(mom_species, /datum/species/tieberian))
 		mix_text += "tiefling+"
-	if(istype(dad_species, /datum/species/rakshari) || istype(mom_species, /datum/species/rakshari))
-		mix_text += "rakshari+"
+	// if(istype(dad_species, /datum/species/rakshari) || istype(mom_species, /datum/species/rakshari)) //stonekeep edit
+		//mix_text += "rakshari+"
 
-	if(istype(child_species, mixes[mix_text]))
-		return TRUE
+	//if(istype(child_species, mixes[mix_text]))
+		//return TRUE
 
 	return FALSE
 

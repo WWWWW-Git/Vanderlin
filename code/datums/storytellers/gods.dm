@@ -309,7 +309,7 @@
 	influence_sets = list(
 		"Set 1" = list(
 			STATS_PARENTS = list("name" = "Number of parents:", "points" = 9.25, "capacity" = 90),
-			STATS_CHILD_POPULATION = list("name" = "Number of children:", "points" = 7, "capacity" = 75),
+			STATS_BLOOMING_POPULATION = list("name" = "Number of children:", "points" = 7, "capacity" = 75),
 		),
 		"Set 2" = list(
 			STATS_MARRIAGES = list("name" = "Marriages made:", "points" = 25, "capacity" = 75),

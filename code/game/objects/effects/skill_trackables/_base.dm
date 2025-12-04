@@ -99,7 +99,8 @@
 	else
 		success = TRUE
 	if(success && user.mind && creator != user && adds_xp_on_reveal)
-		user.mind.add_sleep_experience(reveal_skill, (user.STAINT*2))
+		user.adjust_experience(reveal_skill, (user.STAINT*2)) // STONEKEEP EDIT
+		// user.mind.add_sleep_experience(reveal_skill, (user.STAINT*2))
 	return success
 
 ///Handles revealing the track, including checking how well the tracker can analyze it.

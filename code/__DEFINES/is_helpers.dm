@@ -1,3 +1,8 @@
+//Stonekeep Edit: FILE CHANGE
+//UPDATE TRIGGER ON THIS FILE!!!
+//For the ALTERNATIVE FILE used for KAIZOKU PROJECT
+//Check for code\__DEFINES\is_helpers_kaizoku.dm
+
 // simple is_type and similar inline helpers
 
 

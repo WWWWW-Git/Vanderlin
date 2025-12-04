@@ -1,14 +1,14 @@
 /obj/effect/mob_spawn/human/demi
-	mob_species = /datum/species/demihuman
+	mob_species = /datum/species/denmorian
 
 /obj/effect/mob_spawn/human/demi/trader
-	outfit = /datum/outfit/bard
+	outfit = /datum/outfit/job/kaizoku/migrant/bard
 
 /obj/effect/mob_spawn/human/elf
 	mob_species = /datum/species/elf/snow
 
 /obj/effect/mob_spawn/human/elf/trader
-	outfit = /datum/outfit/bard
+	outfit = /datum/outfit/job/kaizoku/migrant/bard
 
 /datum/world_faction/coastal_merchants
 	faction_name = "Coastal Trade Union"

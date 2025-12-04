@@ -51,7 +51,8 @@
 			to_chat(user, span_notice("Rolling [src] into cracker dough."))
 			if(do_after(user,long_cooktime, src))
 				new /obj/item/reagent_containers/food/snacks/foodbase/hardtack_raw(loc)
-				user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
+				user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.5)) // STONEKEEP EDIT
+				// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
 				qdel(src)
 		else
 			to_chat(user, span_warning("Put [src] on a table before working it!"))
@@ -99,7 +100,8 @@
 			to_chat(user, span_notice("Flattening [src]..."))
 			if(do_after(user, short_cooktime, src))
 				new /obj/item/reagent_containers/food/snacks/piedough(loc)
-				user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
+				user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.5)) // STONEKEEP EDIT
+				// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
 				qdel(src)
 		if(I.get_sharpness())
 			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
@@ -110,7 +112,8 @@
 				else
 					new /obj/item/reagent_containers/food/snacks/foodbase/prezzel_raw(loc)
 				qdel(src)
-				user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
+				user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.5)) // STONEKEEP EDIT
+				// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
 
 	else
 		to_chat(user, span_warning("Put [src] on a table before working it!"))
@@ -218,7 +221,8 @@
 			bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR + 2)
 			foodtype = GRAIN | MEAT
 			modified = TRUE
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
 			qdel(I)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/cheddarslice))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
@@ -230,7 +234,8 @@
 			bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR + 1)
 			foodtype = GRAIN | DAIRY
 			modified = TRUE
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
 			qdel(I)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/cooked/egg))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
@@ -241,7 +246,8 @@
 			bonus_reagents = list(/datum/reagent/consumable/nutriment = EGG_NUTRITION + 2)
 			foodtype = GRAIN | MEAT
 			modified = TRUE
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
 			qdel(I)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/fat/salo/slice))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
@@ -252,7 +258,8 @@
 			bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR + 2)
 			foodtype = GRAIN | MEAT
 			modified = TRUE
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
 			qdel(I)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/butterslice))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
@@ -263,7 +270,8 @@
 			bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
 			foodtype = GRAIN | DAIRY
 			modified = TRUE
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
 			qdel(I)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/meat/mince/beef/mett))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
@@ -274,7 +282,8 @@
 			bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR + 2)
 			foodtype = GRAIN | MEAT | VEGETABLES
 			modified = TRUE
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
 			qdel(I)
 	return ..()
 
@@ -1002,7 +1011,8 @@
 			modified = TRUE
 			faretype = FARE_FINE
 			eat_effect = /datum/status_effect/buff/foodbuff
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
 			qdel(I)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/spiderhoney))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
@@ -1015,7 +1025,8 @@
 			modified = TRUE
 			faretype = FARE_FINE
 			eat_effect = /datum/status_effect/buff/foodbuff
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
 			qdel(I)
 	else if(istype(I, /obj/item/reagent_containers/food/snacks/chocolate))
 		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
@@ -1028,5 +1039,6 @@
 			modified = TRUE
 			faretype = FARE_LAVISH
 			eat_effect = /datum/status_effect/buff/foodbuff
-			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
+			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.2)) // STONEKEEP EDIT
+			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.2))
 			qdel(I)
