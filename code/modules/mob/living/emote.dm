@@ -1002,7 +1002,7 @@
 	if(ishuman(target) && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/mob/living/carbon/human/E = target
-		if(H.zone_selected == BODY_ZONE_PRECISE_GROIN)
+		if(H.zone_selected == BODY_ZONE_GROIN)
 		// anti pedophile logging
 		// We don't need this anymore since we don't have children anymore.
 			var/log_msg
@@ -1019,7 +1019,7 @@
 	message_param = initial(message_param) // reset
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.zone_selected == BODY_ZONE_PRECISE_GROIN)
+		if(H.zone_selected == BODY_ZONE_GROIN) // STONEKEEP EDIT: KAIZOKU; GROIN IS ITS OWN BODYPART.
 			message_param = "slaps %t on the ass!"
 
 	..()

@@ -1,0 +1,13 @@
+#define DEMON_SPREAD_RADIUS 12
+#define DEMON_CORE_BOX_NEWCORE 8
+#define DEMON_HIVE_MAX_CORES 6
+#define DECAL_LAYER 2.1
+#define DEMON_CORE_SEED_COOLDOWN (20 SECONDS)
+#define FIRST_COLONY_RANGE 8
+#define SECOND_COLONY_RANGE 16
+#define MIN_CORE_DISTANCE 6
+#define STRUCTURE_MIN_SPACING 2
+
+//Area of the code specific for hallucinations and whatnot
+#define HALLU_MIN_INTERVAL (30 SECONDS)
+#define HALLU_MAX_INTERVAL (120 SECONDS)

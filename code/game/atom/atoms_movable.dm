@@ -470,7 +470,9 @@
 
 	if(!direct)
 		direct = get_dir(src, newloc)
-	if(!(atom_flags & NO_DIR_CHANGE_ON_MOVE) && !throwing && update_dir)
+
+	//Somehow, this was broken on our server. This fixes the issue.
+	if(!(atom_flags & NO_DIR_CHANGE_ON_MOVE) && !throwing && (update_dir || ismob(src))) //Stonekeep Edit
 		setDir(direct)
 
 	if(!loc.Exit(src, newloc))
@@ -671,7 +673,8 @@
 		set_glide_size(glide_size_override)
 
 	last_move = direct
-	if(!(atom_flags & NO_DIR_CHANGE_ON_MOVE) && !throwing && update_dir)
+	//Somehow, this was broken on our server. This fixes the issue.
+	if(!(atom_flags & NO_DIR_CHANGE_ON_MOVE) && !throwing && (update_dir || ismob(src))) //Stonekeep Edit
 		setDir(direction_to_move)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct, glide_size_override)) //movement failed due to buckled mob(s)
 		return FALSE

@@ -15,7 +15,7 @@
 
 	outfit = null
 	outfit_female = null
-	advclass_cat_rolls = list(CAT_MIGRANT = 15)
+	advclass_cat_rolls = list(CTAG_MIGRANTS = 15)
 
 	same_job_respawn_delay = 0
 
@@ -23,3 +23,11 @@
 	can_have_apprentices = TRUE
 
 	selection_color = "#a33096" //Change this...?
+
+/datum/job/advclass/kaizoku/migrant
+	abstract_type = /datum/job/advclass/kaizoku/migrant
+	category_tags = list(CTAG_MIGRANTS)
+
+/datum/job/advclass/kaizoku/migrant/rare
+	abstract_type = /datum/job/advclass/kaizoku/migrant/rare
+	roll_chance = 30

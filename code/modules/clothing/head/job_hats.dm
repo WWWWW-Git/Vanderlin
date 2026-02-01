@@ -148,6 +148,7 @@
 	icon_state = "maidband"
 	body_parts_covered = NONE
 
+/* //Stonekeep Edit: Removed - Severely improper for our setting.
 /obj/item/clothing/head/maidband/Initialize(mapload, ...)
 	. = ..()
 	// I fucking love pilgrims
@@ -160,3 +161,4 @@
 		department_exceptions = list(/datum/job/advclass/pilgrim, /datum/job/grabber), \
 		inverse = TRUE, \
 	)
+*/

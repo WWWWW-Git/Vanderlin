@@ -1,8 +1,6 @@
 //This animal alongside the Doggo has been organized this way because I seriously can't organize the code otherwise.
 //Feel free to change it. In fact, I encourage you to do it. I just can't waste time on it right now.
 
-//================== MACROS ==================
-
 #define BB_FALCON_CURRENT_TARGET "falcon_current_target"
 #define BB_FALCON_PERCH_TARGET "falcon_perch_target"
 #define BB_FALCON_PERCH_TYPES "falcon_perch_types"
@@ -12,399 +10,6 @@
 #define TRAIT_FALCON_PERCHED "falcon_perched"
 #define TRAIT_FALCON_FROZEN "falcon_frozen"
 #define PERCH_SOURCE "perched"
-
-
-//================== AI CONTROLLER ==================
-
-/datum/ai_controller/falcon
-	movement_delay = 0.4 SECONDS
-	ai_movement = /datum/ai_movement/hybrid_pathing
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/falcon_patrol(),
-		BB_FOCUS_TARGETS = list(),
-		BB_PATROLLING = FALSE,
-		BB_FOLLOWING = FALSE,
-		BB_SUMMONER = null,
-		BB_FALCON_PERCH_TYPES = list(),
-		BB_FALCON_WANT_PERCH = FALSE,
-	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/falcon_behavior,
-		/datum/ai_planning_subtree/falcon_perch_behavior,
-	)
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-
-// Focus targeting: Falcon only attacks mobs in its focus_targets list
-/datum/targetting_datum/falcon_focus/can_attack(mob/living/living_mob, atom/the_target)
-	var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F = living_mob
-	if(F.focus_targets && (the_target in F.focus_targets))
-		return TRUE
-	return FALSE
-
-// Patrol targeting: Falcon attacks valid enemies, never self/summoner
-/datum/targetting_datum/falcon_patrol/can_attack(mob/living/living_mob, atom/the_target)
-	if(!the_target || !ismob(the_target)) return FALSE
-	if(the_target == living_mob) return FALSE
-	// Only check summoner for falcon mobs
-	if(istype(living_mob, /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon))
-		var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F = living_mob
-		if(the_target == F.summoner)
-			return FALSE
-
-	var/mob/H = the_target
-	if(islist(H.faction) && ("orcs" in H.faction)) return TRUE
-	if(isnum(H:mob_biotypes) && (H:mob_biotypes & MOB_UNDEAD)) return TRUE
-	// Add more factions or conditions as needed here
-	return FALSE
-
-//================== PLANNING SUBTREE ==================
-
-/datum/ai_behavior/falcon_unperch
-
-/datum/ai_behavior/falcon_unperch/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/falcon_pawn = controller.pawn
-
-	if(!HAS_TRAIT(falcon_pawn, TRAIT_FALCON_PERCHED))
-		finish_action(controller, FALSE)
-		return
-
-	// If buckled to a human, unbuckle
-	if(falcon_pawn.buckled)
-		falcon_pawn.buckled.unbuckle_mob(falcon_pawn)
-	else
-		// If just perched on an object, toggle off
-		falcon_pawn.toggle_perched(perched = FALSE)
-
-	finish_action(controller, TRUE)
-	return TRUE
-
-/datum/ai_planning_subtree/falcon_behavior
-
-/datum/ai_planning_subtree/falcon_behavior/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/falcon_pawn = controller.pawn
-	if(!istype(falcon_pawn))
-		return
-
-	if(falcon_pawn && falcon_pawn.delivering_letter_anim)
-		return SUBTREE_RETURN_FINISH_PLANNING
-	if(HAS_TRAIT(falcon_pawn, TRAIT_FALCON_FROZEN)) // This will, ahem, "Shortcircuit" the animal. It won't move while perched.
-		return SUBTREE_RETURN_FINISH_PLANNING
-	if(HAS_TRAIT(falcon_pawn, TRAIT_FALCON_PERCHED) && controller.blackboard_key_exists(BB_FALCON_CURRENT_TARGET)) //We have a target while perched? Then unpearch first.
-		controller.queue_behavior(/datum/ai_behavior/falcon_unperch)
-		return SUBTREE_RETURN_FINISH_PLANNING
-
-	if(controller.blackboard[BB_FALCON_DELIVERING_PAPER]) //Priority one: Paper delivery. Your spiritual companion is getting bombarded by the enemy!
-		return SUBTREE_RETURN_FINISH_PLANNING //Remember to NOT do anything else while you deliver the paper.
-
-	var/list/focus_targets = controller.blackboard[BB_FOCUS_TARGETS] //Priority two: Attack the enemy you've been told to focus on. THIS CAN BE ANYONE OR ANYTHING.
-	if(length(focus_targets))
-		var/mob/target = null
-		var/closest_dist = INFINITY
-		for(var/mob/M in focus_targets)
-			if(QDELETED(M))
-				controller.blackboard[BB_FOCUS_TARGETS] -= M
-				continue
-			var/dist = get_dist(falcon_pawn, M)
-			if(dist < closest_dist)
-				closest_dist = dist
-				target = M
-
-		if(target)
-			controller.set_blackboard_key(BB_FALCON_CURRENT_TARGET, target)
-			controller.queue_behavior(/datum/ai_behavior/basic_melee_attack/falcon, BB_FALCON_CURRENT_TARGET, BB_TARGETTING_DATUM, null)
-			return SUBTREE_RETURN_FINISH_PLANNING
-
-	var/want_perch = controller.blackboard[BB_FALCON_WANT_PERCH] //Second priority. This portion of the code handles perching command.
-	if(want_perch && controller.blackboard_key_exists(BB_FALCON_PERCH_TARGET))
-		var/atom/perch_target = controller.blackboard[BB_FALCON_PERCH_TARGET]
-		if(!QDELETED(perch_target))
-			var/dist = get_dist(falcon_pawn, perch_target)
-			if(dist > 1)
-				controller.queue_behavior(/datum/ai_behavior/falcon_follow, BB_FALCON_PERCH_TARGET) //Moves towards the target with pathfinding functions.
-				return SUBTREE_RETURN_FINISH_PLANNING
-			else
-				controller.queue_behavior(/datum/ai_behavior/falcon_perch_on_target, BB_FALCON_PERCH_TARGET) //Well, the falcon is having issues. So snap on it instantly instead.
-				return SUBTREE_RETURN_FINISH_PLANNING
-
-	var/following = controller.blackboard[BB_FOLLOWING] //Priority three: Follow summonner when asked to.
-	var/mob/summoner = controller.blackboard[BB_SUMMONER]
-	if(following && summoner && !QDELETED(summoner))
-		var/dist = get_dist(falcon_pawn, summoner)
-		if(dist > 2)
-			controller.queue_behavior(/datum/ai_behavior/falcon_follow, BB_SUMMONER)
-			return SUBTREE_RETURN_FINISH_PLANNING
-
-	var/patrolling = controller.blackboard[BB_PATROLLING] //Priority four: If not following the summoner, you are patrolling for enemies.
-	if(patrolling)
-		var/patrol_target = null
-		var/closest_patrol_dist = INFINITY
-		for(var/mob/M in hearers(7, falcon_pawn))
-			var/datum/targetting_datum/falcon_patrol/td = new /datum/targetting_datum/falcon_patrol
-			if(td.can_attack(falcon_pawn, M))
-				var/dist = get_dist(falcon_pawn, M)
-				if(dist < closest_patrol_dist)
-					closest_patrol_dist = dist
-					patrol_target = M
-
-		if(patrol_target)
-			controller.set_blackboard_key(BB_FALCON_CURRENT_TARGET, patrol_target)
-			controller.queue_behavior(/datum/ai_behavior/basic_melee_attack/falcon, BB_FALCON_CURRENT_TARGET, BB_TARGETTING_DATUM, null)
-			return SUBTREE_RETURN_FINISH_PLANNING
-		else
-			controller.queue_behavior(/datum/ai_behavior/falcon_patrol)
-			return SUBTREE_RETURN_FINISH_PLANNING
-
-	if(summoner && !QDELETED(summoner)) //Priority five; Default 'follow summoner' but more relaxed, more likely to perch around to rest.
-		var/dist = get_dist(falcon_pawn, summoner)
-		if(dist > 3)
-			controller.queue_behavior(/datum/ai_behavior/falcon_follow, BB_SUMMONER)
-			return SUBTREE_RETURN_FINISH_PLANNING
-	return
-
-/datum/ai_planning_subtree/falcon_perch_behavior //This is a subtree so the bird perches on targets.
-	var/perch_chance = 8 //Chance to perch
-	var/unperch_chance = 12 //Chance to unperch
-
-/datum/ai_planning_subtree/falcon_perch_behavior/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/falcon_pawn = controller.pawn
-	var/is_perched = HAS_TRAIT(falcon_pawn, TRAIT_FALCON_PERCHED)
-
-	if(HAS_TRAIT(falcon_pawn, TRAIT_FALCON_FROZEN))
-		return SUBTREE_RETURN_FINISH_PLANNING
-
-	if(is_perched)
-		if((prob(unperch_chance) || controller.blackboard_key_exists(BB_FALCON_CURRENT_TARGET)))
-			controller.queue_behavior(/datum/ai_behavior/falcon_unperch)
-			return SUBTREE_RETURN_FINISH_PLANNING
-		return SUBTREE_RETURN_FINISH_PLANNING
-
-	if(!prob(perch_chance) || controller.blackboard_key_exists(BB_FALCON_CURRENT_TARGET) || controller.blackboard[BB_FALCON_WANT_PERCH]) //Doing nothing? Perch and relax.
-		return
-
-	if(controller.blackboard_key_exists(BB_FALCON_PERCH_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/falcon_wait_and_perch, BB_FALCON_PERCH_TARGET) // Instead of instantly queuing perch, use new AI behavior for approach-and-perch
-		return SUBTREE_RETURN_FINISH_PLANNING
-	var/mob/summoner = controller.blackboard[BB_SUMMONER] //75% chance to perch on summoner if they're nearby, 25% chance for objects
-	if(prob(75) && summoner && !QDELETED(summoner) && get_dist(falcon_pawn, summoner) <= 3)
-		controller.set_blackboard_key(BB_FALCON_PERCH_TARGET, summoner)
-		controller.queue_behavior(/datum/ai_behavior/falcon_perch_on_target, BB_FALCON_PERCH_TARGET)
-		return SUBTREE_RETURN_FINISH_PLANNING
-	else
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list, BB_FALCON_PERCH_TARGET, controller.blackboard[BB_FALCON_PERCH_TYPES])
-		return
-
-/datum/ai_behavior/falcon_wait_and_perch
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-
-/datum/ai_behavior/falcon_wait_and_perch/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/falcon_pawn = controller.pawn
-	var/mob/living/carbon/human/target = controller.blackboard[target_key]
-	if(QDELETED(falcon_pawn) || QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
-
-	var/dist = get_dist(falcon_pawn, target)
-	if(dist > 1)
-		set_movement_target(controller, target)
-		return
-
-	if(falcon_pawn.start_perching(target)) 	// Adjacent? Then try to perch!
-		finish_action(controller, TRUE, target_key)
-	else
-		finish_action(controller, FALSE, target_key)
-
-//================== FALCON BEHAVIORS ==================
-
-/datum/ai_behavior/falcon_follow
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
-
-/datum/ai_behavior/falcon_follow/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/falcon_follow/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
-
-	var/mob/falcon_pawn = controller.pawn
-	var/dist = get_dist(falcon_pawn, target)
-
-	var/required_distance = controller.blackboard[BB_FALCON_WANT_PERCH] ? 1 : 2	// If we're following for perch command, get closer
-
-	if(dist <= required_distance)
-		finish_action(controller, TRUE, target_key)
-		return
-
-	// Keep updating movement target
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/falcon_patrol
-
-/datum/ai_behavior/falcon_patrol/perform(delta_time, datum/ai_controller/controller)
-	var/mob/falcon_pawn = controller.pawn
-	var/mob/summoner = controller.blackboard[BB_SUMMONER]
-
-	if(!summoner || QDELETED(summoner))
-		finish_action(controller, FALSE)
-		return
-
-	var/patrol_radius = 5 // Pick a random location within patrol radius of summoner
-	var/target_x = summoner.x + rand(-patrol_radius, patrol_radius)
-	var/target_y = summoner.y + rand(-patrol_radius, patrol_radius)
-	var/turf/target_turf = locate(target_x, target_y, summoner.z)
-
-	if(target_turf)
-		controller.set_movement_target(target_turf)
-		spawn(30) // Move to new location after 3 seconds
-			if(controller && !QDELETED(falcon_pawn))
-				finish_action(controller, TRUE)
-	else
-		finish_action(controller, FALSE)
-
-/datum/ai_behavior/falcon_perch_on_target // Falcon behavior that allows them to perch on a target.
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
-
-/datum/ai_behavior/falcon_perch_on_target/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	controller.set_movement_target(target)
-
-/datum/ai_behavior/falcon_perch_on_target/perform(delta_time, datum/ai_controller/controller, target_key)
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		finish_action(controller, FALSE)
-		return
-
-	var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/falcon_pawn = controller.pawn
-	var/dist = get_dist(falcon_pawn, target)
-
-	if(dist > 1)
-		controller.set_movement_target(target)
-		return
-
-	// Only try to perch if adjacent
-	// This will call buckle_mob and "teleport" onto the player
-	if(falcon_pawn.start_perching(target))
-		controller.blackboard[BB_FALCON_WANT_PERCH] = FALSE
-		finish_action(controller, TRUE)
-	else
-		controller.blackboard[BB_FALCON_WANT_PERCH] = FALSE
-		finish_action(controller, FALSE)
-
-/datum/ai_behavior/falcon_perch_on_target/finish_action(datum/ai_controller/controller, succeeded, target_key)
-	. = ..()
-	controller.clear_blackboard_key(target_key)
-
-//================== FALCON MELEE ATTACK ==================
-
-/datum/ai_behavior/basic_melee_attack/falcon
-	action_cooldown = 2 SECONDS
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-/datum/ai_behavior/basic_melee_attack/falcon/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
-	var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/falcon_pawn = controller.pawn
-	if(falcon_pawn.next_click && world.time < falcon_pawn.next_click)
-		return
-
-	var/atom/target = controller.blackboard[target_key]
-	if(!istype(falcon_pawn) || QDELETED(target))
-		finish_action(controller, FALSE)
-		return
-
-	var/dist = get_dist(falcon_pawn, target)
-	if(dist > 1)
-		controller.set_movement_target(target)
-		return
-
-	if(dist <= 1 && isliving(target))
-		var/mob/living/L = target
-		var/list/limb_zones = list(
-			BODY_ZONE_L_ARM, BODY_ZONE_R_ARM,
-			BODY_ZONE_L_LEG, BODY_ZONE_R_LEG,
-			BODY_ZONE_CHEST, BODY_ZONE_HEAD
-		)
-		var/zone = pick(limb_zones)
-		var/obj/item/bodypart/target_bp = L.get_bodypart(zone)
-		var/damage = rand(falcon_pawn.melee_damage_lower, falcon_pawn.melee_damage_upper)
-		var/wound_class = BCLASS_CUT //Talons = cutting
-
-		var/protected = FALSE //First, armor protection check.
-		if(target_bp)
-			if(zone == BODY_ZONE_HEAD) //First, check helmets.
-				for(var/obj/item/clothing/C in L.contents)
-					if(C.slot_flags & ITEM_SLOT_HEAD)
-						if(islist(C.prevent_crits) && (wound_class in C.prevent_crits))
-							protected = TRUE
-							to_chat(L, "<span class='notice'>[C] deflects the falcon's talons!</span>")
-							break
-			else if(zone == BODY_ZONE_PRECISE_R_EYE || zone == BODY_ZONE_PRECISE_L_EYE)
-				for(var/obj/item/clothing/C in L.contents)
-					if(C.slot_flags & ITEM_SLOT_MASK)
-						if(islist(C.prevent_crits) && (wound_class in C.prevent_crits))
-							protected = TRUE
-							to_chat(L, "<span class='notice'>[C] protects your eye from the falcon's talons!</span>")
-							break
-
-		if(protected)
-			// Only cooldown, NO sound, NO visible_message, NO damage, NO wounds
-			falcon_pawn.next_click = world.time + (falcon_pawn.melee_attack_cooldown || 15)
-			finish_action(controller, TRUE, target_key)
-			return
-
-		// ---------- ATTACK ONLY IF NOT PROTECTED ------------------
-		falcon_pawn.visible_message("<span class='danger'>[falcon_pawn] swoops down at [L], talons sink into [L.p_their()] [parse_zone(zone)]!</span>", COMBAT_MESSAGE_RANGE)
-		playsound(get_turf(falcon_pawn), pick(falcon_pawn.attack_sound), 60, TRUE)
-		L.apply_damage(damage, BRUTE, zone)
-
-		// -- CRIT WOUND/GOUGE --
-		if(target_bp)
-			if(zone == BODY_ZONE_HEAD && prob(25))
-				var/eye_type
-				var/eye_side
-				if(prob(50))
-					eye_type = /datum/wound/facial/eyes/right
-					eye_side = "right"
-				else
-					eye_type = /datum/wound/facial/eyes/left
-					eye_side = "left"
-				if(!L.has_wound(eye_type))
-					var/datum/wound/W = new eye_type()
-					W.apply_to_bodypart(target_bp, FALSE, TRUE)
-					L.visible_message("<span class='critical'>[L]'s [eye_side] eye is gouged by sharp talons!</span>")
-				else
-					if(prob(10))
-						var/datum/wound/W = new /datum/wound/slash/large()
-						W.apply_to_bodypart(target_bp, FALSE, TRUE)
-						L.visible_message("<span class='warning'>[L]'s [parse_zone(zone)] is deeply gouged!</span>")
-					else if(prob(30))
-						var/wound_type = damage > 18 ? /datum/wound/slash : /datum/wound/slash/small
-						var/datum/wound/W = new wound_type()
-						W.apply_to_bodypart(target_bp, FALSE, TRUE)
-						L.visible_message("<span class='warning'>[L]'s [parse_zone(zone)] is cut open!</span>")
-			else
-				if(prob(10))
-					var/datum/wound/W = new /datum/wound/slash/large()
-					W.apply_to_bodypart(target_bp, FALSE, TRUE)
-					L.visible_message("<span class='warning'>[L]'s [parse_zone(zone)] is deeply gouged!</span>")
-				else if(prob(30))
-					var/wound_type = damage > 18 ? /datum/wound/slash : /datum/wound/slash/small
-					var/datum/wound/W = new wound_type()
-					W.apply_to_bodypart(target_bp, FALSE, TRUE)
-					L.visible_message("<span class='warning'>[L]'s [parse_zone(zone)] is cut open!</span>")
-
-		// ------ SET NEXT ATTACK TIME -----
-		falcon_pawn.next_click = world.time + (falcon_pawn.melee_attack_cooldown || 15)
-		finish_action(controller, TRUE, target_key)
-		return
 
 /proc/OnFalconBuckled(mob/living/carbon/human/H, mob/living/M)
 	H.update_falcon_perched_overlay()
@@ -417,12 +22,10 @@
 		overlays -= falcon_perched_overlay
 		falcon_perched_overlay = null
 
-	// Only show overlay if falcon is actually buckled to us
-	if(buckled_mobs)
+	if(buckled_mobs) //Only show the overlay if the falcon is bucklet to the player.
 		for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in buckled_mobs)
 			if(QDELETED(F) || F.stat == DEAD)
 				continue
-			// Only show the overlay, don't touch falcon invisibility
 			falcon_perched_overlay = image(F.icon, F.icon_perched, F.dir)
 			falcon_perched_overlay.pixel_x = 7
 			falcon_perched_overlay.pixel_y = 8
@@ -462,7 +65,13 @@
 	maxHealth = 100
 	emote_see = list("scans the horizon", "judges you with a gaze", "swoops low.")
 	speak_chance = 2
-	attack_sound = list('modular/kaizoku/sound/animals/saintalon/saintalon_1.ogg','modular/kaizoku/sound/animals/saintalon/saintalon_1.ogg','modular/kaizoku/sound/animals/saintalon/saintalon_7.ogg','modular/kaizoku/sound/animals/saintalon/saintalon_2.ogg')
+	attack_sound = list() // Placeholder - will use attack_hit_sound instead
+	var/list/attack_hit_sound = list(
+		'sound/combat/hits/bladed/genslash (3).ogg',  // Placeholder - will replace with actual hit sounds
+		'sound/combat/hits/bladed/genslash (2).ogg',
+		'sound/combat/hits/bladed/genslash (1).ogg',
+	)
+	var/attack_sound_chance = 40 // 40% chance to play hit sound on attack
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/fat = 1,
 						/obj/item/reagent_containers/food/snacks/meat/poultry = 1,
 						/obj/item/natural/feather = 1)
@@ -476,6 +85,30 @@
 				/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
 				/obj/item/reagent_containers/food/snacks/produce/grain/oat)
 	var/icon_perched = "falcon_perch"
+
+/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/is_enemy(mob/living/M)
+	if(M == src)
+		return FALSE
+	if(M == summoner) //Will never attack the summoner or itself.
+		return FALSE
+	if(istype(M, /mob/living/simple_animal/hostile/retaliate/custodianpet)) //NEVER attack other custodian pets.
+		return FALSE
+	if(M.stat == DEAD) // Never attack dead mobs.
+		return FALSE
+	if(istype(M, /mob/living/simple_animal/hostile)) //Automatically attacks hostile simple animals.
+		return TRUE
+	if(islist(M.faction))
+		if(FACTION_ORCS in M.faction)
+			return TRUE
+		if(FACTION_UNDEAD in M.faction)
+			return TRUE
+		if(FACTION_CABAL in M.faction)
+			return TRUE
+		if(FACTION_MATTHIOS in M.faction)
+			return TRUE
+	if(isnum(M:mob_biotypes) && (M:mob_biotypes & MOB_UNDEAD)) //Straight up attack by bodytype.
+		return TRUE //Just to reinforce THAT you GOT to ATTACK THESE ONES
+	return FALSE
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/Initialize(mapload)
 	. = ..()
@@ -494,6 +127,7 @@
 			/obj/machinery,
 			/obj/structure/statue
 		)
+		ai_controller.blackboard[BB_TARGETTING_DATUM] = new /datum/targetting_datum/basic()
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/update_icon_state()
 	. = ..()
@@ -540,14 +174,12 @@
 /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/perch_on_human(mob/living/carbon/human/target)
 	if(LAZYLEN(target.buckled_mobs) >= target.max_buckled_mobs)
 		return FALSE
-	// Always forceMove onto their tile before buckling, to be 100% sure
 	var/old_dense = src.density
 	src.density = FALSE
 	src.forceMove(get_turf(target))
 	src.density = old_dense
-	sleep(1) // Sometimes you need a tick for forceMove to register
+	sleep(1) // Sometimes, it may be necessary a tick to properly register!!!!!!!!!!!aaaaaaAAAAAAAAAAAA
 
-	// Now buckle
 	if(!target.buckle_mob(src, TRUE))
 		return FALSE
 	on_perched(target)
@@ -560,11 +192,6 @@
 		return
 	on_unperched()
 	UnregisterSignal(src, COMSIG_LIVING_SET_BUCKLED)
-
-/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/after_move(atom/source)
-	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	toggle_perched(perched = FALSE)
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/toggle_perched(perched)
 	if(!perched)
@@ -629,19 +256,66 @@
 /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/add_focus_target(mob/target)
 	if(!focus_targets)
 		focus_targets = list()
-	if(!(target in focus_targets))
-		focus_targets = list(target) // CLEAR previous
+	if(target in focus_targets)
+		focus_targets -= target
 		if(ai_controller)
-			ai_controller.blackboard[BB_FOCUS_TARGETS] = list(target)
+			ai_controller.blackboard[BB_FOCUS_TARGETS] = focus_targets.Copy()
+		return
+	focus_targets = list(target)
+	if(ai_controller)
+		ai_controller.blackboard[BB_FOCUS_TARGETS] = list(target)
 
-//================== HUMAN PERCH INTERFACE ==================
+/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/find_and_smoke_ziggie(mob/user)
+	if(has_smoke)
+		to_chat(user, "<span class='notice'>[src] is already proudly smoking like the reverenced symbol that it is.</span>")
+		return
+	var/obj/item/clothing/face/cigarette/rollie/found_ziggie = null
+	for(var/obj/item/clothing/face/cigarette/rollie/R in view(7, src))
+		found_ziggie = R
+		break
+
+	if(!found_ziggie)
+		to_chat(user, "<span class='warning'>[src] could not find any smokies nearby.</span>")
+		return
+	visible_message("<span class='notice'>[src] spots a ziggie and swoops toward it!</span>")
+	if(ai_controller)
+		patrolling = FALSE
+		following = FALSE
+		ai_controller.set_blackboard_key("ziggie_target", found_ziggie)
+		ai_controller.queue_behavior(/datum/ai_behavior/falcon_follow, "ziggie_target")
+	spawn(0)
+		var/attempts = 0
+		while(attempts < 100 && !QDELETED(src) && stat != DEAD && !QDELETED(found_ziggie))
+			if(get_dist(src, found_ziggie) <= 1)
+				found_ziggie.forceMove(src)
+				falcon_smoke = found_ziggie
+				has_smoke = TRUE // PROCEED TO HEAL FROM SMOKING!!! hahaa... a smoking snakes reference... haha....
+				update_icon_state()
+				visible_message("<span class='notice'>[src] looks pleased while smoking a literal ziggie. Who fucking teached them that?</span>")
+				var/heal_ticks = 12
+				for(var/i = 1 to heal_ticks)
+					if(!has_smoke || QDELETED(src))
+						break
+					heal_overall_damage(5, 5)
+					sleep(50)
+				if(has_smoke && !QDELETED(src))
+					has_smoke = FALSE
+					if(falcon_smoke)
+						qdel(falcon_smoke)
+						falcon_smoke = null
+					update_icon_state()
+					visible_message("<span class='notice'>[src] finishes the ziggie and looks refreshed.</span>")
+				return
+			attempts++
+			sleep(2)
+		if(!QDELETED(found_ziggie))
+			visible_message("<span class='notice'>[src] couldn't reach the ziggie in time.</span>")
 
 /mob/living/carbon/human/proc/perch_falcon_on_hand(var/falcon)
 	var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F = falcon
 	if(!istype(F, /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon) || !F.can_be_perched(src))
-		to_chat(src, "<span class='warning'>You can't perch that falcon right now.</span>")
+		to_chat(src, "<span class='warning'>That falcon don't want to perch on you.</span>")
 		return FALSE
-	// Set up blackboard and let AI handle the approach and perch!
 	if(F.ai_controller)
 		F.ai_controller.blackboard[BB_FALCON_WANT_PERCH] = TRUE
 		F.ai_controller.blackboard[BB_FALCON_PERCH_TARGET] = src
@@ -654,8 +328,7 @@
 	if(buckled_mobs)
 		for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in buckled_mobs)
 			F.resist_from_perch()
-			F.on_unperched() // <-- Force reset every time
-			return TRUE
+			F.on_unperched()
 	return FALSE
 
 /mob/living/carbon/human/post_buckle_mob(mob/living/M)
@@ -673,12 +346,11 @@
 			H.perch_falcon_on_hand(src)
 
 /mob/living/carbon/human/MiddleClickOn(atom/A, params)
-	// Falcon drop: middle-click yourself to release perched falcon
 	if(A == src && buckled_mobs)
 		for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in buckled_mobs)
 			F.resist_from_perch()
-			return // Only drop one falcon at a time
-	..() // Call parent for normal behavior
+			return // Only drop one falcon, specifically.
+	..() //THEN you can continue with the normal middle click behavior
 
 /obj/item/paper/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon))
@@ -702,37 +374,30 @@
 		return ..()
 	if(!user || !user.real_name)
 		return ..()
-	// Prompt for recipient name
-	var/recipient_name = input(user, "Who do you want to send this letter to? (Type their exact name)", "Send Letter")
+	var/recipient_name = input(user, "Manifest the figure and smell for the falcon", "Send Letter")
 	if(!recipient_name)
 		return ..()
-	// Find the player by real_name
 	var/recipient = null
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
 		if(H.real_name == recipient_name)
 			recipient = H
 			break
 	if(!recipient)
-		to_chat(user, "<span class='warning'>No one by that name found!</span>")
+		to_chat(user, "<span class='warning'>The Saintalon does not know anyone with that smell.</span>")
 		return ..()
-	// Initiate delivery
 	F.start_paper_delivery(src, user, recipient)
 	return TRUE
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/start_paper_delivery(obj/item/paper/P, mob/living/carbon/human/sender, mob/living/carbon/human/recipient)
 	if(delivering_paper)
-		to_chat(sender, "<span class='warning'>I'm already delivering something!</span>")
+		to_chat(sender, "<span class='warning'>The Saintalon is already delivering something.</span>")
 		return
-
-	// --- FORCE UNFREEZE/UNBUCKLE/UNPERCH ---
 	REMOVE_TRAIT(src, TRAIT_FALCON_FROZEN, "perching")
 	REMOVE_TRAIT(src, TRAIT_FALCON_PERCHED, "perched")
 	if(buckled)
 		buckled.unbuckle_mob(src)
 	toggle_perched(FALSE)
 	update_icon_state()
-	// --------------------------------------
-
 	delivering_paper = TRUE
 	held_paper = P
 	delivery_target = recipient
@@ -749,33 +414,24 @@
 		ai_controller.clear_blackboard_key(BB_FALCON_PERCH_TARGET)
 		ai_controller.clear_blackboard_key(BB_FALCON_CURRENT_TARGET)
 		ai_controller.clear_blackboard_key(BB_FOCUS_TARGETS)
-
-	//spawn(0)
 	fly_and_deliver_paper(sender, recipient)
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/fly_and_deliver_paper(mob/living/carbon/human/sender, mob/living/carbon/human/recipient)
-	// Begin delivery
 	delivering_letter_anim = TRUE
 	delivering_paper = TRUE
 	if(ai_controller)
 		ai_controller.blackboard[BB_FALCON_DELIVERING_PAPER] = TRUE
-
-	// Takeoff animation: raise pixel_y, fade out
 	visible_message("<span class='info'>The falcon spreads its wings and takes flight!</span>")
 	var/original_pixel_y = pixel_y
 	for(var/i = 1 to 8)
-		pixel_y = original_pixel_y + i * 4   // Move up visually
-		alpha = 255 - i * 30                // Fade out
+		pixel_y = original_pixel_y + i * 4 // Move up visually
+		alpha = 255 - i * 30 //then fades out
 		sleep(1)
-	pixel_y = original_pixel_y + 32 // vanish off screen
+	pixel_y = original_pixel_y + 32 //... aaand vanish.
 	alpha = 0
 	sleep(2)
-
-	// "Teleport" to recipient
-	if(QDELETED(recipient) || !delivering_paper) return finish_falcon_delivery()
+	if(QDELETED(recipient) || !delivering_paper) return finish_falcon_delivery() // Now you come back to the recipient.
 	forceMove(get_turf(recipient))
-
-	// Landing animation: start high/faded, land/fade in
 	original_pixel_y = pixel_y
 	for(var/i = 8 to 1 step -1)
 		pixel_y = (i-1) * 4
@@ -786,8 +442,6 @@
 
 	visible_message("<span class='info'>[src] arrives at [recipient.real_name] with a letter!</span>")
 	to_chat(recipient, "<span class='info'>[src] is offering you a letter from [sender.real_name]. Use [src] to take it.</span>")
-
-	// Wait for recipient to take or timeout
 	var/wait_time = 0
 	while(wait_time < 50 && held_paper && held_paper.loc == src && !QDELETED(src) && !QDELETED(recipient) && delivering_paper)
 		if(get_dist(src, recipient) > 2) break
@@ -886,13 +540,10 @@
 			to_chat(user, "<span class='notice'>[F] is already smoking!</span>")
 			return
 	..()
-/*
+
 /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/get_sound(input)
 	if("idle")
 		return pick('modular/kaizoku/sound/animals/saintalon/saintalon_3.ogg','modular/kaizoku/sound/animals/saintalon/saintalon_4.ogg','modular/kaizoku/sound/animals/saintalon/saintalon_5.ogg','modular/kaizoku/sound/animals/saintalon/saintalon_6.ogg')
-*/
-
-//================== HUMAN EXTENSIONS ==================
 
 /mob/living/carbon/human
 	var/image/falcon_perched_overlay = null
@@ -900,24 +551,22 @@
 
 /mob/living/carbon/human/MiddleClickOn(atom/A, params)
 	..()
-	if(A == src) // Player middle-clicks themselves
+	if(A == src)
 		drop_perched_falcon()
 
-//================== WHISTLE OBJECT ==================
-
-/datum/intent/whistle/attack
-	name = "attack"
-	icon_state = "inclaw"
+/datum/intent/whistle/use
+	name = "Use"
+	icon_state = "inuse"
 	chargetime = 0
 	noaa = TRUE
 	rmb_ranged = TRUE
 
-/datum/intent/whistle/attack/rmb_ranged(atom/target, mob/user)
+/datum/intent/whistle/use/rmb_ranged(atom/target, mob/user)
 	if(ismob(target))
 		var/mob/L = target
-		// Falcons
 		for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in view(7, user))
-			if(!F.summoner) continue
+			if(!F.summoner)
+				continue
 			if(F.summoner != user)
 				to_chat(user, "<span class='warning'>[F] ignores your command. It serves another master.</span>")
 				continue
@@ -925,9 +574,9 @@
 				to_chat(user, "<span class='warning'>The falcon gets confused. Why attack itself?</span>")
 				continue
 			F.add_focus_target(L)
-		// Doggos
 		for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in view(7, user))
-			if(!D.summoner) continue
+			if(!D.summoner)
+				continue
 			if(D.summoner != user)
 				to_chat(user, "<span class='warning'>[D] ignores your command. It serves another master.</span>")
 				continue
@@ -937,21 +586,7 @@
 			D.add_focus_target(L)
 		to_chat(user, "<span class='info'>The sharp sounds command your animal(s) to attack [L].</span>")
 		return
-
-	// --- NEW: Send animals to bed ---
-	if(istype(target, /obj/structure/bed))
-		var/obj/structure/bed/B = target
-		//for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in view(7, user))
-			//if(F.summoner == user)
-				//F.set_resting_bed(B, user)
-		for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in view(7, user))
-			if(D.summoner == user)
-				D.set_resting_bed(B, user)
-		to_chat(user, "<span class='info'>You command your animal(s) to rest and heal on the bed.</span>")
-		return
-
-	// --- NEW: Send animals to turf ---
-	if(istype(target, /turf/open/floor))
+	if(isturf(target))
 		var/turf/T = target
 		for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in view(7, user))
 			if(F.summoner == user)
@@ -962,57 +597,128 @@
 		to_chat(user, "<span class='info'>You signal your animal(s) to move to a spot.</span>")
 		return
 
-/datum/intent/whistle/patrol
-	name = "patrol/perch"
-	icon_state = "inwring"
-	chargetime = 0
-	noaa = TRUE
-	rmb_ranged = TRUE
+var/global/list/whistle_command_cooldowns = list()
 
-/datum/intent/whistle/patrol/rmb_ranged(atom/target, mob/user)
-	var/perch_done = FALSE
-	// Falcons: handle perch/unperch
+/obj/item/pet_command/whistle/attack_self(mob/user)
+	if(whistle_command_cooldowns[user] && world.time < whistle_command_cooldowns[user])
+		to_chat(user, "<span class='warning'>Your lungs need to recover before using this again.</span>")
+		return
+	whistle_command_cooldowns[user] = world.time + 10
+
+	// Find both falcons and doggos
+	var/list/falcons = list()
+	var/list/doggos = list()
+
 	for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in view(7, user))
-		if(!F.summoner)
-			to_chat(user, "<span class='warning'>[F] does not have an owner.</span>")
-			continue
-		if(F.summoner != user)
-			to_chat(user, "<span class='warning'>[F] does not recognize your whistle.</span>")
-			continue
+		if(F.summoner == user && !(HAS_TRAIT(F, TRAIT_FALCON_PERCHED) && F.buckled == user))
+			falcons += F
 
-		// Falcon-specific perch logic
-		if(HAS_TRAIT(F, TRAIT_FALCON_PERCHED) && F.buckled == user)
-			F.set_unperching()
-			to_chat(user, "<span class='info'>The sound warns your falcon to stop perching.</span>")
-			perch_done = TRUE
-			continue
-		if(!HAS_TRAIT(F, TRAIT_FALCON_PERCHED) && !F.buckled)
-			F.set_perching(user)
-			to_chat(user, "<span class='info'>The sound beckons your falcon to perch on you.</span>")
-			perch_done = TRUE
-			continue
-		// If target is a falcon, set patrol mode
-		if(!perch_done && istype(target, /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon))
-			if(!F.summoner || F.summoner != user)
-				F.summoner = user
-			if(F.summoner == user)
-				F.toggle_patrol(user)
-				to_chat(user, "<span class='notice'>You signal for your falcon to seek enemies.</span>")
-
-	// Doggos: patrol toggle only
 	for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in view(7, user))
-		if(!D.summoner)
-			to_chat(user, "<span class='warning'>[D] does not have an owner.</span>")
-			continue
-		if(D.summoner != user)
-			to_chat(user, "<span class='warning'>[D] does not recognize your whistle.</span>")
-			continue
-		D.toggle_patrol(user)
-	to_chat(user, "<span class='notice'>You signal for your animal(s) to seek enemies.</span>")
-	return
+		if(D.summoner == user)
+			doggos += D
+
+	if(!falcons.len && !doggos.len)
+		to_chat(user, "<span class='warning'>No companions recognize your whistle.</span>")
+		return
+
+	var/list/made_choices = list()
+
+	if(falcons.len)
+		var/datum/radial_menu_choice/perch_option = new
+		perch_option.image = image(icon = 'icons/mob/animal.dmi', icon_state = "parrot_sit")
+		perch_option.info = span_boldnotice("Call your falcon to perch on you.")
+		made_choices["Perch"] = perch_option
+
+	var/datum/radial_menu_choice/patrol_option = new
+	patrol_option.image = image(icon = 'icons/mob/animal.dmi', icon_state = "parrot_fly")
+	patrol_option.info = span_boldnotice("Command your companion to patrol the area and hunt for enemies.")
+	made_choices["Patrol"] = patrol_option
+
+	var/datum/radial_menu_choice/heal_option = new
+	heal_option.image = image(icon = 'icons/roguetown/items/lighting.dmi', icon_state = "spliffoff")
+	heal_option.info = span_boldnotice("Command your companion to find healing. Falcon seeks ziggies, doggo seeks meat or bones.")
+	made_choices["Heal"] = heal_option
+
+	if(falcons.len)
+		var/datum/radial_menu_choice/message_option = new
+		message_option.image = image(icon = 'icons/mob/animal.dmi', icon_state = "parrot_dead")
+		message_option.info = span_boldnotice("Use your falcon to send messages or small objects.")
+		made_choices["Send Message"] = message_option
+
+	if(doggos.len)
+		var/datum/radial_menu_choice/rest_option = new
+		rest_option.image = image(icon = 'icons/mob/animal.dmi', icon_state = "parrot_dead")
+		rest_option.info = span_boldnotice("Allow your doggo to rest on a nearby bed and recover.")
+		made_choices["Rest"] = rest_option
+
+	var/task = show_radial_menu(user, get_turf(user), made_choices, tooltips = TRUE)
+	if(!task)
+		return
+	switch(task)
+		if("Perch")
+			if(!falcons.len)
+				to_chat(user, "<span class='warning'>You have no falcon to perch!</span>")
+				return
+			for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in falcons)
+				F.set_perching(user)
+			to_chat(user, "<span class='info'>The sound beckons your falcon(s) to perch on you.</span>")
+			// Doggo confusion
+			if(doggos.len)
+				for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in doggos)
+					D.visible_message("<span class='notice'>[D] tilts its head in confusion at the command.</span>")
+		if("Patrol")
+			for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in falcons)
+				F.toggle_patrol(user)
+			for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in doggos)
+				D.toggle_patrol(user)
+		if("Heal")
+			for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in falcons)
+				F.find_and_smoke_ziggie(user)
+			for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in doggos)
+				D.find_and_eat_food(user)
+		if("Send Message")
+			if(!falcons.len)
+				to_chat(user, "<span class='warning'>You have no falcon for sending messages!</span>")
+				return
+			var/obj/item/held_item = user.get_inactive_held_item()
+			if(!held_item)
+				to_chat(user, "<span class='warning'>You need to hold an item (paper or small object) in your other hand to send!</span>")
+				return
+			if(!istype(held_item, /obj/item/paper) && held_item.w_class != WEIGHT_CLASS_TINY && held_item.w_class != WEIGHT_CLASS_SMALL)
+				to_chat(user, "<span class='warning'>The falcon can only carry paper, keys, or small items!</span>")
+				return
+			var/recipient_name = input(user, "Who do you want to send this to? (Type their exact name)", "Falcon Messenger") as text|null
+			if(!recipient_name)
+				return
+			var/mob/living/carbon/human/target = null
+			for(var/mob/living/carbon/human/H in GLOB.human_list)
+				if(H.real_name == recipient_name)
+					target = H
+					break
+			if(!target)
+				to_chat(user, "<span class='warning'>The falcon cannot find anyone named '[recipient_name]'.</span>")
+				return
+			for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/F in falcons)
+				F.send_item_via_messenger(user, held_item, target)
+				break
+			if(doggos.len)
+				for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in doggos)
+					D.visible_message("<span class='notice'>[D] looks confused, unsure of what to do.</span>")
+		if("Rest")
+			if(!doggos.len)
+				to_chat(user, "<span class='warning'>You have no doggo to rest!</span>")
+				return
+			var/obj/structure/bed/found_bed = null
+			for(var/obj/structure/bed/B in view(10, user))
+				found_bed = B
+				break
+			if(found_bed)
+				for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in doggos)
+					D.set_resting_bed(found_bed, user)
+			else
+				to_chat(user, "<span class='warning'>There are no beds nearby for your doggo to rest on.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/move_to_turf(var/turf/T, mob/user)
-	// Optional: if you want them to just move there and stand, clear goals
 	patrolling = FALSE
 	following = FALSE
 	if(ai_controller)
@@ -1020,16 +726,15 @@
 		ai_controller.blackboard[BB_FOLLOWING] = FALSE
 		ai_controller.blackboard[BB_DOGGO_RESTING] = FALSE
 		ai_controller.blackboard[BB_DOGGO_REST_BED] = null
-	// Actually move there
-	forceMove(T)
-	to_chat(user, "<span class='notice'>[src] moves to the spot as commanded.</span>")
+		ai_controller.set_movement_target(T)
+	to_chat(user, "<span class='notice'>[src] begins moving to the spot.</span>")
 
 /obj/item/pet_command/whistle
 	name = "dustwalker whistle"
-	desc = "A metal whistle of dustwalker culture settled to allow communication between user and its spiritual companion."
+	desc = "A metal whistle of dustwalker culture settled to allow communication between user and its spiritual companions. Works with both falcons and doggos."
 	icon = 'modular/kaizoku/icons/mobs/falcon.dmi'
 	icon_state = "whistle"
-	possible_item_intents = list(/datum/intent/whistle/attack, /datum/intent/whistle/patrol)
+	possible_item_intents = list(/datum/intent/whistle/use)
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_RING|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
 
@@ -1042,17 +747,14 @@
 			return FALSE
 		return perch_on_human(target)
 
-	// If perching on non-human perches
 	var/list/perch_types = ai_controller?.blackboard[BB_FALCON_PERCH_TYPES]
 	if(!perch_types || !is_type_in_list(target, perch_types))
 		return FALSE
 	if(get_dist(src, target) > 1)
 		return FALSE
 
-	// Perch on object: just move there, show sitting sprite
 	src.forceMove(get_turf(target))
 	toggle_perched(perched = TRUE)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(after_move))
 	visible_message("<span class='notice'>[src] perches on [target].</span>")
 	return TRUE
 
@@ -1081,3 +783,72 @@
 	icon = 'modular/kaizoku/icons/mapset/tradesector32.dmi'
 	icon_state = "animal_cage"
 	mob_path = /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo
+
+/obj/effect/kaizoku_falcon_messenger
+	name = "messenger falcon"
+	desc = "A falcon carrying an item to its destination."
+	icon = 'modular/kaizoku/icons/mobs/falcon.dmi'
+	icon_state = "falcon"
+	layer = ABOVE_NORMAL_TURF_LAYER
+	var/obj/item/carried_item
+	var/turf/target_turf
+	var/mob/living/recipient
+
+/obj/effect/kaizoku_falcon_messenger/Initialize(mapload, obj/item/I, turf/T, mob/living/R)
+	. = ..()
+	carried_item = I
+	target_turf = T
+	recipient = R
+	addtimer(CALLBACK(src, PROC_REF(do_delivery)), 0)
+
+/obj/effect/kaizoku_falcon_messenger/proc/do_delivery()
+	if(!target_turf)
+		qdel(src)
+		return
+
+	forceMove(target_turf)
+	pixel_x = -32
+	pixel_y = 24
+	alpha = 255
+
+	if(recipient && !QDELETED(recipient))
+		recipient.Immobilize(1 SECONDS)
+
+	var/matrix/diveTilt = matrix().Turn(40)
+	var/matrix/climbTilt = matrix().Turn(-25)
+
+	animate(src, time = 12, pixel_x = 0, pixel_y = -16, transform = diveTilt, easing = CUBIC_EASING | EASE_IN)
+	animate(src, time = 18, pixel_x = 32, pixel_y = 24, transform = climbTilt, alpha = 0, easing = CUBIC_EASING | EASE_OUT)
+
+	playsound(src, 'sound/vo/mobs/bird/birdfly.ogg', 30, TRUE, -1)
+
+	addtimer(CALLBACK(src, PROC_REF(drop_item)), 1.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(cleanup)), 2 SECONDS)
+
+/obj/effect/kaizoku_falcon_messenger/proc/drop_item()
+	if(carried_item && !QDELETED(carried_item))
+		carried_item.forceMove(target_turf)
+		for(var/mob/M in view(3, target_turf))
+			to_chat(M, "<span class='nicegreen'>A falcon swoops low and drops [carried_item.name] at [recipient?.name]'s feet!</span>")
+
+/obj/effect/kaizoku_falcon_messenger/proc/cleanup()
+	qdel(src)
+
+/mob/living/simple_animal/hostile/retaliate/custodianpet/falcon/proc/send_item_via_messenger(mob/user, obj/item/I, mob/living/target)
+	if(!I || !target)
+		return FALSE
+
+	var/turf/T = get_turf(target)
+	if(!T)
+		return FALSE
+
+	user.dropItemToGround(I)
+	I.forceMove(src)
+
+	new /obj/effect/kaizoku_falcon_messenger(get_turf(user), I, T, target)
+
+	to_chat(user, "<span class='notice'>[src] takes [I.name] and flies off to deliver it to [target.real_name]!</span>")
+	visible_message("<span class='info'>[src] takes flight with [I.name] clutched in its talons!</span>")
+	playsound(src, 'sound/vo/mobs/bird/birdfly.ogg', 50, TRUE, -1)
+
+	return TRUE

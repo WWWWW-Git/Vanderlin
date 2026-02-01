@@ -18,6 +18,9 @@
 
 	var/list/dent_decals
 
+/turf/closed/wall/Initialize(mapload) //Stonekeep; Forced stub for Kaizojave walls.
+	return ..() // Just pass through to /turf/closed/Initialize
+
 /turf/closed/wall/get_explosion_resistance()
 	return (atom_integrity) / 15
 

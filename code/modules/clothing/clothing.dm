@@ -69,6 +69,8 @@
 	///Multiplies your standing speed by this value.
 	var/stand_speed_reduction = 1
 
+	var/endurance = 0 //Stonekeep Edit
+
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype
 	var/hoodtoggled = FALSE

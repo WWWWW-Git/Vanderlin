@@ -231,6 +231,8 @@
 	var/tempfixeye = FALSE //targetting
 	var/image/targeti
 	var/image/swingi
+	///Mask screen overlay used to cut frills around the player
+	var/atom/movable/screen/frill_mask_overlay/frill_oval_mask //STONEKEEP EDIT - KAIZOJAVE - Wallening Testmerge
 	var/rautoaiming = FALSE //targets any mob on a turf with rmb or lmb
 	var/lautoaiming = FALSE
 	var/unarmed_delay = 8 //delay before an unarmed attack goes off
@@ -281,3 +283,22 @@
 	var/area/ambience_tracked_area
 	/// new title given by an admin.
 	var/admin_title = null
+
+//MOJAVE SUN EDIT - Wallening Testmerge - Click interception for frill mask
+/datum/click_intercept/frill_mask_click_interceptor
+
+/datum/click_intercept/frill_mask_click_interceptor/proc/InterceptClickOn(mob/clicker, params, atom/target)
+	// Block clicks on the mob itself if they fall within the oval mask area
+	if(!target || !ismob(target))
+		return FALSE
+
+	// Calculate distance from clicker to target
+	// Oval mask has approximately 1 tile radius (32 pixels)
+	var/distance = get_dist(clicker, target)
+
+	// If clicking on the masked player from within 1 tile, block it
+	if(distance <= 1)
+		return TRUE
+
+	return FALSE
+//MOJAVE SUN EDIT - Wallening Testmerge

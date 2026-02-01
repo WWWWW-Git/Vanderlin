@@ -72,7 +72,8 @@ DEFINE_BITFIELD(smooth, list(
 #define SMOOTH_GROUP_FLOOR_FLESH S_TURF(21)
 #define SMOOTH_GROUP_MUSHROOM S_TURF(22)
 
-#define MAX_S_TURF 22 //Always match this value with the one above it.
+#define SMOOTH_GROUP_KAIZOJAVE_WALL S_TURF(23) //Stonekeep Edit: /turf/closed/wall/kaizojave
+#define MAX_S_TURF 23 //Stonekeep Edit. Have to match with the one above us.
 
 /* /obj included */
 
@@ -89,8 +90,11 @@ DEFINE_BITFIELD(smooth, list(
 #define SMOOTH_GROUP_WOOD_TABLES S_OBJ(6) //!obj/structure/table/wood
 #define SMOOTH_GROUP_FANCY_WOOD_TABLES S_OBJ(7) //!obj/structure/table/wood/fancy
 
+#define SMOOTH_GROUP_kaizojave_LOW_WALL S_OBJ(8) // Stonekeep Edit: !obj/structure/table/kaizojave/low_wall
+
 /// Performs the work to set smoothing_groups and smoothing_list.
 /// An inlined function used in both turf/Initialize and atom/Initialize.
+//stonekeep edit: Fixed runtime in smoothing_list access by adding safety checks
 #define SETUP_SMOOTHING(...) \
 	if(smoothing_groups) { \
 		if(PERFORM_ALL_TESTS(focus_only/sorted_smoothing_groups)) { \
@@ -104,7 +108,7 @@ DEFINE_BITFIELD(smooth, list(
 			ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_list); \
 		} \
 		/* S_OBJ is always negative, and we are guaranteed to be sorted. */ \
-		if(smoothing_list[1] == "-") { \
+		if(istext(smoothing_list) && length(smoothing_list) && copytext(smoothing_list, 1, 2) == "-") { \
 			smoothing_flags |= SMOOTH_OBJ; \
 		} \
 		SET_SMOOTHING_GROUPS(smoothing_list); \

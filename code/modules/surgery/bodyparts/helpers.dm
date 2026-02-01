@@ -116,6 +116,8 @@
 			L = new /obj/item/bodypart/r_leg()
 		if(BODY_ZONE_CHEST)
 			L = new /obj/item/bodypart/chest()
+		if(BODY_ZONE_GROIN) //Stonekeep Edit
+			L = new /obj/item/bodypart/groin() //Stonekeep Edit
 	if(L)
 		L.update_limb(fixed_icon, src)
 		if(robotic)

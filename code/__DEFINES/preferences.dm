@@ -141,8 +141,8 @@
 #define RANDOMIZE_HAIR_COLORS (RANDOMIZE_HAIR_COLOR | RANDOMIZE_HAIR_COLORS)
 #define RANDOMIZE_HAIR_ALL (RANDOMIZE_HAIR_FEATURES | RANDOMIZE_HAIR_COLORS)
 
+/* //Stonekeep Edit: Removal. Check kaizoku_preferences.dm
 //Age ranges
-// #define "Youngling" //Stonekeep Edit: Removal.
 #define BLOOMING_ADULT 		"Blooming Adult" //Stonekeep Edit: Young Adult.
 #define AGE_ADULT			"Adult"
 #define AGE_MIDDLEAGED		"Middle-Aged"
@@ -153,6 +153,8 @@
 #define NORMAL_AGES_LIST_CHILD		list(BLOOMING_ADULT, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD) //Stonekeep Edit: Young Adult
 #define ALL_AGES_LIST				list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 #define ALL_AGES_LIST_CHILD			list(BLOOMING_ADULT, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL) //Stonekeep Edit: Young Adult
+*/
+
 
 // Pronouns
 #define HE_HIM			"He/Him"

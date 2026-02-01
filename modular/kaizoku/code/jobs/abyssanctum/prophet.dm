@@ -1,6 +1,8 @@
+// Very wip. Will only truly be important when we build up the 'Ritual' system.
+// Different of the Preacher, the Prophet is actually someone powerful, theurgy-wise.
+
 /datum/job/kaizoku/prophet
 	title = "Prophet"
-	// f_title = "Priestess"
 	tutorial = "You were appointed by divine will, bound to a single temple for all your life, \
 	serving as anchor that binds the divine to the mortal, receiving visions, casting holy \
 	penance and upholding the purity that consecrates the faithful. Your blessings are of highest \
@@ -15,6 +17,7 @@
 	bypass_lastclass = TRUE
 	selection_color = "#c2a45d"
 	cmode_music = 'sound/music/cmode/church/CombatAstrata.ogg'
+	allowed_patrons = list(/datum/patron/abyssanctum/curator, /datum/patron/abyssanctum/purifier)
 
 	allowed_races = RACES_CITIZEN_PLAYERS
 
@@ -33,7 +36,7 @@
 	H.verbs |= /mob/living/carbon/human/proc/churchexcommunicate
 	H.verbs |= /mob/living/carbon/human/proc/churchcurse
 	H.verbs |= /mob/living/carbon/human/proc/churchannouncement
-	neck = /obj/item/clothing/neck/psycross/silver/astrata
+	neck = /obj/item/clothing/neck/psycross/silver/abyssanctum
 	head = /obj/item/clothing/head/priestmask
 	shirt = /obj/item/clothing/shirt/undershirt/priest
 	pants = /obj/item/clothing/pants/tights/colored/black
@@ -43,12 +46,12 @@
 	armor = /obj/item/clothing/shirt/robe/priest
 	backl = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/needle = 1, /obj/item/storage/belt/pouch/coins/rich = 1 )
-
-	var/obj/item/weapon/polearm/woodstaff/aries/P = new()
+	var/obj/item/weapon/polearm/woodstaff/aries/P = new() //Change this to an unique Prophet staff later.
 	H.put_in_hands(P, forced = TRUE)
 
-	if(H.patron != /datum/patron/divine/astrata) // For some stupid reason this was checking for Dendor before.
-		H.set_patron(/datum/patron/divine/astrata)
+	if(!(H.patron?.type in H.mind?.assigned_role?.allowed_patrons))
+		var/chosen_patron = pick(H.mind?.assigned_role?.allowed_patrons)
+		H.set_patron(chosen_patron)
 
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/holy, 4, TRUE)
@@ -99,7 +102,7 @@
 	set category = "Priest"
 	if(!mind)
 		return
-	if(!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
+	if(!istype(get_area(src), /area/indoors/town/church/chapel))
 		to_chat(src, span_warning("I need to do this in my Chapel."))
 		return FALSE
 
@@ -154,7 +157,7 @@
 		return
 	var/inputty = input("Ostracize someone, cutting off their anchor to the Abyss. (ostracize them again to remove it)", "Sinner Name") as text|null
 	if(inputty)
-		if(!istype(get_area(src), /area/rogue/indoors/town/church/chapel)) //Change this to the new maptypes.
+		if(!istype(get_area(src), /area/indoors/town/church/chapel)) //Change this to the new maptypes.
 			to_chat(src, span_warning("I can only connect to the abyss on holy grounds."))
 			return FALSE
 		if(inputty in GLOB.excommunicated_players)
@@ -186,7 +189,7 @@
 		return
 	var/inputty = input("Curse someone as a heretic. (curse them again to remove it)", "Sinner Name") as text|null
 	if(inputty)
-		if(!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
+		if(!istype(get_area(src), /area/indoors/town/church/chapel))
 			to_chat(src, "<span class='warning'>I need to do this from the chapel.</span>")
 			return FALSE
 		if(inputty in GLOB.heretical_players)
@@ -217,7 +220,7 @@
 		return
 	var/inputty = input("Make an announcement", "VANDERLIN") as text|null
 	if(inputty)
-		if(!istype(get_area(src), /area/rogue/indoors/town/church/chapel))
+		if(!istype(get_area(src), /area/indoors/town/church/chapel))
 			to_chat(src, "<span class='warning'>I need to do this from the chapel.</span>")
 			return FALSE
 		priority_announce("[inputty]", title = "The [get_role_title()] Speaks", sound = 'sound/misc/bell.ogg')

@@ -70,6 +70,10 @@
 /obj/item/weapon/polearm/spear/hoplite/winged
 	desc = "A humble spear with a bronze head, a rare survivor from the battles long past that nearly destroyed Grimoria."
 
+//Improper .DMI file coming from complete disregard to modularization.
+// Removal will be performed unless replacement occours from someone else.
+/*
+
 /obj/item/weapon/flail/peasant
 	name = "crusher"
 	desc = "To break, smash and chastise thy foes."
@@ -82,9 +86,10 @@
 /obj/item/weapon/polearm/halberd/bardiche/dendor
 	icon = 'icons/roguetown/weapons/64.dmi'
 
+
 /obj/item/weapon/polearm/spear/abyssor
 	icon = 'icons/roguetown/weapons/64.dmi'
-
+*/
 //................ Onehanders ............... //
 /obj/item/weapon/mace/steel
 	icon = 'modular/stonekeep/icons/weapons.dmi'
@@ -99,8 +104,12 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -6,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 	return ..()
 
+//Improper .DMI file coming from complete disregard to modularization.
+// Removal will be performed unless replacement occours from someone else.
+/*
 /obj/item/weapon/flail/sflail/necraflail
 	icon = 'icons/roguetown/weapons/32.dmi'
+*/
 
 /obj/item/weapon/axe/boneaxe
 	icon = 'modular/stonekeep/icons/weapons.dmi'
@@ -127,9 +136,13 @@
 	icon = 'modular/stonekeep/icons/weapons.dmi'
 	icon_state = "sflail"
 
+/*
+//Improper .DMI file coming from complete disregard to modularization.
+// Removal will be performed unless replacement occours from someone else.
 /obj/item/weapon/knife/cleaver/combat
 	icon = 'icons/roguetown/weapons/32.dmi'
 	force = DAMAGE_DAGGER+2
+*/
 
 /obj/item/weapon/mace/copperbludgeon
 	name = "copper club"
@@ -240,7 +253,9 @@
 	icon = 'modular/stonekeep/icons/weapons.dmi'
 	icon_state = "necrashield"
 
-
+//Improper .DMI file coming from complete disregard to modularization.
+// Removal will be performed unless replacement occours from someone else.
+/*
 /obj/item/weapon/mace/goden/steel/malum
 	icon = 'icons/roguetown/weapons/64.dmi'
 	dropshrink = 0.9
@@ -255,4 +270,4 @@
 				return list("shrink" = 0.4,"sx" = 5,"sy" = -2,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -2,"ex" = 5,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -24,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = -1,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
-
+*/

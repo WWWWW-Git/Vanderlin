@@ -12,7 +12,7 @@
 	icon = 'icons/mob/sprite_accessory/accessory/rakshari.dmi'
 	gender = NEUTER
 	use_static = TRUE
-	specuse = list(SPEC_ID_RAKSHARI)
+	// specuse = list(SPEC_ID_RAKSHARI) // Unused. We don't have Rakshari.
 
 /datum/sprite_accessory/accessories/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	return is_human_part_visible(owner, HIDEFACE)
@@ -72,7 +72,7 @@
 
 /datum/sprite_accessory/accessories/rakshari
 	abstract_type = /datum/sprite_accessory/accessories/rakshari
-	specuse = list(SPEC_ID_RAKSHARI)
+	// specuse = list(SPEC_ID_RAKSHARI) // Unused. We don't have Rakshari.
 
 /datum/sprite_accessory/accessories/rakshari/gilded_g
 	name = "Gilded (G)"

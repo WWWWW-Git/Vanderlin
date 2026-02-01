@@ -62,6 +62,10 @@ GLOBAL_LIST_EMPTY(last_words)
 /mob/living/death(gibbed)
 	var/was_dead_before = stat == DEAD
 	set_stat(DEAD)
+	if(ishuman(src) && prob(40)) // Only shake human mobs, 40% chance
+		spawn() {
+			shake_body() //Stonekeep Edit: Kaizoku. Cadaveric spasm.
+		}
 	unset_machine()
 	timeofdeath = world.time
 	tod = station_time_timestamp()
@@ -155,3 +159,34 @@ GLOBAL_LIST_EMPTY(last_words)
 			locale = "a hallowed place, sworn to the Ten" // special bit for the church since it's sacred ground
 
 	return locale
+
+/mob/living/proc/shake_body()
+	var/oldx = pixel_x
+	var/oldy = pixel_y
+
+	var/strong_ticks = 50
+	var/light_ticks = 300
+
+	var/strong = 1
+	var/light = 0.5
+
+	for(var/i = 1 to strong_ticks)
+		if(i % 8 == 0)
+			pixel_x = oldx
+			pixel_y = oldy + (i % 16 == 0 ? strong : -strong)
+		else
+			pixel_x = oldx + (i % 2 ? strong : -strong)
+			pixel_y = oldy
+		sleep(1)
+
+	for(var/i = 1 to light_ticks)
+		if(i % 14 == 0)
+			pixel_x = oldx
+			pixel_y = oldy + (i % 28 == 0 ? light : -light)
+		else
+			pixel_x = oldx + (i % 2 ? light : -light)
+			pixel_y = oldy
+		sleep(1)
+
+	pixel_x = oldx
+	pixel_y = oldy

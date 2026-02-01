@@ -14,7 +14,7 @@
 	spawn_positions = 4
 	min_pq = -10
 	bypass_lastclass = TRUE
-
+	give_bank_account = TRUE
 	allowed_races = RACES_PLAYER_ALL
 	allowed_patrons = ALL_ABYSSANCTUM_DOCTRINES
 
@@ -80,6 +80,8 @@
 	H.change_stat(STATKEY_STR, 1) //Votary training includes strength training.
 	H.change_stat(STATKEY_END, 2) // For casting lots of spells, and working long hours without sleep at the church
 	H.change_stat(STATKEY_PER, -1)
+	ADD_TRAIT(H, TRAIT_EMPTYHANDS, TRAIT_GENERIC)
+
 	if(!H.has_language(/datum/language/celestial)) // For discussing church matters with the other Clergy
 		H.grant_language(/datum/language/celestial)
 		to_chat(H, "<span class='info'>I can speak Celestial with ,c before my speech.</span>")

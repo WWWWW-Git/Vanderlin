@@ -90,8 +90,8 @@ SUBSYSTEM_DEF(ticker)
 	var/last_bot_update = 0
 
 	var/list/no_ruler_lines = list(
-		"Set a Daimyo to 'high' in your class preferences to begin the campaign!",
-		"The clan awaits for the Daimyo to claim the celestial throne.",
+		"Set a Sovereign to 'high' in your class preferences to begin the campaign!",
+		"The clan awaits for the Sovereign to claim the celestial throne.",
 		"The oceanic scrolls remains sealed until a leader comes to claim its tides.",
 		"This game cannot begin until the Thalassic Mandate is fulfilled.",
 		"Pray the ancestors send a Clan Sovereign.",
@@ -100,9 +100,11 @@ SUBSYSTEM_DEF(ticker)
 		"The retainers are awaiting for someone to rise to the throne.",
 		"The emperor gave this land to someone for a reason, you know.",
 		"Milord! The THALLASIC MANDATE remains UNFULFILLED!",
-		"Humen and Elven massagers to whoever picks the Daimyo role!",
+		"Free Humen and Elven massagers to whoever picks the Sovereign role!",
+		"Cute Geishas or Otokonokos to the Sovereigner that stands up!!!",
 		"Milord! What is the point of KAIZOKU without an abyssal regent?!",
 		"I'm LOSING my SANITY, become an CLAN PATRIARCH NOW!!!",
+		"I'm LOSING my SEED, become an CLAN MATRIARCH NOW!!!",
 		"No leader? About time to choose an random hobo as the banner holder."
 		)
 

@@ -20,6 +20,9 @@
 	most of which have historically been at odds with one another and other species. \
  	The Heartfeltean people became part of Fog Island's political landscape by the alliance of \
 	both nations, and are viewed in great light beyond the perception of prejudice. \
+	Regardless, many came in search for a second chance far away from denmorian hordes, \
+	other few has been recovered from zybantine slave ships, kept among the lower \
+	classes as servants, or low lives. \
 	\n\n\
 	The Psyjin tend to find fortune easier than the other species, and are so diverse \
 	that no other traits are dominant in their species."
@@ -29,13 +32,10 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP)
-	inherent_skills = list(
-		/datum/skill/misc/reading = 1,
-	)
 
 	use_skintones = TRUE
 
-	possible_ages = NORMAL_AGES_LIST_CHILD
+	possible_ages = NORMAL_AGES_LIST_BLOOMING
 
 	changesource_flags = WABBAJACK
 

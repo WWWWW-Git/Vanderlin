@@ -9,7 +9,7 @@
 /datum/objective/personal/proper_burial/on_creation()
 	. = ..()
 	if(owner?.current)
-		if(owner.current.job == "Gravetender" || istype(owner.current.mind?.assigned_role, /datum/job/undertaker))
+		if(owner.current.job == "Thresholder" || istype(owner.current.mind?.assigned_role, /datum/job/kaizoku/ferryman)) //Stonekeep Edit. Temporary.
 			required_burials = 2
 		RegisterSignal(owner.current, COMSIG_GRAVE_CONSECRATED, PROC_REF(on_grave_consecrated))
 	update_explanation_text()

@@ -8,7 +8,7 @@
 	department_flag = FACTIONLESS
 	job_flags = NONE
 	display_order = KZ_THISSUCKS
-	faction = FACTION_MIGRANTS
+	faction = FACTION_FOREIGNERS
 	total_positions = 0
 	spawn_positions = 0
 	min_pq = -999

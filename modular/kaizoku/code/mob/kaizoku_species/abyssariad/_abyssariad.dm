@@ -12,6 +12,7 @@
 	contains_lux = TRUE
 	// pure_blood = TRUE
 	used_table = /datum/chimeric_table/pelagic
+	satiation_sips = 3 //Higher quality blood. Feel free to put fault at Abyssaya for bringing Sunscorneds over.
 
 /datum/chimeric_table/pelagic
 	name = "Pelagic"
@@ -46,9 +47,19 @@
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
 				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+	if(method == INGEST && iscarbon(L)) //Stoneep Edit - Start
+		var/mob/living/carbon/C = L
+		if(C.dna?.species?.id == SPEC_ID_SUNSCORNED)
+			var/datum/reagent/blood/blood_reagent = new /datum/reagent/blood() // Use the standard blood handler but mark as pelagic
+			blood_reagent.data = data
+			if(!blood_reagent.data)
+				blood_reagent.data = list()
+			blood_reagent.data["blood_type"] = /datum/blood_type/human/pelagic // Ensure type consistency: store the blood type as a path, not a string
+			blood_reagent.handle_sunscorned_blood_ingest(C, reac_volume, blood_reagent.data)
+			return
 	if((method == INGEST) && L.clan)
 		L.adjust_bloodpool(reac_volume)
-		L.clan.handle_bloodsuck(BLOOD_PREFERENCE_FANCY)
+		L.clan.handle_bloodsuck(BLOOD_PREFERENCE_CHAMPIONAGE) //stonekeep edit end
 	if(method == INJECT)
 		SEND_SIGNAL(L, COMSIG_HANDLE_INFUSION, data["blood_type"], reac_volume)
 
@@ -283,7 +294,7 @@
 		if(message[1])
 			if(message[1] != "*")
 				message = " [message]"
-				var/list/accent_words = strings("abyssal_replacement.json", "abyssal")
+				var/list/accent_words = strings("accents/abyssal_replacement.json", "abyssal")
 
 				for(var/key in accent_words)
 					var/value = accent_words[key]

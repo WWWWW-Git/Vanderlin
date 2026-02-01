@@ -3,7 +3,7 @@
 	tutorial = "Proper nations of arts allows it to bridge everything, even the warfare and justice system. \
 	The clans wants justice without causing outcries as the civilians calls for blood, and so, their spectacler follows, \
 	serving the crown's law with bloodsport punishment as the last god a criminal mind will ever meet. \
-	a judge and spectacle at once, Entertain the public, execute the unredeemable and safekeep the caged. You are the star of this show."
+	A judge and spectacle at once, Entertain the public, execute the unredeemable and safekeep the caged. You are the star of this show."
 	department_flag = FACTION_MILITARY
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_CITIZEN_PLAYERS

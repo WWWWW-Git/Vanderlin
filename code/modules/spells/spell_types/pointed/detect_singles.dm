@@ -1,3 +1,5 @@
+//Stonekeep: Removal.
+
 /datum/action/cooldown/spell/detect_singles
 	name = "Find Singles"
 	button_icon_state = "love"
@@ -20,9 +22,9 @@
 	if(cast_on.IsWedded())
 		to_chat(owner, span_love("\The [cast_on] has a spouse! May they find happiness in each other."))
 	else
-		if(cast_on.age == AGE_CHILD)
-			to_chat(owner, span_warning("\The [cast_on] is a mere child! Of course they don't have any partner."))
-		else if(length(cast_on?.mind?.personal_objectives))
+		//if(cast_on.age == AGE_CHILD) // Stonekeep Edit: Start
+			//to_chat(owner, span_warning("\The [cast_on] is a mere child! Of course they don't have any partner."))
+		if(length(cast_on?.mind?.personal_objectives)) // Stonekeep Edit: End
 			var/datum/objective/personal/marry/marry_objective = locate() in cast_on.mind.personal_objectives
 			if(!marry_objective.completed)
 				to_chat(owner, span_love("\The [cast_on] is single and their heart is aching for love!"))

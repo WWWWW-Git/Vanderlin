@@ -12,7 +12,7 @@
 
 /datum/species/elf/undine
 	name = "Undine"
-	id = "elf"
+	id = SPEC_ID_UNDINE
 	desc = "<b>Undine</b><br>\
 	An amalgamation between Goblins and Elves that arrived at the Fog islands centuries \
 	ago, long corrupted by demonic essence and alchemical misconducts over generations, \
@@ -26,13 +26,14 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP)
-//	default_features = list("mcolor" = "FFF", "ears" = "Kappae", "tail_human" = "Kappav")
+	inherent_skills = list(
+		/datum/skill/misc/reading = 1,
+	)
 	use_skintones = 1
-//	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = NONE
 	liked_food = NONE
 	swap_male_clothes = TRUE
-	possible_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
+	possible_ages = NORMAL_AGES_LIST_BLOOMING
 	changesource_flags = WABBAJACK
 	limbs_icon_m = 'modular/kaizoku/icons/abyssariad_bodies/male/ms_kappa.dmi'
 	limbs_icon_f = 'modular/kaizoku/icons/abyssariad_bodies/female/fs_kappa.dmi'

@@ -169,11 +169,10 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	// STONEKEEP EDIT: DEATH TO SLAPCRAFT
-	/*if(!user.cmode)
+	if(!user.cmode) //Stonekeep Edit > Back to Slapcraft, for now. Until we choose better options.
 		if(user.try_recipes(src, I, user))
 			user.changeNext_move(CLICK_CD_FAST)
-			return TRUE */
+			return TRUE
 	if(I.obj_flags_ignore)
 		return I.attack_atom(src, user)
 	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_atom(src, user))

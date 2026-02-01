@@ -45,7 +45,7 @@
 	name = "bullet pouch"
 	icon_state = "dartpouch0"
 	item_state = "dartpouch"
-	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK|ITEM_SLOT_BACK //Stonekeep Edit: Might make a 'Bullet Quiver' later.
 	max_storage = 10
 	ammo_type = list(/obj/item/ammo_casing/caseless/bullet)
 	fill_type = /obj/item/ammo_casing/caseless/bullet

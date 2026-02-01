@@ -68,6 +68,15 @@
 
 ////Classic Inquisitor with a much more underground twist. Use listening devices, sneak into places to gather evidence, track down suspicious individuals. Has relatively the same utility stats as Confessor, but fulfills a different niche in terms of their combative job as the head honcho.
 
+/mob/living/carbon/human/proc/view_inquisition()
+	set name = "View Inquisition"
+	set category = "Inquisition"
+
+	if(!hierarchy_interface)
+		hierarchy_interface = new /datum/inquisition_hierarchy_interface(src)
+	hierarchy_interface.selected_school = inquisition_position.school
+	hierarchy_interface.refresh_hierarchy()
+
 ///The dirty, violent side of the Inquisition. Meant for confrontational, conflict-driven situations as opposed to simply sneaking around and asking questions. Templar with none of the miracles, but with all the muscles and more.
 
 /mob/living/carbon/human/proc/torture_victim()

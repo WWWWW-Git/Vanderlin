@@ -46,3 +46,8 @@
 	name = "left leg stump"
 	check_name = "<span class='danger'><B>LEFT LEG STUMP</B></span>"
 	mob_overlay = "dis_ll"
+
+/datum/wound/dismemberment/groin //Stonekeep Edit: Placeholder wound for Kaizoku duel 'sliced in half'
+	name = "groin stump"
+	check_name = "<span class='danger'><B>GROIN STUMP</B></span>"
+	mob_overlay = "dis_groin"

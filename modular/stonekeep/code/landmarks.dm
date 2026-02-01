@@ -185,6 +185,10 @@
 
 // ===================================================================================
 /*	..................   Dwarf Outpost Landmark sub-spawners  ................... */
+
+//Improper .DMI file coming from complete disregard to modularization.
+// Removal will be performed unless replacement occours from someone else.
+/*
 /obj/effect/spawner/map_spawner/outpost/dwarf_weapon
 	icon = 'icons/roguetown/weapons/32.dmi'
 	icon_state = "paxe"
@@ -195,6 +199,7 @@
 		/obj/item/weapon/axe/steel = 60,
 		/obj/item/weapon/pick/steel = 10
 		)
+*/
 
 /obj/effect/spawner/map_spawner/outpost/dwarf_armor
 	icon = 'icons/roguetown/clothing/head.dmi'

@@ -289,17 +289,17 @@
 	name = "kaizoku's waitao"
 	icon_state = "waitao_coat"
 	color = null
-	desc = "Silken coats of heartfelt making, used by the sons of Kaizoku, or just artistic folk."
+	desc = "Foglander silken coats of coastal culture, proudly used by the sons of Kaizoku, or just artistic folk."
 	icon = 'modular/kaizoku/icons/clothingicon/armor.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/armor.dmi'
 	sleeved = 'modular/kaizoku/icons/helpers/sleeves_armor.dmi'
 	body_parts_covered = CHEST|VITALS|LEGS
 	sellprice = 45
 
-/obj/item/clothing/armor/brigandine/godwenkai //I dislike overused armor in unique roles. so I just made an "Officer" armor based on the chinese actual officer armor. Brigadine.
+/obj/item/clothing/armor/brigandine/godwenkai
 	slot_flags = ITEM_SLOT_ARMOR
-	name = "weeper-patterned championage armor" //This is the Shan Wen Kia armor, but the downwards 'Y' is upwards now, so I can't name it <mountain patterned armor>
-	desc = "The ancient godwenkai, a heavy armor made with overlapping arrangement of armor plates, assembled with the symbol of the Weeping God. This is used by Abyssariad Champions who still lingers on this world, honoring the Weeper who fed Abyssor."
+	name = "Y-wenkai armor" //This is the Shan Wen Kia armor, but the downwards 'Y' is upwards now, so I can't name it <mountain patterned armor>
+	desc = "The ancient Y-wenkai, a heavy armor made with overlapping arrangement of armor plates, assembled with the symbol of the Weeping God. This is used by Abyssariad Champions who still lingers on this world, honoring the Weeper who fed Abyssor."
 	icon_state = "godwenkai"
 	icon = 'modular/kaizoku/icons/clothingicon/armor.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/armor.dmi'
@@ -483,17 +483,17 @@
 	icon_state = "fflcustodian"
 
 /obj/item/clothing/armor/cuirass/custodian
-	name = "custodian cuirass"
-	desc = "A refined cuirass made of spring steel for heartfeltean housecarls. Flexible, sturdy armor that gives all the required leeway to move."
+	name = "coastal cuirass"
+	desc = "A refined cuirass made of spring steel for coastal housecarls. Flexible, sturdy armor that gives all the required leeway to move."
 	icon_state = "flscustodian"
 	item_state = "flscustodian"
 	icon = 'modular/kaizoku/icons/clothingicon/armor.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/armor.dmi'
 	sleeved = 'modular/kaizoku/icons/helpers/sleeves_armor.dmi'
 
-/obj/item/clothing/armor/cuirass/zinger
-	name = "zigmaster cuirass"
-	desc = "Plate and lamellar bound into padded leather. A proper cuirass for the Zigmasters that requires that each inch of their skin remains covered."
+/obj/item/clothing/armor/cuirass/shuhen
+	name = "shuhen cuirass"
+	desc = "Plate and lamellar bound into padded leather. A proper cuirass for the Shuhen that requires that each inch of their skin remains covered."
 	icon_state = "zigmaster"
 	item_state = "zigmaster"
 	icon = 'modular/kaizoku/icons/clothingicon/armor.dmi'
@@ -550,14 +550,14 @@
 /obj/item/clothing/armor/brigandine/custzamurai
 	name = "brigandine-of-knives"
 	icon_state = "flccustodian"
-	desc = "Foglander brigandine with huge edged plates covering the shoulders before the shape of a cuirass is visible."
+	desc = "Brigandine made in traditional Shuhen metallurgy, with huge edged plates covering the shoulders before the shape of a cuirass is visible."
 	icon = 'modular/kaizoku/icons/clothingicon/armor.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/armor.dmi'
 	sleeved = 'modular/kaizoku/icons/helpers/sleeves_armor.dmi'
 
 /obj/item/clothing/armor/brigandine/custknight
 	name = "plated brigandine"
-	desc = "Heartfeltean brigandine proper for a knightly warrior. Type of armor usually portrayed in islander arts."
+	desc = "Coastal brigandine proper for a knightly warrior. Well adjusted, it barely makes swimming harder, proper for those whom lives by the sea."
 	icon_state = "hlccustodian"
 	icon = 'modular/kaizoku/icons/clothingicon/armor.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/armor.dmi'

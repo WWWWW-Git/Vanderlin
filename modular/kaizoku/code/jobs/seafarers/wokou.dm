@@ -119,7 +119,7 @@
 			H.set_blindness(0)
 			shirt = /obj/item/clothing/armor/chainmail/hauberk/kusari
 			neck = /obj/item/clothing/neck/chaincoif/iron/kusari_zukin
-			shoes = /obj/item/clothing/shoes/boots/armor/light/kusaritabi
+			shoes = /obj/item/clothing/shoes/boots/armor/ironmaille/kusaritabi
 			beltl = /obj/item/weapon/flail/kusarigama/peasant
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 			to_chat(H, span_warning("<span class='info'>I am a Muqian, I hail from the towers of civilization, those upheld in sturdy chains alike my body. May the dices of destiny enlight my ways.</span>"))

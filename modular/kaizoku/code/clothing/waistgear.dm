@@ -13,7 +13,7 @@
 	color = pick(GLOB.peasant_dyes)
 	..()
 
-/obj/item/storage/belt/kaizoku/leather/daisho/ninja/PopulateContents()
+/obj/item/storage/belt/kaizoku/leather/daisho/ninja/populate_contents()
 	new /obj/item/reagent_containers/food/snacks/fogdart(src)
 	new /obj/item/reagent_containers/food/snacks/fogdart(src)
 	new /obj/item/weapon/tetsubishi(src)
@@ -30,9 +30,9 @@
 	name = "curator daisho belt"
 	color = CLOTHING_CURATOR
 
-/obj/item/storage/backpack/satchel/ninja/PopulateContents()
-	new /obj/item/grenade/smoke_bomb(src)
-	new /obj/item/grenade/smoke_bomb/poison(src)
+/obj/item/storage/backpack/satchel/ninja/populate_contents()
+	new /obj/item/kaizoku/grenade/smoke_bomb(src)
+	new /obj/item/kaizoku/grenade/smoke_bomb/poison(src)
 	new /obj/item/throwing_star/ninja(src)
 
 /obj/item/storage/belt/kaizoku/leather/pursebelt

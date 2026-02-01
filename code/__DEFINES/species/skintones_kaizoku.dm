@@ -137,3 +137,12 @@
 //Orc shet
 
 #define SKIN_COLOR_GROONN "50715C" //Mint
+
+//SUNSCORNED SKIN TONES
+
+#define VAMP_COLOR_ICECAP        "eaeaea"
+#define VAMP_COLOR_TEMPERATE     "a9a9a9"
+#define VAMP_COLOR_TROPICALDRY   "6e6e6e"
+#define VAMP_COLOR_TROPICALWET   "4d4d4dff"
+#define VAMP_COLOR_DESERT        "222222ff"
+#define VAMP_COLOR_CRIMSONLANDS  "0f0f0fff"

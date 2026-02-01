@@ -156,6 +156,10 @@
 
 	var/mob/stored_mob = null // werewolf bullshit
 
+	var/mob/remoteview_target = null //Stonekeep Edit
+	var/remoteviewer = FALSE //Stonekeep Edit
+	var/remoteview_grace_until = 0
+
 	var/datum/family_member/family_member_datum
 
 	var/temp_debuff_level = null

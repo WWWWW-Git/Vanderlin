@@ -353,14 +353,14 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		remove_minigame_hud()
 
 	if(!QDELETED(user) && user.mind && start_time && !(special_effects & FISHING_MINIGAME_RULE_NO_EXP))
-		var/seconds_spent = (world.time - start_time) * 0.1
+		// var/seconds_spent = (world.time - start_time) * 0.1 //Stonekeep edit: Oh my GOD. why are you LIKE THAT?
 		var/extra_exp_malus = user.get_skill_level(/datum/skill/labor/fishing) - difficulty * 0.1
 		if(extra_exp_malus > 0)
 			experience_multiplier /= (1 + extra_exp_malus * EXPERIENCE_MALUS_MULT)
 		if(auto_handling)
 			experience_multiplier *= 0.5
 		experience_multiplier *= used_rod.experience_multiplier
-		user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(seconds_spent * (2500 / 15 MINUTES * 0.1) * experience_multiplier))
+		// user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(seconds_spent * (2500 / 15 MINUTES * 0.1) * experience_multiplier)) //Stonekeep Edit: Fix this later.
 
 	if(!win)
 		SEND_SIGNAL(user, COMSIG_MOB_COMPLETE_FISHING, src, FALSE)

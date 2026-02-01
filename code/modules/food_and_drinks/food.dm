@@ -51,6 +51,11 @@
 					to_chat(H, "<span class='notice'>Edible... but not satisfying.</span>")
 				last_check_time = world.time
 				return
+			if(H.dna.species.id == SPEC_ID_SUNSCORNED)
+				to_chat(H, span_warning("Food of mortals is unsuitable. I require blood."))
+				H.adjust_disgust(50)
+				last_check_time = world.time
+				return
 			last_check_time = world.time
 
 

@@ -25,16 +25,24 @@
 	corruption and purify decay, but this leaves them unable to ingest many of the creations of the soil. \
 	Their traditional form is standardized, but some outcasts strays to carve out a distinct physical identity. \
 	\n\n\
-	THIS IS A ESTEEMED BUT DISTRUSTED RACE, SUBJECT TO PUBLIC UNEASE AND HIGHER EXPECTATIONS. <B>PROVE YOUR VALUE AS PURIFIED JEWEL OR DIE IN CORRUPTIVE DISHONOR.</B>"
+	Despite the diminished color perception and lean bodies that betrays their towering presence, their sharp, \
+	tactical minds and unyielding muscles settles them as formidable holy warriors and spellswords.\
+	\n\n\
+	THIS IS AN NATIVE RACE OF FOGLANDS, SUBJECT TO HIGHER ROLEPLAY EXPECTATIONS \
+	AS A FIRST CLASS CITIZEN RACE, THEY HAVE GOVERNMENT AND STATE RIGHTS. \
+	<B>PROVE YOUR VALUE AS PURIFIED JEWEL OR DIE IN CORRUPTIVE DISHONOR.</B>"
 
 	skin_tone_wording = "Championage Branch"
 	default_color = "FFFFFF"
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	inherent_traits = list(TRAIT_NOMOBSWAP)
-//	default_features = list("mcolor" = "FFF", "ears" = "Upright", "tail_human" = "Onetail")
+	inherent_skills = list(
+		/datum/skill/misc/reading = 1,
+	)
+
 	use_skintones = 1
-	possible_ages = NORMAL_AGES_LIST //Remember to always remove Child. Destroy every single one.
+	possible_ages = CHAMPIONAGE_AGES
 	disliked_food = NONE
 	liked_food = MEAT
 	changesource_flags = WABBAJACK
@@ -47,6 +55,7 @@
 	soundpack_f = /datum/voicepack/female/abyssariad
 	allowed_cultures = list("muqian", "kaizoku", "shuhen", "linyou", "dustwalker", "foreigner") // IDs
 	allowed_body_types = list("mt_kit", "normalbody") // IDs
+	exotic_bloodtype = /datum/blood_type/human/pelagic
 
 	offset_features_m = list(
 		OFFSET_ID = list(0,1),\

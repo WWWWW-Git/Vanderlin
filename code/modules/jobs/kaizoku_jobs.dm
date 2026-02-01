@@ -2,6 +2,7 @@ GLOBAL_LIST_INIT(noble_positions, list(
 	/datum/job/kaizoku/sovereign::title,
 	/datum/job/kaizoku/clanmember::title,
 	/datum/job/kaizoku/doyen::title,
+	/datum/job/kaizoku/bachelor::title, //STONEKEEP EDIT: Removal
 	/datum/job/kaizoku/performer::title,
 	/datum/job/kaizoku/menial::title,
 
@@ -9,18 +10,17 @@ GLOBAL_LIST_INIT(noble_positions, list(
 GLOBAL_PROTECT(noble_positions)
 
 GLOBAL_LIST_INIT(garrison_positions, list(
-	/datum/job/kaizoku/bachelor::title, //STONEKEEP EDIT: Removal
-	/datum/job/kaizoku/militia::title,
-	/datum/job/kaizoku/retainer::title,
+	/datum/job/kaizoku/provost::title,
 	/datum/job/kaizoku/spectacler::title,
+	/datum/job/kaizoku/retainer::title,
+	/datum/job/kaizoku/constable::title,
+	/datum/job/kaizoku/militia::title,
 	))
 GLOBAL_PROTECT(garrison_positions)
 
 GLOBAL_LIST_INIT(church_positions, list(
 	/datum/job/kaizoku/prophet::title,
 	/datum/job/kaizoku/stormcaller::title,
-	/datum/job/kaizoku/mastersohei::title,
-	/datum/job/kaizoku/tideseeker::title,
 	/datum/job/kaizoku/votary::title,
 	))
 GLOBAL_PROTECT(church_positions)
@@ -69,6 +69,13 @@ GLOBAL_LIST_INIT(company_positions, list(//Stonekeep Edit start: The Quartermast
 	))
 
 GLOBAL_PROTECT(company_positions)
+
+GLOBAL_LIST_INIT(inquisition_positions, list(
+	/datum/job/kaizoku/tideseeker::title,
+	/datum/job/kaizoku/mastersohei::title,
+	))
+GLOBAL_PROTECT(inquisition_positions)
+
 
 GLOBAL_LIST_INIT(allmig_positions, list(
 	/datum/job/kaizoku/citizen::title,

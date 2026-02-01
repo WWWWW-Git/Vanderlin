@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(custodian_handsoff, world.file2list("strings/rt/custodian_hands
 			r_hand = /obj/item/weapon/sword/scimitar/messer/dao
 			l_hand = /obj/item/weapon/shield/wood/rattan
 			armor = /obj/item/clothing/armor/cuirass/iron/sanmaido
-			head = /obj/item/clothing/head/helmet/kettle/jingasa
+			head = /obj/item/clothing/head/helmet/kettle/kaizoku/shuhen
 		if(2)
 			r_hand = /obj/item/weapon/mace/steel/ararebo
 			l_hand = /obj/item/weapon/shield/wood/rattan
@@ -101,11 +101,11 @@ GLOBAL_LIST_INIT(custodian_handsoff, world.file2list("strings/rt/custodian_hands
 			r_hand = /obj/item/weapon/flail/sflail/kusarifundo
 			l_hand = /obj/item/weapon/shield/wood/rattan
 			armor = /obj/item/clothing/armor/chainmail/tatami
-			head = /obj/item/clothing/head/helmet/kettle/jingasa
+			head = /obj/item/clothing/head/helmet/kettle/kaizoku/shuhen
 		if(4)
 			r_hand = /obj/item/weapon/polearm/spear/yari/katakama
 			armor = /obj/item/clothing/armor/cuirass/nanbando
-			head = /obj/item/clothing/head/helmet/kettle/jingasa
+			head = /obj/item/clothing/head/helmet/kettle/kaizoku/shuhen
 
 /mob/living/carbon/human/species/abyssariad/raider/retainer/proc/configure_mind()
 	mind = new /datum/mind(src)

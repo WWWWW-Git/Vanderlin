@@ -364,7 +364,7 @@
 	var/datum/species/species = return_species(prefs)
 	if(prefs.age == BLOOMING_ADULT && !(YOUNGBEARD in species.species_traits)) //Stonekeep Edit: Young Adult
 		return FALSE
-	return (prefs.gender == MALE) || istype(species, /datum/species/dwarf) || istype(species, /datum/species/triton)
+	return (prefs.gender == MALE) || istype(species, /datum/species/dwarf) //Stonekeep edit; Triton removal.
 
 /datum/customizer/bodypart_feature/hair/facial/humanoid
 	customizer_choices = list(/datum/customizer_choice/bodypart_feature/hair/facial/humanoid)
@@ -398,6 +398,7 @@
 		/datum/sprite_accessory/hair/facial/hermit,
 	)
 
+/* Stonekeep Edit
 /datum/customizer/bodypart_feature/hair/facial/humanoid/rakshari
 	customizer_choices = list(/datum/customizer_choice/bodypart_feature/hair/facial/humanoid/rakshari)
 
@@ -420,7 +421,7 @@
 		/datum/sprite_accessory/hair/facial/triton/seaqueen,
 		/datum/sprite_accessory/hair/facial/triton/catfish,
 	)
-
+*/
 /datum/customizer_choice/bodypart_feature/hair/facial/humanoid/get_random_accessory(datum/customizer_entry/entry, datum/preferences/prefs)
 	var/datum/species/species = return_species(prefs)
 

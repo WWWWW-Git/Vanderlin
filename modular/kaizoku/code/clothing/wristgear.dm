@@ -44,6 +44,9 @@
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/gloves.dmi'
 	sleeved = 'modular/kaizoku/icons/clothingicon/gloves.dmi'
 
+
+/obj/item/clothing/wrists/bracers/ironjackchain
+
 /obj/item/clothing/gloves/chain/iron/kikko
 	name = "turtle-shell iron gauntlets"
 	icon_state = "ikikkotekko"

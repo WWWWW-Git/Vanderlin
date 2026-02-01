@@ -134,6 +134,7 @@
 	misc_flags = CRAFTING_TEST_EXCLUDE
 	uses_lord_coloring = LORD_SECONDARY
 
+/* //Stonekeep Edit: Removed - Severely improper for our setting.
 /obj/item/clothing/shirt/dress/maid/Initialize(mapload, ...)
 	. = ..()
 	// I fucking love pilgrims
@@ -146,7 +147,7 @@
 		department_exceptions = list(/datum/job/advclass/pilgrim, /datum/job/grabber), \
 		inverse = TRUE, \
 	)
-
+*/
 
 //................ Servant Gown   ............... //
 /obj/item/clothing/shirt/dress/maid/servant

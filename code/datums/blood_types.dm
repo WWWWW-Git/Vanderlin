@@ -25,6 +25,8 @@ GLOBAL_LIST_INIT_TYPED(blood_types, /datum/blood_type, init_subtypes_w_path_keys
 	///the chimeric table we pull from when creating chimeric nodes based on this blood
 	var/datum/chimeric_table/used_table
 
+	var/satiation_sips = 7 // Stonekeep Edit: Kaizoku Sunscorned: Enhance file compatibility later.
+
 /datum/blood_type/New()
 	. = ..()
 	compatible_types |= type
@@ -147,6 +149,7 @@ GLOBAL_LIST_INIT_TYPED(blood_types, /datum/blood_type, init_subtypes_w_path_keys
 /datum/blood_type/animal
 	name = "Animal"
 	used_table = /datum/chimeric_table/animal
+	satiation_sips = 12 // Stonekeep Edit: Kaizoku Sunscorned
 
 /datum/blood_type/troll
 	name = "Troll"
@@ -164,6 +167,7 @@ GLOBAL_LIST_INIT_TYPED(blood_types, /datum/blood_type, init_subtypes_w_path_keys
 	contains_lux = TRUE
 	tainted_lux = TRUE
 	reagent_type = /datum/reagent/blood
+	satiation_sips = 0 // Stonekeep Edit: Kaizoku Sunscorned
 
 /datum/blood_type/human/corrupted/goblin
 	name = "Goblin"

@@ -21,7 +21,7 @@
 	skin_tone_wording = "Terracota type"
 
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, OLDGREY)
-	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_NOHYGIENE)
+	inherent_traits = list(TRAIT_NOMOBSWAP)
 	use_skintones = TRUE
 
 	possible_ages = list(AGE_IMMORTAL)

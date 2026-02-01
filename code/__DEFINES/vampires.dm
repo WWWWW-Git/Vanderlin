@@ -13,6 +13,7 @@
 #define BLOOD_PREFERENCE_FANCY (1<<5)
 #define BLOOD_PREFERENCE_RATS (1<<6)
 #define BLOOD_PREFERENCE_EUPHORIC (1<<7)
+#define BLOOD_PREFERENCE_CHAMPIONAGE (1<<8) //Stonekeep Edit
 
 #define TATTOO_SILENT	"Silent Casting"
 

@@ -1,8 +1,19 @@
-/obj/item/clothing/shoes/boots/armor/light/kusaritabi
+/obj/item/clothing/shoes/boots/armor/ironmaille/kusaritabi
 	name = "chains tabi"
 	icon_state = "kusaritabi"
 	item_state = "kusaritabi"
 	desc = "The riveted chainmail version of the unarmored Tabi footwear."
+	icon = 'modular/kaizoku/icons/clothingicon/feet.dmi'
+	mob_overlay_icon = 'modular/kaizoku/icons/clothing/feet.dmi'
+	sleeved = 'modular/kaizoku/icons/clothing/feet.dmi'
+
+// Remember to make a new /obj/item/clothing/shoes/boots/armor/light
+
+/obj/item/clothing/shoes/boots/armor/light/placeholder
+	name = "placeholder shoes"
+	icon_state = "kusaritabi"
+	item_state = "kusaritabi"
+	desc = "Placeholder for light plate later."
 	icon = 'modular/kaizoku/icons/clothingicon/feet.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/feet.dmi'
 	sleeved = 'modular/kaizoku/icons/clothing/feet.dmi'

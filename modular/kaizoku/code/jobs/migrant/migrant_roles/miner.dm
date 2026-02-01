@@ -4,7 +4,7 @@
 				who will ever know what they'll find beneath?"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/migrant/miner
-	category_tags = list(CTAG_MIGRANT)
+	category_tags = list(CTAG_MIGRANTS)
 	allowed_races = RACES_NOTNATIVE
 	apprentice_name = "Miner Apprentice"
 	cmode_music = 'sound/music/cmode/towner/CombatBeggar.ogg'//pilgrims aren't towners, this fits them more for a combat on the woods

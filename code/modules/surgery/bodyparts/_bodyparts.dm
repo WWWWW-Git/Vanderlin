@@ -142,7 +142,7 @@
 		return list(/datum/intent/grab/move, /datum/intent/grab/twist, /datum/intent/grab/smash, /datum/intent/grab/armdrag)
 
 /obj/item/bodypart/chest/grabbedintents(mob/living/user, precise)
-	if(precise == BODY_ZONE_PRECISE_GROIN)
+	if(precise == BODY_ZONE_GROIN) //Stonekeep Edit
 		return list(/datum/intent/grab/move, /datum/intent/grab/twist, /datum/intent/grab/shove)
 	return list(/datum/intent/grab/move, /datum/intent/grab/shove)
 
@@ -784,8 +784,8 @@
 	var/obj/item/cavity_item
 	aux_zone = "boob"
 	aux_layer = BODYPARTS_LAYER
-	subtargets = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_PRECISE_GROIN)
-	grabtargets = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_PRECISE_GROIN)
+	subtargets = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_STOMACH) // STONEKEEP EDIT: KAIZOKU; GROIN IS ITS OWN BODYPART.
+	grabtargets = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_STOMACH) // STONEKEEP EDIT: KAIZOKU; GROIN IS ITS OWN BODYPART.
 	offset = OFFSET_ARMOR
 	dismemberable = FALSE
 
@@ -819,6 +819,37 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
+
+/obj/item/bodypart/groin
+	name = "groin"
+	desc = ""
+	icon_state = "default_human_groin"
+	max_damage = 150
+	body_zone = BODY_ZONE_GROIN
+	body_part = GROIN
+	px_x = 0
+	px_y = 6
+	subtargets = list(BODY_ZONE_GROIN)
+	grabtargets = list(BODY_ZONE_GROIN)
+	offset = OFFSET_GROIN
+	dismemberable = TRUE
+	dismember_wound = /datum/wound/dismemberment/groin
+	can_be_disabled = FALSE
+
+	grid_width = 64
+	grid_height = 64
+
+/obj/item/bodypart/groin/dismember(dam_type = BRUTE, bclass = BCLASS_CUT, mob/living/user, zone_precise = src.body_zone)
+	. = ..()
+	if(. && owner)
+		var/obj/item/bodypart/l_leg = owner.get_bodypart(BODY_ZONE_L_LEG)
+		if(l_leg && l_leg.dismemberable)
+			l_leg.drop_limb()
+			l_leg.forceMove(src)
+		var/obj/item/bodypart/r_leg = owner.get_bodypart(BODY_ZONE_R_LEG)
+		if(r_leg && r_leg.dismemberable)
+			r_leg.drop_limb()
+			r_leg.forceMove(src)
 
 /obj/item/bodypart/l_arm
 	name = "left arm"
@@ -1168,3 +1199,32 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
+
+
+// STONEKEEP EDIT: KAIZOKU; GROIN IS ITS OWN BODYPART.
+
+/obj/item/bodypart/groin
+	name = "groin"
+	desc = ""
+	icon_state = "default_human_groin"
+	max_damage = 200
+	body_zone = BODY_ZONE_GROIN
+	body_part = GROIN
+	px_x = 0
+	px_y = 0
+	var/obj/item/cavity_item
+	aux_zone = "boob"
+	aux_layer = BODYPARTS_LAYER
+	offset = OFFSET_ARMOR
+	grid_width = 64
+	grid_height = 96
+
+/obj/item/bodypart/groin/Destroy()
+	QDEL_NULL(cavity_item)
+	return ..()
+
+/obj/item/bodypart/groin/drop_organs(mob/user, violent_removal)
+	if(cavity_item)
+		cavity_item.forceMove(drop_location())
+		cavity_item = null
+	..()

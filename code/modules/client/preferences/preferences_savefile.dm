@@ -344,6 +344,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	_load_appearence(S)
 
+	// Culture
+	S["culture"] >> culture //Stonekeep Edit
+
+	// Body type
+	S["body_type"] >> body_type //Stonekeep Edit
+
 	var/patron_typepath
 	S["selected_patron"] >> patron_typepath
 	if(patron_typepath)
@@ -409,6 +415,31 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	setspouse = setspouse
 	selected_accent ||= ACCENT_DEFAULT
 
+	// Ensure body_type is valid for current species
+	var/list/_allowed_body_types
+	if(pref_species)
+		if(hascall(pref_species, "get_available_body_types"))
+			_allowed_body_types = call(pref_species, "get_available_body_types")()
+		else
+			_allowed_body_types = pref_species.allowed_body_types
+	if(_allowed_body_types && length(_allowed_body_types))
+		if(isnull(body_type) || !(body_type in _allowed_body_types))
+			body_type = _allowed_body_types[1]
+	else
+		body_type = null
+
+	var/list/_allowed_cultures
+	if(pref_species)
+		if(hascall(pref_species, "get_available_cultures"))
+			_allowed_cultures = call(pref_species, "get_available_cultures")()
+		else
+			_allowed_cultures = pref_species.allowed_cultures
+	if(_allowed_cultures && length(_allowed_cultures))
+		if(isnull(culture) || !(culture in _allowed_cultures))
+			culture = _allowed_cultures[1]
+	else
+		culture = null
+
 	S["body_markings"] >> body_markings
 	body_markings = SANITIZE_LIST(body_markings)
 
@@ -471,6 +502,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["gender_choice"]			, 	gender_choice)
 	WRITE_FILE(S["setspouse"]			, 	setspouse)
 	WRITE_FILE(S["selected_accent"], selected_accent)
+	// Culture
+	WRITE_FILE(S["culture"], culture)
+
+	// Body type
+	WRITE_FILE(S["body_type"], body_type)
 
 
 	//Custom names

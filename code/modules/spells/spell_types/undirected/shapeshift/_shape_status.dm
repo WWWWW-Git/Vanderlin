@@ -35,6 +35,7 @@
 
 /datum/status_effect/shapechange_mob/on_apply()
 	. = ..()
+	// owner.status_effect = src
 	owner.gender = caster_mob.gender
 	owner.regenerate_icons()
 	caster_mob.mind?.transfer_to(owner)

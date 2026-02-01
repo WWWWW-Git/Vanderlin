@@ -35,7 +35,7 @@
 		/datum/skill/labor/mining = 1,
 	)
 
-	possible_ages = NORMAL_AGES_LIST
+	possible_ages = NORMAL_AGES_LIST_BLOOMING
 	use_skintones = TRUE
 
 	changesource_flags = WABBAJACK

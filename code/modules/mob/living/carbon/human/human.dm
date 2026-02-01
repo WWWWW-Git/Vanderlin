@@ -81,8 +81,8 @@
 			return
 		if(!can_do_sex())	//STONEKEEP EDIT START
 			return
-		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
-			if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+		if(user.zone_selected == BODY_ZONE_GROIN) // STONEKEEP EDIT: KAIZOKU; GROIN IS ITS OWN BODYPART.
+			if(get_location_accessible(src, BODY_ZONE_GROIN, skipundies = TRUE))
 				if(underwear == "Nude")
 					return
 				if(do_after(user, 30, target = src))
@@ -313,7 +313,7 @@
 	popup.open()
 
 #ifdef MATURESERVER	//STONEKEEP EDIT START
-	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+	if(get_location_accessible(src, BODY_ZONE_GROIN, skipundies = TRUE))
 		if(can_do_sex())
 			dat += "<tr><td><BR><B>Underwear:</B> <A href='?src=[REF(src)];undiesthing=1'>[underwear == "Nude" ? "Nothing" : "Remove"]</A></td></tr>"
 #endif	//STONEKEEP EDIT END
@@ -986,3 +986,50 @@
 		return
 
 	message_admins("[ADMIN_LOOKUPFLW_PP(src)] is a [mind.assigned_role.get_informed_title(src)] and has been disconnected for more than 30 seconds!")
+
+/mob/living/carbon/human/proc/do_blood_sacrifice()
+	var/obj/item/held
+	for(var/obj/item/I in held_items)
+		if(istype(I, /obj/item/weapon/knife))
+			held = I
+			break
+	if(!held)
+		balloon_alert(src, "I need a knife in my hand!")
+		return FALSE
+	var/obj/item/bodypart/arm = get_bodypart(BODY_ZONE_L_ARM)
+	if(!arm)
+		balloon_alert(src, "I have no left arm!")
+		return FALSE
+	var/has_small = FALSE
+	var/has_slash = FALSE
+	for(var/datum/wound/W in arm.wounds)
+		if(istype(W, /datum/wound/slash/small))
+			has_small = TRUE
+		else if(istype(W, /datum/wound/slash) && !istype(W, /datum/wound/slash/small) && !istype(W, /datum/wound/slash/large))
+			has_slash = TRUE
+	var/wound_type
+	if(has_slash)
+		wound_type = /datum/wound/slash/large
+	else if(has_small)
+		wound_type = /datum/wound/slash
+	else
+		wound_type = /datum/wound/slash/small
+	arm.add_wound(wound_type)
+	visible_message(span_warning("[src] cuts their wrist with [held] in a blood sacrifice!"))
+	return TRUE
+
+/mob/living/carbon/human/proc/set_remoteview(atom/A) //Stonekeep Edit
+	remoteview_target = A
+	reset_perspective(A)
+
+
+// Verify whether an Infernal Eye effect is active shortly after casting
+/mob/living/carbon/human/proc/check_demongaze_active()
+	if(!client)
+		return
+	var/datum/status_effect/buff/demongaze/eff = has_status_effect(/datum/status_effect/buff/demongaze)
+	if(eff && remoteviewer && remoteview_target)
+		visible_message(span_notice("Infernal Eye persisted."))
+	else
+		visible_message(span_warning("Infernal Eye did not persist."))
+	return

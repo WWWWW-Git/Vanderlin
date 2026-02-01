@@ -182,11 +182,11 @@
 	name = "fogbeast"
 	desc = "A huge and elegant beast that gallops across open fields with hooves deadlier than any sword. \
 			Long extinct from the mainlands, it is the favourite beasts of Fog Islanders and Heartfelteans."
-	icon = 'modular/kaizoku/icons/mobs/horse.dmi'
-	icon_state = "horse"
-	icon_living = "horse"
-	icon_dead = "horse_dead"
-	icon_gib = "horse_gib"
+	icon = 'modular/kaizoku/icons/mobs/fogbeast.dmi'
+	icon_state = "fogbeast"
+	icon_living = "fogbeast"
+	icon_dead = "fogbeast_dead"
+	icon_gib = "fogbeast_gib"
 	faction = list("saiga") // mounted frens
 	ai_controller = /datum/ai_controller/fogbeast
 	gender = MALE
@@ -353,11 +353,11 @@
 	name = "fogbeast mare" // Name distinction because they share the same sprite and all.
 	desc = "A huge and elegant beast that gallops across open fields with hooves deadlier than any sword. \
 			Long extinct from the mainlands, it is the favourite beasts of Fog Islanders and Heartfelteans."
-	icon = 'modular/kaizoku/icons/mobs/horse.dmi'
-	icon_state = "horse"
-	icon_living = "horse"
-	icon_dead = "horse_dead"
-	icon_gib = "horse_gib"
+	icon = 'modular/kaizoku/icons/mobs/fogbeast.dmi'
+	icon_state = "fogbeast"
+	icon_living = "fogbeast"
+	icon_dead = "fogbeast_dead"
+	icon_gib = "fogbeast_gib"
 	faction = list("saiga")
 	ai_controller = /datum/ai_controller/fogbeast
 	gender = FEMALE
@@ -524,13 +524,13 @@
 // FOGBEAST FOALS
 
 /mob/living/simple_animal/hostile/retaliate/fogmare/filly
-	icon = 'modular/kaizoku/icons/mobs/horse.dmi'
+	icon = 'modular/kaizoku/icons/mobs/fogbeast.dmi'
 	name = "fogbeast filly" // Name for a young female foal.
 	desc = "The young foal of a fogbeast. This one is a female."
-	icon_state = "horsekid"
-	icon_living = "horsekid"
-	icon_dead = "horsekid_dead"
-	icon_gib = "horsekid_gib"
+	icon_state = "foggie"
+	icon_living = "foggie"
+	icon_dead = "foggie_dead"
+	icon_gib = "foggie_gib"
 
 	animal_species = null
 	gender = FEMALE

@@ -128,6 +128,8 @@
 	gender = MALE
 	specuse = list(SPEC_ID_HUMEN, SPEC_ID_DWARF, SPEC_ID_ELF, SPEC_ID_TIEFLING)
 
+/* Stonekeep Edit: Temporary
+
 /datum/sprite_accessory/hair/facial/rakshari/kesh
 	name = "Kesh"
 	icon_state = "kesh"
@@ -164,3 +166,6 @@
 	gender = FEMALE
 	specuse = list(SPEC_ID_TRITON)
 	specuse = list(SPEC_ID_HUMEN, SPEC_ID_DWARF, SPEC_ID_ELF, SPEC_ID_TIEFLING)
+
+
+*/

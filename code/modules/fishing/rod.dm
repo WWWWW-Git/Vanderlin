@@ -274,7 +274,9 @@
 		return
 
 	//About thirty minutes of non-stop reeling to get from zero to master... not worth it but hey, you do what you do.
-	user.mind?.add_sleep_experience(/datum/skill/labor/fishing, time * 0.13 * experience_multiplier)
+	// user.mind?.add_sleep_experience(/datum/skill/labor/fishing, time * 0.13 * experience_multiplier)
+	//user.mind?.adjust_experience(/datum/skill/labor/fishing, (time * 0.13 * experience_multiplier) + (user.STAINT * 0.5)) //Stonekeep Edit: Fix this later.
+
 
 	//Try to move it 'till it's under the user's feet, then try to pick it up
 	var/requires_vertical = (loc.z > currently_hooked.z)

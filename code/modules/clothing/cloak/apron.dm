@@ -53,6 +53,7 @@
 	grid_height = 64
 	pocket_storage_component_path = /datum/component/storage/concrete/grid/cloak
 
+/* //Stonekeep Edit: Removed - Severely improper for our setting.
 /obj/item/clothing/cloak/apron/maid/Initialize(mapload, ...)
 	. = ..()
 	// I fucking love pilgrims
@@ -65,4 +66,4 @@
 		department_exceptions = list(/datum/job/advclass/pilgrim, /datum/job/grabber), \
 		inverse = TRUE, \
 	)
-
+*/

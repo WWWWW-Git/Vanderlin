@@ -165,16 +165,16 @@
 /*========= FISHING ==========*/
 /datum/blueprint_recipe/fishbait
 	name = "fishbait (red)"
-	result_type = list(/obj/item/fishing/bait/meat,
-				/obj/item/fishing/bait/meat)
+	result_type = list(/obj/item/fishing/lure/meat,
+				/obj/item/fishing/lure/meat)
 	required_materials = list(/obj/item/reagent_containers/food/snacks/meat/mince = 1)
 	verbage = "starts rolling some bait"
 	verbage_tp = "starts rolling some bait"
 
 /datum/blueprint_recipe/fishbait/dough
 	name = "fishbait (dough)"
-	result_type = list(/obj/item/fishing/bait/dough,
-				/obj/item/fishing/bait/dough)
+	result_type = list(/obj/item/fishing/lure/dough,
+				/obj/item/fishing/lure/dough)
 	required_materials = list(/obj/item/reagent_containers/food/snacks/dough_slice = 1)
 
 /datum/blueprint_recipe/fishreel
@@ -451,7 +451,7 @@
 
 /datum/blueprint_recipe/confessional
 	name = "confession"
-	result_type = /obj/item/paper/confession
+	result_type = /obj/item/paper/inqslip/confession
 	required_materials = list(/obj/item/paper = 1)
 	construct_tool = list(/obj/item/natural/feather)
 	skillcraft = /datum/skill/misc/reading

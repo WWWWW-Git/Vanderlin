@@ -8,7 +8,7 @@
 	allowed_races = RACES_NOTNATIVE
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/kaizoku/migrant/bard
-	category_tags = list(CTAG_MIGRANT)
+	category_tags = list(CTAG_MIGRANTS)
 	apprentice_name = "Aspiring Bard"
 
 /datum/outfit/job/kaizoku/migrant/bard/pre_equip(mob/living/carbon/human/H)

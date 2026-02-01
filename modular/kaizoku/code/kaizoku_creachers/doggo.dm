@@ -1,7 +1,7 @@
-//This animal alongside the Falcon has been organized this way because I seriously can't organize the code otherwise.
-//Feel free to change it. In fact, I encourage you to do it. I just can't waste time on it right now.
+// Stonekeep Edit: (pinpointing to remember later)
+// Remember to split this file with other files.
+// Organization's sake.
 
-// ==================== MACROS ====================
 #define BB_FOCUS_TARGETS "focus_targets"
 #define BB_PATROLLING "patrolling"
 #define BB_CURRENT_TARGET "current_target"
@@ -10,7 +10,7 @@
 #define BB_DOGGO_RESTING "doggo_resting"
 #define BB_DOGGO_REST_BED "doggo_rest_bed"
 
-// ==================== AI CONTROLLER ====================
+// Put this in another file, when we have our own Kaizoku modular folders.
 
 /datum/ai_controller/doggo
 	movement_delay = 0.4 SECONDS
@@ -28,20 +28,23 @@
 	)
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-// ==================== AI PLANNING SUBTREE ====================
-
+// Put this in another file, when we have our own Kaizoku modular folders.
 /datum/ai_planning_subtree/doggo_behavior
 
 /datum/ai_planning_subtree/doggo_behavior/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/doggo_pawn = controller.pawn
-	if(!istype(doggo_pawn)) return
+	if(!istype(doggo_pawn))
+		return
 
-	if(doggo_pawn.doggo_bellyup) return SUBTREE_RETURN_FINISH_PLANNING
-	if(doggo_pawn.doggo_held) return SUBTREE_RETURN_FINISH_PLANNING
-	if(doggo_pawn.stat == DEAD) return SUBTREE_RETURN_FINISH_PLANNING
-	if(doggo_pawn.doggo_napping) return SUBTREE_RETURN_FINISH_PLANNING // blocks all actions while napping
+	if(doggo_pawn.doggo_bellyup)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	if(doggo_pawn.doggo_held)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	if(doggo_pawn.stat == DEAD)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	if(doggo_pawn.doggo_napping)
+		return SUBTREE_RETURN_FINISH_PLANNING // blocks all actions while napping
 
-	// === NAP ON BED LOGIC ===
 	var/bed = controller.blackboard[BB_DOGGO_REST_BED]
 	if(bed)
 		var/turf/bed_turf = get_turf(bed)
@@ -106,14 +109,11 @@
 		else
 			controller.queue_behavior(/datum/ai_behavior/doggo_patrol)
 			return SUBTREE_RETURN_FINISH_PLANNING
-
-	// Lazy follow
 	if(summoner && !QDELETED(summoner))
 		var/dist = get_dist(doggo_pawn, summoner)
 		if(dist > 3)
 			controller.queue_behavior(/datum/ai_behavior/doggo_follow, BB_SUMMONER)
 			return SUBTREE_RETURN_FINISH_PLANNING
-
 	return
 
 // ==================== DOGGO MOB ====================
@@ -144,7 +144,6 @@
 	melee_attack_cooldown = 15
 	attack_sound = list('sound/vo/mobs/vw/attack (1).ogg','sound/vo/mobs/vw/attack (2).ogg','sound/vo/mobs/vw/attack (3).ogg','sound/vo/mobs/vw/attack (4).ogg')
 
-
 /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/get_sound(input)
 	switch(input)
 		if("aggro")
@@ -158,11 +157,35 @@
 		if("cidle")
 			return pick('sound/vo/mobs/vw/bark (1).ogg','sound/vo/mobs/vw/bark (2).ogg','sound/vo/mobs/vw/bark (3).ogg','sound/vo/mobs/vw/bark (4).ogg','sound/vo/mobs/vw/bark (5).ogg','sound/vo/mobs/vw/bark (6).ogg','sound/vo/mobs/vw/bark (7).ogg')
 
+/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/proc/is_enemy(mob/living/M)
+	if(M == src)
+		return FALSE
+	if(M == summoner) //Will never attack the summoner or itself.
+		return FALSE
+	if(istype(M, /mob/living/simple_animal/hostile/retaliate/custodianpet)) //NEVER attack other custodian pets.
+		return FALSE
+	if(M.stat == DEAD) // Never attack dead mobs.
+		return FALSE
+	if(istype(M, /mob/living/simple_animal/hostile)) //Automatically attacks hostile simple animals.
+		return TRUE
+	if(islist(M.faction))
+		if(FACTION_ORCS in M.faction)
+			return TRUE
+		if(FACTION_UNDEAD in M.faction)
+			return TRUE
+		if(FACTION_CABAL in M.faction)
+			return TRUE
+		if(FACTION_MATTHIOS in M.faction)
+			return TRUE
+	if(isnum(M:mob_biotypes) && (M:mob_biotypes & MOB_UNDEAD)) //Straight up attack by bodytype.
+		return TRUE //Just to reinforce that you GOT to ATTACK THESE ONES
+	return FALSE
+
 /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/var/napping = FALSE
 
-// ======= Targeting for doggo =======
+// Put this in another file, when we have our own Kaizoku modular folders.
+
 /datum/targetting_datum/doggo_focus
-// No vars needed, just procs
 /datum/targetting_datum/doggo_focus/can_attack(mob/living/living_mob, atom/the_target)
 	var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D = living_mob
 	if(D.focus_targets && (the_target in D.focus_targets))
@@ -170,19 +193,14 @@
 	return FALSE
 
 /datum/targetting_datum/doggo_patrol
-// No vars needed, just procs
 /datum/targetting_datum/doggo_patrol/can_attack(mob/living/living_mob, atom/the_target)
 	if(!the_target || !ismob(the_target)) return FALSE
-	if(the_target == living_mob) return FALSE
 	if(istype(living_mob, /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo))
 		var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D = living_mob
-		if(the_target == D.summoner) return FALSE
-	var/mob/H = the_target
-	if(islist(H.faction) && ("orcs" in H.faction)) return TRUE
-	if(isnum(H:mob_biotypes) && (H:mob_biotypes & MOB_UNDEAD)) return TRUE
+		return D.is_enemy(the_target)
 	return FALSE
 
-// ========== DOGGO AI BEHAVIORS =============
+// Put this in another file, when we have our own Kaizoku modular folders.
 
 /datum/ai_behavior/basic_melee_attack/doggo
 	action_cooldown = 2 SECONDS
@@ -231,6 +249,8 @@
 		finish_action(controller, TRUE, target_key)
 		return
 
+// Put this in another file, when we have our own Kaizoku modular folders.
+
 /datum/ai_behavior/doggo_follow
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 
@@ -274,6 +294,8 @@
 		ai_controller.queue_behavior(/datum/ai_behavior/doggo_follow, "move_target")
 	to_chat(user, "<span class='notice'>[src] trots off towards the chosen location.</span>")
 
+// Put this in another file, when we have our own Kaizoku modular folders.
+
 /datum/ai_behavior/doggo_patrol
 
 /datum/ai_behavior/doggo_patrol/perform(delta_time, datum/ai_controller/controller)
@@ -300,6 +322,9 @@
 	else
 		finish_action(controller, FALSE)
 
+// ==================== DOGGO MOB DEFINITION ====================
+// Put this in code/modules/mob/living/simple_animal/hostile/retaliate/creacher/doggo.dm later
+// when we find a better way to handle code modules with Kaizoku files.
 // ==================== DOGGO PROCS & LIFE ====================
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/Initialize(mapload)
@@ -327,16 +352,21 @@
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/proc/add_focus_target(target)
 	if(!focus_targets) focus_targets = list()
-	if(!(target in focus_targets))
-		focus_targets = list(target)
+	if(target in focus_targets) // If target already in focus list, remove it (double-click cancellation)
+		focus_targets -= target
 		if(ai_controller)
-			ai_controller.blackboard[BB_FOCUS_TARGETS] = list(target)
-			ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
-		patrolling = FALSE
-		following = FALSE
-		if(ai_controller)
-			ai_controller.blackboard[BB_PATROLLING] = FALSE
-			ai_controller.blackboard[BB_FOLLOWING] = FALSE
+			ai_controller.blackboard[BB_FOCUS_TARGETS] = focus_targets.Copy()
+		return
+	// Otherwise add target to focus list
+	focus_targets = list(target)
+	if(ai_controller)
+		ai_controller.blackboard[BB_FOCUS_TARGETS] = list(target)
+		ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
+	patrolling = FALSE
+	following = FALSE
+	if(ai_controller)
+		ai_controller.blackboard[BB_PATROLLING] = FALSE
+		ai_controller.blackboard[BB_FOLLOWING] = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/proc/toggle_patrol(user)
 	if(summoner && summoner != user)
@@ -370,24 +400,58 @@
 		ai_controller.blackboard[BB_FOCUS_TARGETS] = list()
 		ai_controller.blackboard[BB_DOGGO_RESTING] = FALSE
 		ai_controller.blackboard[BB_DOGGO_REST_BED] = null
-	to_chat(user, "<span class='notice'>The doggo begins following you closely.</span>")
+	to_chat(user, "<span class='notice'>The doggo begins following you.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/proc/set_resting_bed(obj/structure/bed/bed, mob/user)
 	if(summoner && summoner != user)
-		to_chat(user, "<span class='warning'>[src] ignores your command. It serves another master.</span>")
+		to_chat(user, "<span class='warning'>[src] looks at you with disdain. It follows another master.</span>")
 		return
 	if(ai_controller)
 		ai_controller.blackboard[BB_DOGGO_REST_BED] = bed
 	update_icon_state()
 	to_chat(user, "<span class='notice'>[src] has been allowed to rest on the bed nearby.</span>")
 
+/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/proc/find_and_eat_food(user)
+	if(summoner && summoner != user)
+		to_chat(user, "<span class='warning'>[src] looks at you with disdain. It follows another master.</span>")
+		return
+	var/obj/item/found_food = null 	// Makes the doggo search for meat or bones in view
+	for(var/obj/item/reagent_containers/food/snacks/meat/M in view(10, src))
+		found_food = M
+		break
+	if(!found_food)
+		for(var/obj/item/natural/bundle/bone/B in view(10, src))
+			found_food = B
+			break
+
+	if(!found_food)
+		visible_message("<span class='notice'>[src] sniffs around but can't find any meat or bones nearby.</span>")
+		return
+	if(ai_controller) //Move to the chosen food and eat it.
+		patrolling = FALSE
+		following = FALSE
+		visible_message("<span class='notice'>[src] bounds toward [found_food] eagerly!</span>")
+		ai_controller.set_blackboard_key("food_target", found_food)
+		ai_controller.queue_behavior(/datum/ai_behavior/doggo_follow, "food_target")
+		spawn(0) // Allows them to check the stuff
+			var/attempts = 0
+			while(attempts < 100 && !QDELETED(src) && stat != DEAD && !QDELETED(found_food))
+				if(get_dist(src, found_food) <= 1)
+					visible_message("<span class='notice'>[src] devours [found_food] hungrily!</span>")
+					adjustBruteLoss(-50) // Immediate healing, rather than slow healing.
+					adjustFireLoss(-50)
+					qdel(found_food)
+					return
+				attempts++
+				sleep(2)
+			if(!QDELETED(found_food))
+				visible_message("<span class='notice'>[src] couldn't reach the food.</span>")
+
 /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/proc/start_nap()
 	doggo_napping = TRUE
-	update_icon_state()
-	to_chat(src, "<span class='notice'>[src] curls up without regards for the bed's hygiene.</span>")
 	spawn(nappytime)
-		if(doggo_napping && stat != DEAD)
-			src.finish_nap()
+		if(!QDELETED(src) && doggo_napping)
+			finish_nap()
 
 /mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/proc/finish_nap()
 	fully_heal()  // Finished napping? You will fully heal.
@@ -436,6 +500,116 @@
 
 	pickup_by(H)
 	return
+
+// =============== DOGGO WHISTLE SYSTEM ===============
+// FILE: This section should be moved to code/game/objects/items/whistle_doggo.dm
+// Doggo whistle command system, similar to falcon whistle
+
+/datum/intent/whistle/doggo
+	name = "Use"
+	icon_state = "inuse"
+	chargetime = 0
+	noaa = TRUE
+	rmb_ranged = TRUE
+
+/datum/intent/whistle/doggo/rmb_ranged(atom/target, mob/user)
+	// Attack a mob
+	if(ismob(target))
+		var/mob/L = target
+		// Doggos
+		for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in view(7, user))
+			if(!D.summoner) continue
+			if(D.summoner != user)
+				to_chat(user, "<span class='warning'>[D] ignores your command. It serves another master.</span>")
+				continue
+			if(D == L)
+				to_chat(user, "<span class='warning'>The doggo gets confused. Why attack itself?</span>")
+				continue
+			D.add_focus_target(L)
+		to_chat(user, "<span class='info'>The sharp whistle commands your doggo(s) to attack [L].</span>")
+		return
+
+	// Move to empty turf
+	if(isturf(target))
+		var/turf/T = target
+		for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in view(7, user))
+			if(D.summoner == user)
+				D.move_to_turf(T, user)
+		to_chat(user, "<span class='info'>You signal your doggo(s) to move to a spot.</span>")
+		return
+
+var/global/list/doggo_whistle_command_cooldowns = list()
+
+/obj/item/pet_command/doggo_whistle/attack_self(mob/user)
+	// Cooldown check
+	if(doggo_whistle_command_cooldowns[user] && world.time < doggo_whistle_command_cooldowns[user])
+		to_chat(user, "<span class='warning'>You need to wait before using the whistle again.</span>")
+		return
+	doggo_whistle_command_cooldowns[user] = world.time + 10 // 1 second cooldown
+
+	// Find doggos in range
+	var/list/doggos = list()
+	for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in view(7, user))
+		if(D.summoner == user)
+			doggos += D
+
+	if(!doggos.len)
+		to_chat(user, "<span class='warning'>No doggos recognize your whistle.</span>")
+		return
+
+	// Build radial menu
+	var/list/made_choices = list()
+
+	// Option 1: Patrol
+	var/datum/radial_menu_choice/patrol_option = new
+	patrol_option.image = image(icon = 'icons/mob/animal.dmi', icon_state = "parrot_fly")
+	patrol_option.info = span_boldnotice("Command your doggo to patrol the area and hunt for enemies.")
+	made_choices["Patrol"] = patrol_option
+
+	// Option 2: Follow
+	var/datum/radial_menu_choice/follow_option = new
+	follow_option.image = image(icon = 'icons/mob/animal.dmi', icon_state = "parrot_sit")
+	follow_option.info = span_boldnotice("Command your doggo to follow you closely.")
+	made_choices["Follow"] = follow_option
+
+	// Option 3: Rest on Bed
+	var/datum/radial_menu_choice/rest_option = new
+	rest_option.image = image(icon = 'icons/mob/animal.dmi', icon_state = "parrot_dead")
+	rest_option.info = span_boldnotice("Allow your doggo to rest on a nearby bed and recover.")
+	made_choices["Rest"] = rest_option
+
+	var/task = show_radial_menu(user, get_turf(user), made_choices, tooltips = TRUE)
+	if(!task)
+		return
+
+	// Execute chosen command
+	switch(task)
+		if("Patrol")
+			for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in doggos)
+				D.toggle_patrol(user)
+		if("Follow")
+			for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in doggos)
+				D.set_following(user)
+		if("Rest")
+			// Find nearby beds
+			var/obj/structure/bed/found_bed = null
+			for(var/obj/structure/bed/B in view(5, user))
+				found_bed = B
+				break
+			if(found_bed)
+				for(var/mob/living/simple_animal/hostile/retaliate/custodianpet/doggo/D in doggos)
+					D.set_resting_bed(found_bed, user)
+			else
+				to_chat(user, "<span class='warning'>There are no beds nearby for your doggo to rest on.</span>")
+
+/obj/item/pet_command/doggo_whistle
+	name = "doggo whistle"
+	desc = "A metal whistle designed to command doggo companions. Double-click to bring up a menu of commands."
+	icon = 'modular/kaizoku/icons/mobs/doggo.dmi'
+	icon_state = "whistle"
+	possible_item_intents = list(/datum/intent/whistle/doggo)
+	w_class = WEIGHT_CLASS_TINY
+	slot_flags = ITEM_SLOT_RING|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
 
 // =============== DOGGO ITEM FOR PICKUP/DROP ===============
 

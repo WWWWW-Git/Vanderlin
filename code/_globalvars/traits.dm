@@ -180,7 +180,11 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"In Training" = TRAIT_INTRAINING,
 		"Admin Killgod" = TRAIT_ADMINTEST_CRIT,
 		"Heroic" = TRAIT_VILLAINOUS,
-		"Actual Hero" = TRAIT_HERO
+		"Actual Hero" = TRAIT_HERO,
+		"Way of Empty Hands" = TRAIT_EMPTYHANDS,
+		"Purifier's Bulwark" = TRAIT_PURIFIER_BULWARK,
+		"Champion's Knowledge" = TRAIT_CHAMPION_KNOWLEDGE,
+		"Soulside Connection" = TRAIT_SOULSIDE_CONNECTION,
 	),
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS
@@ -319,9 +323,13 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CHANGELING_METABOLISM = span_info("My metabolism breaks down demonic impurity. Now, I crave flesh rather than what is green."), // STONEKEEP EDIT
 	TRAIT_DESECRANT = span_info("I've forsaken honor and on the path of becoming Dai, for my soul is diseased."), // STONEKEEP EDIT
 	TRAIT_GOODLOVER = span_love("It's a lucky thing to share my bed."), //STONEKEEP EDIT
-	TRAIT_INTRAINING = "I'm going to be a hero someday! I can use training dummies more effectively than others.", //Stonekeep edit; No longer becoming a knight.
+	TRAIT_EMPTYHANDS = span_info("My body is already a weapon refined by faith, I must never rely on weapons to do the fighting for me."), // Stonekeep Edit.
+	TRAIT_INTRAINING = "I'm going to be a soldier someday! I can use training dummies more effectively than others.", //Stonekeep edit; No longer becoming a knight.
+	TRAIT_PURIFIER_BULWARK = span_info("My spirit and body is a unstoppable shield against the influences of Graggar."), // Stonekeep Edit
+	TRAIT_CHAMPION_KNOWLEDGE = span_info("I've inherited the wisdom and tactics of my ancestors. I can manipulate blessed waters even further."), // Stonekeep Edit
+	TRAIT_SOULSIDE_CONNECTION = span_info("I can detect evil from someone else's soul."), // Stonekeep Edit
 	TRAIT_ADMINTEST_CRIT = span_info("ADMIN TOOL: Guaranteed chance to crit with every attack."),
-	TRAIT_VILLAINOUS = span_info("I am TOTALLY A HERO. I, the entity or nation I follow does NOTHING wrong."),
+	TRAIT_VILLAINOUS = span_info("I am TOTALLY A HERO. I, the entity or nation I follow does ABSOLUTELY NOTHING wrong."),
 	TRAIT_HERO = span_info("Either fate or my own choice has lead me here to do what is right."),
 ))
 

@@ -278,3 +278,74 @@
 	name = "reflective_cutting_plane"
 	plane = REFLECTIVE_DISPLACEMENT_PLANE
 	render_target = REFLECTIVE_DISPLACEMENT_PLANE_RENDER_TARGET
+
+
+
+
+// Stonekeep Edit EDIT - Wallening Testmerge
+/atom/movable/screen/plane_master/frill_under
+	name = "frill under plane master"
+	plane = UNDER_FRILL_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/frill_under/backdrop(mob/mymob)
+	. = ..()
+	if(!mymob)
+		CRASH("Plane master backdrop called without a mob attached.")
+	remove_filter(FRILL_MOB_MASK)
+	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = FRILL_MASK_RENDER_TARGET, flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/frill_mask
+	name = "frill mask plane master"
+	plane = FRILL_MASK_PLANE
+	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
+	blend_mode = BLEND_OVERLAY
+	render_target = FRILL_MASK_RENDER_TARGET
+	render_relay_plane = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "blank"
+
+/atom/movable/screen/plane_master/frill_mask/Initialize()
+	. = ..()
+	alpha = 255
+
+/atom/movable/screen/plane_master/frill
+	name = "frill plane master"
+	plane = FRILL_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/frill/backdrop(mob/mymob)
+	. = ..()
+	remove_filter(FRILL_FLOOR_CUT)
+	remove_filter(FRILL_GAME_CUT)
+	remove_filter(FRILL_MOB_MASK)
+	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = FRILL_MASK_RENDER_TARGET, flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/frill_over
+	name = "frill over plane master"
+	plane = OVER_FRILL_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/frill_over/backdrop(mob/mymob)
+	. = ..()
+	remove_filter(FRILL_MOB_MASK)
+	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = FRILL_MASK_RENDER_TARGET, flags = MASK_INVERSE))
+
+/atom/movable/screen/frill_mask_overlay //This is the screen object that hides wall's frills.
+	name = "frill mask"
+	icon = 'code/__DEFINES/kaizojave/placeholder_icons/effects/directionals.dmi'
+	icon_state = "south"
+	plane = FRILL_MASK_PLANE
+	layer = FLOAT_LAYER
+	appearance_flags = NO_CLIENT_COLOR | RESET_COLOR
+	screen_loc = "CENTER:-120,CENTER:-120"
+	density = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

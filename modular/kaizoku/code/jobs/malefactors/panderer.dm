@@ -1,3 +1,5 @@
+//The panderer is both a replacement for the Nitemaster, and the Gaffer at the same time.
+
 /datum/job/kaizoku/panderer
 	title = "Panderer"
 	faction = FACTION_TOWN
@@ -7,34 +9,48 @@
 	allowed_races = RACES_CITIZEN_PLAYERS
 
 	tutorial = "You own this den of indulgence with your associates, your hand controls the population \
-	with vice, corruption and sin, be it drugs, assassinations or pleasures of the flesh, you provide \
-	it all. Your infamous organized society thrives beyond the law's reach, as the sewers have no owners, \
-	and the tower's clan tolerates you, as your gang ensures no more other syndicates intrude on their \
-	domains with more aggressive drugs. Don't forget gambling, your only 'legal' business."
+	with vice and sin, be it drugs, assassinations or pleasures of the flesh, you provide \
+	it all. Your infamous organized society thrives beyond the law's reach, as the sewers have no owners \
+	as the tower's clan tolerates you, since your gang ensures no more other syndicates intrude on their \
+	domains with more aggressive drugs and crimes, such as the Rockhill's black market, so seek to destroy it. \
+	Don't forget gambling and the adventure guild, your only 'legal' business."
 	min_pq = 0
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/kaizoku/panderer
 	display_order = NITEMAN_ORDER
 	give_bank_account = 120
 	cmode_music = 'modular/stonekeep/sound/cmode/combat_hellish2.ogg'
+	spells = list(/datum/action/cooldown/spell/undirected/list_target/convert_role/mercenary)
+
 
 /datum/outfit/job/kaizoku/panderer/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/shirt/undershirt/webs
-	belt = /obj/item/storage/belt/leather
-	beltr = /obj/item/weapon/mace/cudgel
-	beltl = /obj/item/storage/keyring/nitemaster
+	backr = /obj/item/storage/backpack/satchel
+	backpack_contents = list(/obj/item/storage/belt/pouch/coins/rich = 1, /obj/item/merctoken = 2, /obj/item/natural/feather, /obj/item/paper = 3, /obj/item/weapon/knife/dagger/steel, /obj/item/paper)
+	backl = /obj/item/weapon/sword/long/replica // Just give them a normal Katana.
+	belt = /obj/item/storage/belt/leather/plaquegold
+	beltr = /obj/item/flashlight/flare/torch/lantern
+	shirt = /obj/item/clothing/shirt/tunic/colored/black
+	wrists = /obj/item/clothing/wrists/bracers/leather/advanced
+	armor = /obj/item/clothing/armor/leather/hide
+	mask = /obj/item/clothing/face/spectacles/delf // Change this to normal red spectacles.
+	ring = /obj/item/clothing/ring/gold
+	pants = /obj/item/clothing/pants/trou/leather/advanced
+	shoes = /obj/item/clothing/shoes/nobleboot
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/black
+	mask = /obj/item/clothing/face/eyepatch/fake
+	// beltl = /obj/item/storage/keyring/nitemaster
+	beltl = /obj/item/storage/keyring/gaffer // Change to the Panderer key later.
 	if(H.gender == FEMALE)
 		shoes = /obj/item/clothing/shoes/shortboots
 		armor = /obj/item/clothing/shirt/dress/stewarddress
 		cloak = /obj/item/clothing/cloak/cape/silk/dark
-	// if(isdarkelf(H))
-		//mask = /obj/item/clothing/face/spectacles/delf
-	ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
-	H.grant_language(/datum/language/thievescant)
-	to_chat(H, "<span class='info'>I can gesture in thieves' cant with ,t before my speech.</span>")
-	ADD_TRAIT(H, TRAIT_THIEVESGUILD, TRAIT_GENERIC)
 
+	ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_THIEVESGUILD, TRAIT_GENERIC)
+	H.grant_language(/datum/language/thievescant) //Change this later to a Mafia language.
+
+	to_chat(H, "<span class='info'>I can gesture in thieves' cant with ,t before my speech.</span>")
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
@@ -71,3 +87,61 @@
 	construct_tool = /obj/item/natural/feather
 	required_materials = list(/obj/item/paper = 1)
 	result_type = /obj/item/paper/certificate/adventurer_fake
+
+
+
+/datum/outfit/gaffer/pre_equip(mob/living/carbon/human/H, visuals_only)
+	..()
+	backr = /obj/item/storage/backpack/satchel
+	backpack_contents = list(/obj/item/storage/belt/pouch/coins/rich = 1, /obj/item/merctoken = 2, /obj/item/natural/feather, /obj/item/paper = 3, /obj/item/weapon/knife/dagger/steel, /obj/item/paper)
+	backl = /obj/item/weapon/sword/long/replica
+	belt = /obj/item/storage/belt/leather/plaquegold
+	beltl = /obj/item/storage/keyring/gaffer
+	beltr = /obj/item/flashlight/flare/torch/lantern
+	shirt = /obj/item/clothing/shirt/tunic/colored/black
+	wrists = /obj/item/clothing/wrists/bracers/leather/advanced
+	armor = /obj/item/clothing/armor/leather/hide
+	if(!visuals_only)
+		ring = /obj/item/clothing/ring/gold/burden
+	else
+		ring = /obj/item/clothing/ring/gold
+	pants = /obj/item/clothing/pants/trou/leather/advanced
+	shoes = /obj/item/clothing/shoes/nobleboot
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/black
+	mask = /obj/item/clothing/face/eyepatch/fake
+
+	ADD_TRAIT(H, TRAIT_SEEPRICES, type)
+	ADD_TRAIT(H, TRAIT_BURDEN, type)
+	ADD_TRAIT(H, TRAIT_STEELHEARTED, type)
+	ADD_TRAIT(H, TRAIT_OLDPARTY, TRAIT_GENERIC)
+
+	H.change_stat(STATKEY_SPD, 2)
+	H.change_stat(STATKEY_PER, 1)
+	H.change_stat(STATKEY_STR, 1)
+
+	H.adjust_skillrank(/datum/skill/combat/swords, pick(1,2), TRUE) //they are practicing with their fake ass shit sword but its clearly not paying off yet
+	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/crossbows, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/bows, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/butchering, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/mathematics, 5, TRUE)
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE) //actual stealth archer
+		H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
+		H.change_stat(STATKEY_PER, 1)
+

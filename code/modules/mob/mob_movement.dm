@@ -1,7 +1,4 @@
-//Can the atom pass this mob (always true for /mob)
-/mob/CanPass(atom/movable/mover, turf/target)
-	. = ..()
-	return TRUE
+
 
 /**
  * If your mob is concious, drop the item in the active hand
@@ -504,7 +501,7 @@
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
+	selector.set_selected_zone(BODY_ZONE_GROIN, mob)
 
 ///Hidden verb to target the left leg, bound to 3
 /client/verb/body_l_leg()

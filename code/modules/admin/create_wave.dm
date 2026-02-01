@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/outfits_list = list()
 	var/list/sexes_list = list(MALE,FEMALE)
 	var/list/races_list = RACES_PLAYER_ALL
-	var/list/ages_list = list(AGE_CHILD,AGE_ADULT,AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+	var/list/ages_list = list(BLOOMING_ADULT,AGE_ADULT,AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL) //STONEKEEP EDIT
 	var/list/stats_list = list(STATKEY_INT,STATKEY_STR,STATKEY_PER,STATKEY_SPD,STATKEY_CON,STATKEY_LCK)
 	var/list/skills_list = list()
 	var/list/languages_list = list()

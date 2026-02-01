@@ -222,6 +222,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		return
 	new_character.key = key
 	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+	new_character.can_do_sex()	//STONEKEEP EDIT
 	var/area/joined_area = get_area(new_character.loc)
 	if(joined_area)
 		joined_area.on_joining_game(new_character)
@@ -230,4 +231,3 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		Spl.Fade(TRUE)
 	new_character = null
 	qdel(src)
-

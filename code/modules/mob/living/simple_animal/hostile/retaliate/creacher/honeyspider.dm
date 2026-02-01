@@ -116,10 +116,9 @@
 		SEND_SIGNAL(src, COMSIG_MOB_FEED, O, 30, user)
 		SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHANGE, user, 10)
 		qdel(O)
-		if(is_species(user, /datum/species/elf/dark))
-			production += 50
-		else
-			production += 25
+		//if(is_species(user, /datum/species/elf/dark)) //Stonekeep - Dark elves are just elves now.
+			//production += 50 //Stonekeep Edit
+		production += 25 //Stonekeep Edit
 		if(tame && owner == user)
 			return TRUE
 		var/realchance = tame_chance
@@ -189,7 +188,7 @@
 			return "leg"
 		if(BODY_ZONE_PRECISE_STOMACH)
 			return "stomach"
-		if(BODY_ZONE_PRECISE_GROIN)
+		if(BODY_ZONE_GROIN)
 			return "stomach"
 		if(BODY_ZONE_HEAD)
 			return "head"

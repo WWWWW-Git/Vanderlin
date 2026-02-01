@@ -311,7 +311,7 @@
 	var/list/attempted_wounds
 	switch(pick(crit_classes))
 		if("cbt")
-			if(zone_precise == BODY_ZONE_PRECISE_GROIN)
+			if(zone_precise == BODY_ZONE_GROIN) //Stonekeep Edit
 				var/cbt_multiplier = 1
 				if(user && HAS_TRAIT(user, TRAIT_NUTCRACKER))
 					cbt_multiplier = 2
@@ -332,8 +332,11 @@
 				if(HAS_TRAIT(src, TRAIT_CRITICAL_RESISTANCE))
 					used -= 10
 				var/fracture_type = /datum/wound/fracture/chest
-				if(zone_precise == BODY_ZONE_PRECISE_GROIN)
-					if(damage_dividend >= 0.7) // Lower body paralysis
+				if(zone_precise == BODY_ZONE_GROIN)
+					if(damage_dividend >= 0.8) // Dismember groin
+						src.dismember(BRUTE, BCLASS_CUT, user)
+						return TRUE
+					else if(damage_dividend >= 0.7) // Lower body paralysis
 						fracture_type = /datum/wound/fracture/groin
 				if((isnull(user) || !user.status_traits) ? prob(used) : (HAS_TRAIT(user, TRAIT_ADMINTEST_CRIT) || prob(used))) //Stonekeep Edit
 					LAZYADD(attempted_wounds, fracture_type)

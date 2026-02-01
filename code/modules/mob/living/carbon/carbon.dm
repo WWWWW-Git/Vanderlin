@@ -710,6 +710,24 @@
 	if(lightning_flashing)
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_INVISIBLE)
 
+	if(ishuman(src)) //Stonekeep Edit: Start
+		var/mob/living/carbon/human/H = src
+		if(H.remoteviewer && H.remoteview_target)
+			if(ismob(H.remoteview_target))
+				var/mob/living/L = H.remoteview_target
+				if(L.stat != CONSCIOUS)
+					// Allow unconscious viewing
+					var/datum/status_effect/buff/demongaze/eff = H.has_status_effect(/datum/status_effect/buff/demongaze)
+					if(!eff || eff.target != L)
+						if(!(H.remoteview_grace_until && world.time < H.remoteview_grace_until))
+							H.remoteviewer = FALSE
+							H.set_remoteview(null)
+							return
+			if(client.eye != H.remoteview_target)
+				client.eye = H.remoteview_target
+			if(H.remoteview_target.update_remote_sight(src))
+				return //Stonekeep Edit: Ending
+
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A)
@@ -1422,3 +1440,13 @@
 	if(!dna?.species)
 		return
 	return dna?.species.id == species
+
+/mob/living/carbon/verb/test_dismember_groin()
+	set name = "Test Dismember Groin"
+	set category = "Debug"
+	var/obj/item/bodypart/groin = get_bodypart(BODY_ZONE_GROIN)
+	if(groin)
+		groin.dismember(BCLASS_CUT, src, BODY_ZONE_GROIN)
+		to_chat(src, "Attempted to dismember groin.")
+	else
+		to_chat(src, "No groin bodypart found.")

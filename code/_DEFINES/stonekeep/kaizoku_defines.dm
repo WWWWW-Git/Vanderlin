@@ -13,6 +13,10 @@ GLOBAL_LIST_INIT(abyssal_readme, world.file2list("strings/rt/abyssaltide.json"))
 #define TRAIT_DESECRANT	"Desecrant"
 #define TRAIT_VILLAINOUS "Heroic"
 #define TRAIT_HERO "Actual Hero"
+#define TRAIT_EMPTYHANDS "Way of Empty Hands" //WIP; Finish later; DEMPSEY ROLL!!! REMEMBER TO GO FULL ON HAJIME NO IPPO ON THIS
+#define TRAIT_PURIFIER_BULWARK "Purifier Bulwark" // WIP; Finish later; Make them resist and FUCK UP ANTAGS, badly.
+#define TRAIT_CHAMPION_KNOWLEDGE "Champion's Knowledge" // WIP; Finish later.
+#define TRAIT_SOULSIDE_CONNECTION "Soulside Connection" // WIP; Finish later
 // Debug guaranteed crit chance for testing purposes, almost always crits
 #define TRAIT_ADMINTEST_CRIT "Debug guaranteed critchance"
 
@@ -25,10 +29,13 @@ GLOBAL_LIST_INIT(abyssal_readme, world.file2list("strings/rt/abyssaltide.json"))
 #define CLOTHING_PURIFIER		"#346c81"
 #define CLOTHING_CURATOR		"#bd3541"
 
-#define CTAG_MIGRANT 		"CAT_MIGRANT"  		// Pilgrim classes
-#define CTAG_CITIZEN 		"CAT_CITIZEN"
+#define CTAG_CITIZEN 		"CAT_CITIZEN"  		// Citizen classes
+#define CTAG_MIGRANTS 		"CAT_MIGRANTS"  		// Migrants classes
+#define CTAG_WANDERER 		"CAT_WANDERER"  		// Wanderer classes
+#define CTAG_LOWLIFE 		"CAT_LOWLIFE"  		// Lowlife classes
 #define CTAG_RETAINER		"CAT_RETAINER"
-#define CTAG_BACHELOR	"CAT_BACHELOR"
+#define CTAG_BACHELOR		"CAT_BACHELOR"
+#define CTAG_FORESTER 		"CAT_FORESTER"
 
 // =============================================================================
 // ========================	SPRITE ACCESSORIES	================================

@@ -117,7 +117,7 @@
 	name = "Chainmail footwear {Kusari-Tabi}"
 	recipe_name = "a pair of Kusari-Tabi"//the boots aren't supposed to be made in duos
 	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/clothing/shoes/boots/armor/light/kusaritabi
+	created_item = /obj/item/clothing/shoes/boots/armor/ironmaille/kusaritabi
 
 /datum/anvil_recipe/armor/suneate
 	name = "Plated shin-guards {Suneate}"
@@ -202,7 +202,7 @@
 	name = "Conical helmet x2 {Jingasa}"
 	recipe_name = "a pair of Jingasas"
 	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/clothing/head/helmet/kettle/jingasa
+	created_item = /obj/item/clothing/head/helmet/kettle/kaizoku/shuhen
 	createditem_extra  = 1
 	craftdiff = 2
 

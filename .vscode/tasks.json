@@ -4,18 +4,23 @@
         {
             "type": "dreammaker",
             "dme": "vanderlin.dme",
-            "problemMatcher": ["$dreammaker"],
+            "problemMatcher": [
+                "$dreammaker"
+            ],
             "group": "build",
             "label": "dm: build - vanderlin.dme"
         },
-
         {
             "type": "process",
             "command": "tools/build/build",
-            "args": ["-DLOWMEMORYMODE"],
+            "args": [
+                "-DLOWMEMORYMODE"
+            ],
             "windows": {
                 "command": ".\\tools\\build\\build.bat",
-                "args": ["-DLOWMEMORYMODE"]
+                "args": [
+                    "-DLOWMEMORYMODE"
+                ]
             },
             "options": {
                 "env": {
@@ -33,14 +38,19 @@
             "dependsOn": "dm: reparse",
             "label": "Build All (low memory mode)"
         },
-
         {
             "type": "process",
             "command": "tools/build/build",
-            "args": ["-DLOWMEMORYMODE", "-DNO_DUNGEON"],
+            "args": [
+                "-DLOWMEMORYMODE",
+                "-DNO_DUNGEON"
+            ],
             "windows": {
                 "command": ".\\tools\\build\\build.bat",
-                "args": ["-DLOWMEMORYMODE", "-DNO_DUNGEON"]
+                "args": [
+                    "-DLOWMEMORYMODE",
+                    "-DNO_DUNGEON"
+                ]
             },
             "options": {
                 "env": {
@@ -61,10 +71,18 @@
         {
             "type": "process",
             "command": "tools/build/build",
-            "args": ["-DLOWMEMORYMODE", "-DNO_DUNGEON", "-DABSOLUTE_MINIMUM_MODE"],
+            "args": [
+                "-DLOWMEMORYMODE",
+                "-DNO_DUNGEON",
+                "-DABSOLUTE_MINIMUM_MODE"
+            ],
             "windows": {
                 "command": ".\\tools\\build\\build.bat",
-                "args": ["-DLOWMEMORYMODE", "-DNO_DUNGEON", "-DABSOLUTE_MINIMUM_MODE"]
+                "args": [
+                    "-DLOWMEMORYMODE",
+                    "-DNO_DUNGEON",
+                    "-DABSOLUTE_MINIMUM_MODE"
+                ]
             },
             "options": {
                 "env": {
@@ -85,10 +103,14 @@
         {
             "type": "process",
             "command": "tools/build/build",
-            "args": ["-DUNIT_TESTS"],
+            "args": [
+                "-DUNIT_TESTS"
+            ],
             "windows": {
                 "command": ".\\tools\\build\\build.bat",
-                "args": ["-DUNIT_TESTS"]
+                "args": [
+                    "-DUNIT_TESTS"
+                ]
             },
             "options": {
                 "env": {
@@ -106,11 +128,19 @@
             "dependsOn": "dm: reparse",
             "label": "Build All (unit tests)"
         },
-
         {
             "command": "${command:dreammaker.reparse}",
             "group": "build",
             "label": "dm: reparse"
+        },
+        {
+            "type": "dreammaker",
+            "dme": "vanderlin.dme",
+            "problemMatcher": [
+                "$dreammaker"
+            ],
+            "group": "build",
+            "label": "dm: build - ${command:CurrentDME}"
         }
     ]
 }

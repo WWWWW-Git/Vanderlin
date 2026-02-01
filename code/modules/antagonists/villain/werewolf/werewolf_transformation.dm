@@ -67,12 +67,6 @@
 	W.rage_datum = rage_datum
 	W.regenerate_icons()
 	W.stored_mob = src
-	var/mob/living/carbon/human/species/werewolf/W = new (get_turf(user))
-
-	if(user.age == BLOOMING_ADULT) //Stonekeep Edit: Young Adult
-		W.age = BLOOMING_ADULT //Stonekeep Edit: Young Adult
-
-	W.set_patron(user.patron)
 	W.limb_destroyer = TRUE
 	W.ambushable = FALSE
 	W.skin_armor = new /obj/item/clothing/armor/regenerating/skin/werewolf_skin(W)

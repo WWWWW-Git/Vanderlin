@@ -26,8 +26,8 @@
 
 ///Check if tha target can be caught by the hook
 /obj/item/fishing/hook/proc/can_be_hooked(atom/target)
-	if(ishuman(target))
-		return istriton(target)
+	//if(ishuman(target)) // Stonekeep Edit: We don't have tritons.
+		//return istriton(target)
 	return isitem(target)
 
 ///Any special effect when hooking a target that's not managed by the fishing rod.

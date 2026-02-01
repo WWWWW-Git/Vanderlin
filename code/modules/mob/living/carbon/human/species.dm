@@ -340,7 +340,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	if(message && message[1] && message[1] != "*")
 		message = " [message]"
 
-		var/list/accent_words = strings("accents/accent_universal.json", "universal")
+		var/list/accent_words = strings("accents/abyssal_replacement.json", "abyssal") //Stonekeep Edit
 		for(var/key in accent_words)
 			var/value = accent_words[key]
 			if(islist(value))

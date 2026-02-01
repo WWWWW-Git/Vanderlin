@@ -12,7 +12,7 @@
 
 /datum/species/abyssariad/skylancer
 	name = "Skylancer"
-	id = "abyssariad"
+	id = SPEC_ID_SKYLANCER
 	desc = "<b>Sky branched Champions</b><br>\
 	Molded by Abyssor's will to battle in Blood Apotheosis to protect Abyssal relics, these \
 	avian denmorians are an graceful race suited to navigate rocky shores and battlefronts. Inquisitive and aloof, \
@@ -29,10 +29,12 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	inherent_traits = list(TRAIT_NOMOBSWAP)
+	inherent_skills = list(
+		/datum/skill/misc/reading = 1,
+	)
 	default_features = list("mcolor" = "FFF", "ears" = "TenguS", "tail_human" = "TenguV")
 	use_skintones = 1
-	possible_ages = list(AGE_IMMORTAL) //Abyssariads are Immortal. However, if they become stray from Abyssor's will - they suffer severe dementia after some decades.
-//	skinned_type = /obj/item/stack/sheet/animalhide/human
+	possible_ages = CHAMPIONAGE_AGES
 	disliked_food = NONE
 	liked_food = NONE
 	changesource_flags = WABBAJACK

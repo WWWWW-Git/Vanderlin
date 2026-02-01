@@ -1445,10 +1445,10 @@ generate/load female uniform sprites matching all previously decided variables
 			sleeveindex -= 2
 
 	var/index = I.icon_state
-	var/mob/living/carbon/human/HM = src
-	if(istype(HM) && HM.age == AGE_CHILD)
-		index += "_child"
-	else if(gender == FEMALE ^ dna.species.swap_female_clothes)
+	// var/mob/living/carbon/human/HM = src // Went unused
+	//if(istype(HM) && HM.age == AGE_CHILD) //Stonekeep Edit: Young Adult
+		//index += "_child"
+	if(gender == FEMALE ^ dna.species.swap_female_clothes) //STONEKEEP edit
 		index += "_f"
 	if(dna.species.custom_clothes)
 		index += "_[dna.species.custom_id ? dna.species.custom_id : dna.species.id]"

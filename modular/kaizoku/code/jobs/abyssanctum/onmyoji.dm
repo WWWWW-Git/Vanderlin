@@ -10,9 +10,12 @@
 	spawn_positions = 1
 	min_pq = 0
 	bypass_lastclass = TRUE
+	selection_color = "#c2a45d"
 	allowed_patrons = list(/datum/patron/abyssanctum/curator)
 
-	allowed_races = RACES_FIRSTCLASS_PLAYERS
+	//allowed_races = RACES_FIRSTCLASS_PLAYERS
+	allowed_races = RACES_SECONDCLASS_PLAYERS
+
 	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 	allowed_sexes = list(MALE, FEMALE)
 	tutorial = "The Chosen of the pressuring depth, senior spiritcallers of Abyssor, sage of the oceans. \

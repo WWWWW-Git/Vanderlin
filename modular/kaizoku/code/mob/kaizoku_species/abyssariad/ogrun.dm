@@ -12,7 +12,8 @@
 
 /datum/species/abyssariad/ogrun
 	name = "Ogrun"
-	id = "abyssariad"
+	id = SPEC_ID_OGRUN
+	native_language = "Abyssal"
 	desc = "<b>Island branched Champions</b><br>\
 	Under the guide of Abyssor's creations, orcs invading fog islands became purified entities after Blood Apotheosis. \
 	Just like the islands that sprinkled the ocean's surface, these orcs bears the constant waves and storms of life \
@@ -31,8 +32,11 @@
 	inherent_traits = list(TRAIT_NOMOBSWAP)
 	default_features = list("mcolor" = "FFF", "ears" = "Ogrun", "tail_human" = "Onihorn")
 	use_skintones = 1
-	possible_ages = list(AGE_IMMORTAL) //Abyssariads are Immortal. However, Onis are the newest ones on the fold, and they become Orcs mentally if they stray away from Abyssor.
-//	skinned_type = /obj/item/stack/sheet/animalhide/human
+	possible_ages = CHAMPIONAGE_AGES
+	inherent_skills = list(
+		/datum/skill/misc/reading = 1,
+	)
+
 	disliked_food = NONE
 	liked_food = MEAT
 	changesource_flags = WABBAJACK

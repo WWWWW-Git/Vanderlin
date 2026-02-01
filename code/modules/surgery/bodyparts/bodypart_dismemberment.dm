@@ -434,3 +434,17 @@
 
 		L.attach_limb(src, 1)
 		return 1
+
+ //Stonekeep Edit - Groin introdution - Adapt this better
+/obj/item/bodypart/groin/dismember(dam_type = BRUTE, bclass = BCLASS_CUT, mob/living/user, zone_precise = src.body_zone)
+	. = ..()
+	if(. && owner)
+		var/obj/item/bodypart/l_leg = owner.get_bodypart(BODY_ZONE_L_LEG)
+		if(l_leg && l_leg.dismemberable)
+			l_leg.drop_limb()
+		var/obj/item/bodypart/r_leg = owner.get_bodypart(BODY_ZONE_R_LEG)
+		if(r_leg && r_leg.dismemberable)
+			r_leg.drop_limb()
+
+/obj/item/bodypart/groin/drop_limb(special)
+	. = ..()

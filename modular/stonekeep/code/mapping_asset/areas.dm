@@ -44,7 +44,7 @@
 	background_track = 'modular/stonekeep/sound/area/manor.ogg'
 	background_track_dusk = 'modular/stonekeep/sound/area/manor.ogg'
 	background_track_night = 'modular/stonekeep/sound/area/manornight.ogg'
-	converted_type = /area/rogue/outdoors/exposed/manorgarri
+	converted_type = /area/outdoors/exposed/manorgarri
 	first_time_text = "Stonehill manor"
 
 /area/rogue/indoors/town/makers
@@ -70,7 +70,7 @@
 	background_track_night = null
 	background_track_dusk = null
 	background_track_night = null
-	converted_type = /area/rogue/outdoors/exposed/manorgarri
+	converted_type = /area/outdoors/exposed/manorgarri
 
 /area/rogue/under/tomb/indoors/magic
 	background_track = 'modular/stonekeep/sound/area/magiciantower.ogg'
@@ -148,7 +148,7 @@
 	name = "danger(monastery)"
 	icon_state = "cavelava"
 	background_track = 'modular/kaizoku/sound/ambience/Syzygy.ogg'
-	converted_type = /area/rogue/outdoors/exposed/decap
+	converted_type = /area/outdoors/exposed/decap
 
 /area/rogue/under/cavelava
 	first_time_text = ""
@@ -182,7 +182,7 @@
 	background_track_night = null
 	first_time_text = "MOUNT DECAPITATION"
 	ambush_times = list("night","dawn","dusk","day")
-	converted_type = /area/rogue/indoors/shelter/mountains/decap
+	converted_type = /area/indoors/shelter/mountains/decap
 
 // modifications to bog area
 /area/rogue/outdoors/bog

@@ -1,10 +1,10 @@
 /datum/faith/abyssanctum
 	name = "\improper Abyssanctum"
 	desc = "The religion of Fog Islanders, devoted to seek sanctity through purification \
-	as the supreme tide against demonic taint, the world's filter, said that the soul can reach \
-	sanctity and be stripped away from the cycle of death as thalassic angels, or be reincarnated by holy tides, \
-	The abyssanctum have three expressions of faith as icon of spiritual resonance with the deep. \
-	They differ from pantheon's abyssorites, with a more down-to-earth structure and mutual bind to the thalassic realm."
+	as the supreme tide against demonic taint, concepting the world's filter, said that the soul can reach \
+	sanctity and be stripped away from the cycle of death as thalassic spirits, or be reincarnated by holy tides. \
+	The abyssanctum have three expressions of resonance with Abyssor's thalassic angels, and they differ from \
+	pantheon's abyssorites, with a more down-to-earth structure and mutual bind to the oceanic realm rather than hunting it down."
 	godhead = /datum/patron/abyssanctum/purifier //All the doctrines are equals.
 
 /datum/patron/abyssanctum
@@ -27,19 +27,22 @@
 	if(istype(T, /turf/open/water))
 		return TRUE
 
-	to_chat(follower, span_danger("My voice can only reach The Great Whale and THEIR angels on watery tides."))
+	to_chat(follower, span_danger("My voice can only reach The Great Whale and his angels on watery tides."))
 	return FALSE
 
 /datum/patron/abyssanctum/purifier
 	name = "Purifier Doctrine"
-	domain = "Abyssor, mutual to the tides of fate, focused on the spiritual."
-	desc = "Purifiers of the spirit and essence by rites against the burden unseen. Their dreams are warning splinter of the Tide of Fate, \
-	believing it must be changed just much it should be protected."
+	domain = "Abyssor, mutual to Quintessential the Nautilus, focused on the spiritual."
+	desc = "Purifiers act as the intermediaries of spirits and must hear \
+			the splinters of the tides of fate found on dreams. Warnings demand change \
+			just as much as purifications into the spiritual realm. \
+			Restless souls seek salvation from twisted fates, \
+			as no spirit deserves derailment on deadside's realm."
 	flaws= "Reckless, Stubborn, Destructive - Intolerant"
 	worshippers = "Exorcists, talisman makers, survivors of demonic incursions. The Shrinekeepers."
 	sins = "Fear, Hubris, Forgetfulness - Hesitation"
-	boons = "Purifier's hymn. You directly resist corruptive influence. Your rituals branches exorcisms and dream guidance."
-	added_traits = list(TRAIT_LEECHIMMUNE, TRAIT_KAIZOKU) //Leech Immune will change later.
+	boons = "Purifier Bulwark. You directly resist corruptive influence, spiritual or not. Your rituals branches exorcisms and dream guidance."
+	added_traits = list(TRAIT_PURIFIER_BULWARK, TRAIT_KAIZOKU) //Leech Immune will change later.
 	devotion_holder = /datum/devotion/abyssanctum/purifier
 	confess_lines = list(
 		"ABYSSOR COMMANDS THE WAVES!",
@@ -54,21 +57,24 @@
 /datum/devotion/abyssanctum/purifier
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/abyssal_heal,
-		CLERIC_T1 = /datum/action/cooldown/spell/chain_of_torment,
-		CLERIC_T2 = /datum/action/cooldown/spell/veil_of_spirits,
-		CLERIC_T3 = /datum/action/cooldown/spell/revival_spark,
+		CLERIC_T1 = /datum/action/cooldown/spell/purify,
+		CLERIC_T2 = /datum/action/cooldown/spell/abyssal_tether,
+		CLERIC_T3 = /datum/action/cooldown/spell/barotrauma,
 	)
 
 /datum/patron/abyssanctum/curator
 	name = "Curator Doctrine"
-	domain = "Abyssor, mutual to the Champions of Age, focused on the mind."
-	desc = "The custodians of knowledge, binding wounds and lore to guide the lost and sever blasphemy. \
-	They purge the twisted heresies, censoring corruption to never feed EVIL, and preserve what is sacred." //NOC will be angry at this.
+	domain = "Abyssor, mutual to Petrichor, the Cthonic Squid, focused on the mind."
+	desc = "Bound to the ways of Petrichor, we must regard \
+			wisdom as the pathway to salvation that overlaps evil, \
+			censorship of purity is dissent, but sinful perceptions \
+			must be purged. The purity of the mind must be restored, \
+			as for every sickness of thought is feed for Zizo."
 	flaws = "Reckless, Stubborn, Destructive - Overtrusting"
-	worshippers = "The common folk, storytellers, ship doctors and educators. The Yamabushi."
+	worshippers = "The common folk, storytellers, ship doctors and educators. The Curators."
 	sins = "Fear, Hubris, Forgetfulness - Intellectual arrogance"
-	boons = "Knowledge of the Champions. You receive more qualities from blessed waters. Your rituals branches blessings."
-	added_traits = list(TRAIT_LEECHIMMUNE, TRAIT_KAIZOKU) //Leech Immune will change later.
+	boons = "Champion's Knowledge. Blessed waters provides more quality and ways of warfare. Your rituals branches blessings."
+	added_traits = list(TRAIT_CHAMPION_KNOWLEDGE, TRAIT_KAIZOKU) //Leech Immune will change later.
 	devotion_holder = /datum/devotion/abyssanctum/curator
 	confess_lines = list(
 		"ABYSSOR COMMANDS THE WAVES!",
@@ -90,14 +96,18 @@
 
 /datum/patron/abyssanctum/tideweaver
 	name = "Tideweaver Doctrine"
-	domain = "Abyssor, mutual to the holy tessellation, focused on the physical."
-	desc = "Guardians of the filtering lattice, believers that corruption is severed by blade and sacrifice, \
-	stacking what remains into tessellated order, as removing evil from the root without leaving gaps is the true salvation."
+	domain = "Abyssor, mutual to Syzygy the Sky Serpent, focused on the physical."
+	desc = "Guardians of filtering, what shields the body \
+			from rot unseen. Uphold the status quo of flesh and steel, \
+			heal the flawed, shatter the irredeemable, \
+			as for every untreated disease, a failure. \
+			Salvation lies in uprooting harm without leaving ruins behind."
 	flaws = "Reckless, Stubborn, Destructive - Unyielding"
-	worshippers = "Abyssal Warriors, Sea raiders, Generals. The Soheis."
+	worshippers = "Abyssal Warriors, Sea raiders, Generals. The Tideweavers."
 	sins = "Fear, Hubris, Forgetfulness - Disobedience"
 	boons = "Soulside Connection. You can feel the presence of heretics. Your rituals branches sacrifices."
 	devotion_holder = /datum/devotion/abyssanctum/tideweaver
+	added_traits = list(TRAIT_SOULSIDE_CONNECTION, TRAIT_KAIZOKU) //Leech Immune will change later.
 	confess_lines = list(
 		"ABYSSOR COMMANDS THE WAVES!",
 		"THE OCEAN'S FURY IS ABYSSOR'S WILL!",
@@ -111,9 +121,9 @@
 /datum/devotion/abyssanctum/tideweaver
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/abyssal_heal,
-		CLERIC_T1 = /datum/action/cooldown/spell/purify,
-		CLERIC_T2 = /datum/action/cooldown/spell/abyssal_tether,
-		CLERIC_T3 = /datum/action/cooldown/spell/barotrauma,
+		CLERIC_T1 = /datum/action/cooldown/spell/chain_of_torment,
+		CLERIC_T2 = /datum/action/cooldown/spell/veil_of_spirits,
+		CLERIC_T3 = /datum/action/cooldown/spell/revival_spark,
 	)
 
 #define ALL_ABYSSANCTUM_DOCTRINE list(/datum/patron/abyssanctum/purifier, /datum/patron/abyssanctum/curator, /datum/patron/abyssanctum/tideweaver)

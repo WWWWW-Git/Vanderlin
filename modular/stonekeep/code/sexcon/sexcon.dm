@@ -121,13 +121,13 @@ Admin logging is provided for orgasms and if you try to initiate sex with corpse
 	show_ui()
 
 /datum/sex_controller/proc/cum_onto()
-	log_combat(user, target, "came onto the target")
+	log_combat(user, target, "loses the seed onto the target")
 	playsound(target, 'modular/stonekeep/sound/sexcon/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 	add_cum_floor(get_turf(target))
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE)
-	log_combat(user, target, "came inside the target")
+	log_combat(user, target, "loses the seed inside the target")
 	if(oral)
 		playsound(target, pick(list('modular/stonekeep/sound/sexcon/mouthend (1).ogg','modular/stonekeep/sound/sexcon/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
@@ -142,7 +142,7 @@ Admin logging is provided for orgasms and if you try to initiate sex with corpse
 		user.visible_message(span_love("[user] tightens in ecstasy!"))
 		after_ejaculation()
 	if(user.gender == MALE)
-		user.visible_message(span_love("[user] spills on the floor!"))
+		user.visible_message(span_love("[user] spills the seed on the floor!"))
 		playsound(user, 'modular/stonekeep/sound/sexcon/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 		add_cum_floor(get_turf(user))
 		after_ejaculation()
@@ -177,9 +177,9 @@ Admin logging is provided for orgasms and if you try to initiate sex with corpse
 	charge = clamp(amount, 0, SEX_MAX_CHARGE)
 	var/after_empty = (charge < CHARGE_FOR_CLIMAX)
 	if(empty && !after_empty)
-		to_chat(user, span_notice("I feel like I'm not so spent anymore."))
+		to_chat(user, span_notice("The inner qi-gate recovers my seed."))
 	if(!empty && after_empty)
-		to_chat(user, span_notice("I'm spent!"))
+		to_chat(user, span_notice("I'm spent... I lost all my seed..."))
 
 /datum/sex_controller/proc/adjust_charge(amount)
 	set_charge(charge + amount)
@@ -188,7 +188,7 @@ Admin logging is provided for orgasms and if you try to initiate sex with corpse
 	adjust_charge(dt * CHARGE_RECHARGE_RATE)
 	if(is_spent())
 		if(arousal > 60)
-			to_chat(user, span_warning("I'm too spent!"))
+			to_chat(user, span_warning("I'm too spent! I lost all of my seed!"))
 			adjust_arousal(-20)
 		adjust_arousal(-dt * SPENT_AROUSAL_RATE)
 
@@ -542,7 +542,8 @@ Admin logging is provided for orgasms and if you try to initiate sex with corpse
 			return "<span class='love_high'>[string]</span>"
 
 /obj/effect/decal/cleanable/coom
-	name = "mess"
+	name = "lost seed" // I will be honest. Neither I know why I started this internal meme. Nor do I know why it stuck IN MY MIND.
+	desc = "Someone was unworthy of keeping their seed inside themselves."
 	icon = 'modular/stonekeep/icons/dirt.dmi'
 	icon_state = "mess1"
 	random_icon_states = list("mess1", "mess2", "mess3")

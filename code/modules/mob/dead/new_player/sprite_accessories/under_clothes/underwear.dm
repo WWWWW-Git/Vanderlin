@@ -20,11 +20,13 @@
 	gender = MALE
 	specuse = list(SPEC_ID_DWARF)
 
+/* Stonekeep Edit: Removal
 /datum/sprite_accessory/underwear/male_half
 	name = "Undies Half"
 	icon_state = "male_half"
 	gender = MALE
 	specuse = list(SPEC_ID_HALFLING)
+*/
 
 /datum/sprite_accessory/underwear/female_bikini
 	name = "Femundies"
@@ -36,7 +38,7 @@
 	name = "FemUndiesD"
 	icon_state = "female_dwarf"
 	gender = FEMALE
-	specuse = list(SPEC_ID_DWARF, SPEC_ID_HALFLING)
+	specuse = list(SPEC_ID_DWARF) //Stonekeep Edit
 
 /datum/sprite_accessory/underwear/female_leotard
 	name = "Femleotard"

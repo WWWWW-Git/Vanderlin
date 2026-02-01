@@ -1,12 +1,13 @@
 /datum/job/kaizoku/doyen
 	title = "Doyen Champion"
 	f_title = "Doyenne Champion"
-	tutorial = "More than six centuries has passed yet you still feel the blood of the unholy.\
-	You've outlived your comrades, and the memories of watching the skies bleed asunder teached \
-	you what slaughter really means. Now that demons are coming back, you wear your ancient armor \
-	once more, haunted by memories as a gaze that lingers on fields long buried by you. \
-	There is no one better at killing demons than you are, and your name fills their essence with fear, \
-	but there is something... out there... coming to get you."
+	tutorial = "More than six centuries has passed yet you still feel the blood of the unholy. \
+	You've outlived your comrades, and the memories of watching the skies bleed asunder taught \
+	you what slaughter really means, always on edge, high alert- everything that reenacts \
+	the memories triggers an overdrive of your senses all over again. \
+	There is no one better at killing demons, ... \
+	but the memories... there is something... out there... coming for you. \
+	Graggar knows your name."
 	department_flag = FACTION_MILITARY
 	display_order = KZ_DOYEN
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
@@ -18,7 +19,7 @@
 
 	spells = list(/datum/action/cooldown/spell/undirected/list_target/convert_role/militia)
 	allowed_sexes = list(MALE, FEMALE) //same as town guard
-	allowed_ages = list(AGE_IMMORTAL) //You are more than 600 years old, bud.
+	allowed_ages = list(AGE_ANCIENT) //You are more than 600 years old, bud.
 	allowed_races = RACE_NATIVE_PLAYERS //Change this to Kaizoku races only.
 
 	// advclass_cat_rolls = list(CTAG_VETERAN = 20) // You don't.
@@ -77,4 +78,4 @@
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
-	// ADD_TRAIT(H, TRAIT_BLOODBOIL, TRAIT_GENERIC) //Instantly kill TIEFLINGS AND DEMONS on SIGHT.
+	// ADD_TRAIT(H, TRAIT_BLOODBOIL, TRAIT_GENERIC) // kill TIEFLINGS AND DEMONS on SIGHT.

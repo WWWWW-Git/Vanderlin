@@ -151,8 +151,8 @@
 	alternate_worn_layer = SHOESLEEVE_LAYER
 
 /obj/item/clothing/pants/platelegs/weepershanwenkai
-	name = "weeper-patterned championage lowerhalf"
-	desc = "Lower part of a godwenkai armor, relics of abyssariad championage for those of high-ranking deeply bound to Abyssanctum. Usually made of bronze, the grasp of the current era brought high-quality steel to the table."
+	name = "Y-wenkai lowerhalf"
+	desc = "Lower part of a Y-wenkai armor, relics of abyssariad championage for those of high-ranking deeply bound to Abyssanctum. Usually made of bronze, the grasp of the current era brought high-quality steel to the table."
 	icon = 'modular/kaizoku/icons/clothingicon/pants.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/pants.dmi'
 	sleeved = 'modular/kaizoku/icons/helpers/sleeves_pants.dmi'

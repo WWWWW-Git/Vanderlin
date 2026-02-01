@@ -109,6 +109,23 @@
 
 	victim.blood_volume = max(victim.blood_volume-5, 0)
 	victim.handle_blood()
+	//Stonekeep Edit: Start - Put this somewhere else later.
+	var/blood_handle = 0
+	if(victim.stat == DEAD)
+		blood_handle |= BLOOD_PREFERENCE_DEAD
+	else
+		blood_handle |= BLOOD_PREFERENCE_LIVING
+	if(ishuman(victim))
+		var/mob/living/carbon/human/Hv = victim
+		if(Hv.dna?.species?.id in list(SPEC_ID_CHANGELING, SPEC_ID_SKYLANCER, SPEC_ID_OGRUN))
+			blood_handle |= BLOOD_PREFERENCE_CHAMPIONAGE
+	if(HAS_TRAIT(victim, TRAIT_SILVER_BLESSED))
+		blood_handle |= BLOOD_PREFERENCE_FANCY
+		blood_handle |= BLOOD_PREFERENCE_EUPHORIC
+	var/datum/blood_type/BT = victim.get_blood_type()
+	src.on_blood_consumed(victim, blood_handle, BT)
+	src.on_blood_consumed(victim, blood_handle)
+	//Stonekeep Edit ending: Sunscorners
 
 	playsound(loc, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
 

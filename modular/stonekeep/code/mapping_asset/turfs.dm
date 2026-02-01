@@ -371,22 +371,6 @@
 	icon_state = "hayedge-se"
 	mouse_opacity = 0
 
-/*	..................   Kaizoku Sand   ................... */
-/turf/open/floor/sand
-	icon = 'modular/stonekeep/icons/turfs.dmi'
-	icon_state = "sand"
-	footstep = FOOTSTEP_SAND
-	barefootstep = FOOTSTEP_SOFT_BAREFOOT
-	clawfootstep = FOOTSTEP_SAND
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	landsound = 'sound/foley/jumpland/dirtland.ogg'
-	neighborlay = "sandedges"
-
-/turf/open/floor/sand/Initialize()
-	dir = pick(GLOB.cardinals)
-	. = ..()
-
-
 /turf/open/floor/carpet/hamlet
 	icon = 'modular/stonekeep/icons/carpet_hamlet.dmi'
 	smoothing_flags = SMOOTH_BITMASK

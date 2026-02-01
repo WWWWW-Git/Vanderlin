@@ -3,7 +3,7 @@
 	If you need to add more map_adjustment, check 'map_adjustment_include.dm'
 	These 'map_adjustment.dm' files shouldn't be included in 'dme'
 */
-
+/* // Stonekeep Edit: We don't use this map.
 /datum/map_adjustment/voyager
 	map_file_name = "voyager.dmm"
 	blacklist = list(
@@ -44,3 +44,4 @@
 		/datum/job/farmer = 1000,
 		/datum/job/miner = 1000,
 	)
+*/

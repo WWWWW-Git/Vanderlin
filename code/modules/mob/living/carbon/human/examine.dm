@@ -55,6 +55,10 @@
 	if(maniac && (user != src))
 		race_name = "disgusting pig"
 
+	var/datum/component/sunscorned_disguise/sun_disguise_comp = GetComponent(/datum/component/sunscorned_disguise) //Stonekeep Edit - Start
+	if(sun_disguise_comp?.disguised)
+		race_name = "Humen" // Stonekeep Edit - End
+
 	var/m1 = "[t_He] [t_is]"
 	var/m2 = "[t_his]"
 	var/m3 = "[t_He] [t_has]"
@@ -117,6 +121,15 @@
 					if(src.skin_tone == skin_tones[tone])
 						skin_tone_seen = lowertext(tone)
 						break
+
+				// Check if sunscorned with disguise and map human hex back to heritage name
+				if(!skin_tone_seen || skin_tone_seen == "incomprehensible")
+					var/datum/component/sunscorned_disguise/disguise = src.GetComponent(/datum/component/sunscorned_disguise)
+					if(disguise)
+						var/heritage = disguise.get_heritage_from_skin(src.skin_tone)
+						if(heritage)
+							skin_tone_seen = lowertext(heritage)
+
 			var/slop_lore_string = "."
 			if(ishumannorthern(user))
 				var/mob/living/carbon/human/racist = user

@@ -29,7 +29,7 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 	outfit_female = null
 	job_reopens_slots_on_death = TRUE
 	same_job_respawn_delay = 15 MINUTES
-	advclass_cat_rolls = list(CTAG_ADVENTURER = 15)
+	advclass_cat_rolls = list(CTAG_WANDERER = 15)
 	is_foreigner = TRUE
 	can_have_apprentices = FALSE
 	scales = TRUE
@@ -63,3 +63,11 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 		total_positions_so_far = slots
 
 	return slots
+
+/datum/job/advclass/kaizoku/wanderer
+	abstract_type = /datum/job/advclass/kaizoku/wanderer
+	category_tags = list(CTAG_WANDERER)
+
+/datum/job/advclass/kaizoku/wanderer/rare
+	abstract_type = /datum/job/advclass/kaizoku/wanderer/rare
+	roll_chance = 30

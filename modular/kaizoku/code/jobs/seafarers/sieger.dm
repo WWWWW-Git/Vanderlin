@@ -62,7 +62,7 @@
 /obj/item/roguemachine/siegebuilder
 	name = "siege workspace"
 	desc = "To quickly deploy and create siege machines, custodian engineers makes use of this portable table."
-	icon = 'modular/kaizoku/icons/mapset/frontierjustice32.dmi'
+	icon = 'modular/kaizoku/icons/mapset/furniture_32x32.dmi'
 	icon_state = "siegeworkshop"
 	density = TRUE
 	anchored = TRUE
@@ -434,8 +434,8 @@
 	icon_state = "saintstarter"
 
 /obj/item/siege_part/automata_core
-	name = "unfinished automata core"
-	desc = "Standardized automata core of Foglander origin that requires the brain of an \
+	name = "unfinished haniwa core"
+	desc = "Standardized haniwa core of Foglander origin that requires the brain of an \
 	fallen warrior too worthy to rot, or a brainwashed individual."
 	icon_state = "golemcore_unfinished"
 
@@ -795,8 +795,8 @@
 /obj/structure/siege/oilwagoon
 	name = "oil wagoon"
 	desc = "A rickety wooden wagon loaded with highly flammable oil. Meant to turn the battlefield into a blazing inferno."
-	icon = 'modular/kaizoku/icons/mapset/frontierjustice32.dmi'
-	icon_state = "abyssalbench_2"
+	icon = 'modular/kaizoku/icons/mapset/furniture_32x32.dmi'
+	icon_state = "abyssalbench_2" //Placeholder
 	anchored = FALSE
 	density = TRUE
 	var/max_distance = 16
@@ -809,7 +809,7 @@
 	if(istype(I, /obj/item/weapon/axe/adze))
 		if(active || lit) return
 		active = TRUE
-		user.visible_message("<span class='notice'>[user] strikes the oil wagon with the adze, sending it rolling forward!</span>")
+		user.visible_message("<span class='notice'>[user] strikes the oil wagon.</span>")
 		spawn(0)
 			push(get_dir(user, src), user)
 
@@ -820,17 +820,13 @@
 		var/turf/next = get_step(src, dir)
 		if(!next || !isturf(next) || next.density || locate(/obj/structure) in next)
 			break
-
 		step_to(src, next)
 		moved_tiles++
-
 		var/obj/effect/oilspill/oil = new(next)
 		oil_trail += oil
-
 		for(var/mob/living/carbon/human/M in next)
 			var/thrust_power = 3
 			M.dir = turn(dir, 180)
-
 			if(prob(60))
 				var/list/side_dirs = list(turn(dir, 90), turn(dir, -90))
 				var/dir_choice = pick(side_dirs)
@@ -838,13 +834,13 @@
 				if(side_target && isturf(side_target) && !side_target.density)
 					M.throw_at(side_target, thrust_power, 1)
 				M.Knockdown(30)
-				to_chat(M, "<span class='danger'>You're knocked aside by the rolling oil wagon!</span>")
+				to_chat(M, "<span class='danger'>You're knocked aside!</span>")
 			else
 				var/turf/front = get_step(M, dir)
 				if(front && isturf(front) && !front.density)
 					M.throw_at(front, thrust_power, 1)
 				M.Paralyze(30)
-				to_chat(M, "<span class='danger'>You're slammed forward by the oil wagon!</span>")
+				to_chat(M, "<span class='danger'>You're slammed forward by the wagon!</span>")
 			M.apply_damage(5, "brute", "chest")
 		sleep(3)
 
@@ -860,12 +856,11 @@
 	ignite_wagon()
 
 /obj/structure/siege/oilwagoon/proc/ignite_wagon()
-	if(lit) return
+	if(lit)
+		return
 	lit = TRUE
-	visible_message("<span class='danger'>The oil wagon ignites and violently explodes, releasing a sea of fire and smoke!</span>")
-
+	visible_message("<span class='danger'>The oil wagon ignites!</span>")
 	var/turf/T = get_turf(src)
-
 	if(T)
 		playsound(T, pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'), 100)
 		explosion(T, light_impact_range = 1, hotspot_range = 2, smoke = TRUE)
@@ -875,9 +870,9 @@
 		S.start()
 
 	for(var/obj/effect/oilspill/O in oil_trail)
-		if(QDELETED(O)) continue
+		if(QDELETED(O))
+			continue
 		O.life += 60
-
 	qdel(src)
 
 /obj/structure/siege/oilwagoon/proc/explode_and_smoke()
@@ -897,7 +892,7 @@
 	name = "boiling oil cauldron"
 	desc = "A heavy iron pot filled with scalding oil, mounted atop the wall."
 	icon = 'modular/kaizoku/icons/mapset/frontierjustice32.dmi'
-	icon_state = "experimental2"
+	icon_state = "experimental2" //Placeholder
 	anchored = TRUE
 	density = TRUE
 	dir = SOUTH
@@ -934,17 +929,22 @@
 	for(var/i = 1, i <= 1, i++)
 		var/turf/T = initial
 		T = get_step(T, direction)
-		if(!T) continue
+		if(!T)
+			continue
 		var/turf/fall_turf = T
 		while(istype(fall_turf, /turf/open/transparent/openspace) || fall_turf.z > 1)
 			var/next_z = fall_turf.z - 1
-			if(next_z <= 0) break
+			if(next_z <= 0)
+				break
 			var/next = locate(fall_turf.x, fall_turf.y, next_z)
-			if(!next || fall_turf.density) break
+			if(!next || fall_turf.density)
+				break
 			fall_turf = next
-			if(!istype(fall_turf, /turf/open/transparent/openspace)) break
+			if(!istype(fall_turf, /turf/open/transparent/openspace))
+				break
 
-		if(!fall_turf || fall_turf.density) continue
+		if(!fall_turf || fall_turf.density)
+			continue
 		affected_tiles += fall_turf
 
 		for(var/dir_offset in list(turn(direction, 90), turn(direction, -90)))
@@ -959,12 +959,12 @@
 
 /proc/burn_body_with_oil(var/mob/living/carbon/human/H)
 	for(var/zone in list("head", "chest", "groin", "l_arm", "r_arm", "l_leg", "r_leg"))
-		H.apply_damage(30, BURN, zone)
+		H.apply_damage(40, BURN, zone)
 
 /obj/structure/siege/boiling_cauldron/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/axe/adze))
 		anchored = FALSE
-		to_chat(user, span_notice("You pry the cauldron loose, making it moveable."))
+		to_chat(user, span_notice("You pry the cauldron loose."))
 /*
 /obj/structure/siege/boiling_cauldron/attack_self(mob/user)
 	if(!anchored)
@@ -1011,12 +1011,12 @@
 		G.arm_tick = world.time + BOMB_ARMTIME
 		G.icon_state = G.icon_state_prepare
 		G.last_seen_target = (ismob(target) ? get_turf(target) : target)
-		G.visible_message("<span class='info'>A brainwashed goblin is unleashed, perceiving [target] as food!</span>")
+		G.visible_message("<span class='info'>A brainwashed goblin is unleashed!</span>")
 		G.ai_controller = new /datum/ai_controller/clockbomb(G)
 		user.dropItemToGround(bombitem)
 		qdel(bombitem)
 	else
-		to_chat(user, "<span class='warning'>You cannot make the goblin perceive this as food.</span>")
+		to_chat(user, "<span class='warning'>There is now way you can make this Goblin believe the target is food.</span>")
 
 // ===================== GOBLIN MOB =====================
 
@@ -1091,7 +1091,7 @@
 		arming = FALSE
 		icon_state = icon_state_idle
 		if(summoner)
-			to_chat(summoner, "<span class='notice'>[src] stands up, ready to run!</span>")
+			to_chat(summoner, "<span class='notice'>[src] stands up, triggered.</span>")
 		return
 
 	icon_state = (triggered && world.time % 2 == 0) ? icon_state_triggered : icon_state_idle
@@ -1163,16 +1163,17 @@
 			triggered = TRUE
 			trigger_tick = world.time + BOMB_TRIGGER_TIME
 			icon_state = icon_state_triggered
-			visible_message("<span class='warning'>The goblin's explosive wheel fills with pressure!</span>")
+			visible_message("<span class='warning'>The goblin's explosive wheel fills with pressure.</span>")
 			if(summoner)
-				to_chat(summoner, "<span class='notice'>[src] is about to explode soon!</span>")
+				to_chat(summoner, "<span class='notice'>[src] is about to explode.</span>")
 
 /mob/living/simple_animal/hostile/clockbomb_goblin/proc/on_shoved(user, zone)
 	if(pounced_target)
 		remove_pounce_overlay()
-	if(stat != DEAD)
+		visible_message("<span class='warning'>[src] is knocked off.</span>")
+	else if(stat != DEAD)
 		stat = DEAD
-		visible_message("<span class='danger'>[src] is knocked off and starts ticking faster!</span>")
+		visible_message("<span class='danger'>[src] is knocked off and starts ticking faster.</span>")
 		death()
 
 /mob/living/simple_animal/hostile/clockbomb_goblin/proc/explode()
@@ -1186,8 +1187,6 @@
 		var/mob/living/carbon/human/H = pounced_target
 		H.remove_goblin_pounced_overlay()
 	..()
-
-// ===================== HUMAN MOB OVERLAY SUPPORT =====================
 
 /mob/living/carbon/human
 	var/image/goblin_pounced_overlay = null
@@ -1205,8 +1204,6 @@
 	if(goblin_pounced_overlay)
 		cut_overlay(goblin_pounced_overlay)
 		goblin_pounced_overlay = null
-
-// ===================== AI CONTROLLER ===================
 
 /datum/ai_controller/clockbomb
 	parent_type = /datum/ai_controller
@@ -1228,8 +1225,6 @@
 		for(var/path in planning_subtrees)
 			var/datum/ai_planning_subtree/tree = new path
 			tree.SelectBehaviors(src, 0)
-
-// ===================== AI PLANNING SUBTREE ===================
 
 /datum/ai_planning_subtree/clockbomb_plan/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/mob/living/simple_animal/hostile/clockbomb_goblin/G = controller.pawn
@@ -1257,8 +1252,6 @@
 				to_chat(G.summoner, "<span class='notice'>[G] is about to explode!</span>")
 	else
 		step_towards(G, T)
-
-// ===================== SOFT EXPLOSION PROC ===================
 
 /proc/soft_explosion(turf/center, devastation_range, heavy_impact_range, light_impact_range, flash_range = 0, soundin = 'sound/misc/explode/explosion.ogg')
 	playsound(center, soundin, 80, 1)
@@ -1328,10 +1321,14 @@
 	. = ..()
 	has_exploded = TRUE
 	icon_state = icon_state_dead
-	sleep(5 SECONDS)
+
+	addtimer(CALLBACK(src, .proc/do_delayed_explosion), 5 SECONDS)
+
+/mob/living/simple_animal/hostile/clockbomb_goblin/proc/do_delayed_explosion()
+	if(QDELETED(src))
+		return
 	soft_explosion(get_turf(src), 2, 2, 3)
 	qdel(src)
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Abyssal Hellsbane
@@ -1339,7 +1336,7 @@
 
 /obj/machinery/holy_purifier/core
 	name = "abyssal hellsbane"
-	desc = "Overglorified stomach rendered into steel. It breaks down corpses and souls into oils and cores considered sacred."
+	desc = "Overglorified stomach rendered as steel. It breaks down corpses and souls into oils and cores considered sacred."
 	icon = 'modular/kaizoku/icons/mapset/tradesector32.dmi'
 	icon_state = "hellsbane"
 	density = FALSE

@@ -4,7 +4,7 @@
 	tutorial = "Cloth, linen, silk and leather. \
 	You've tirelessly studied and poured your life into \
 	sewing articles of protection, padding, and fashion for serf and noble alike."
-	category_tags = list(CTAG_MIGRANT)
+	category_tags = list(CTAG_MIGRANTS)
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NOTNATIVE
 	outfit = /datum/outfit/tailor

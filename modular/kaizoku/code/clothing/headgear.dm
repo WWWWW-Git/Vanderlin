@@ -63,7 +63,7 @@
 	name = "roningasa"
 	icon_state = "roningasa"
 	flags_inv = HIDEEARS|HIDEFACE
-	desc = "A hat typically worn by the masterless zamurais - the ronins."
+	desc = "A hat typically worn by the masterless shuhen zamurais, the ronins."
 	bloody_icon_state = null
 
 /obj/item/clothing/head/tengai/torioigasa
@@ -88,8 +88,8 @@
 	flags_inv = HIDEEARS|HIDEFACE
 
 /obj/item/clothing/head/soheicloth
-	name = "sohei coverings"
-	desc = "Blessed fabric bathed in holy water, keeping a sohei protected from corruptive gases - and providing anonymity."
+	name = "tideweaver coverings"
+	desc = "Blessed fabric bathed in holy water, keeping a tideweaver protected from corruptive gases - and providing anonymity."
 	icon_state = "soheicloth"
 	body_parts_covered = HEAD|HAIR
 	body_parts_covered = HEAD|HAIR|EARS|MOUTH
@@ -132,12 +132,12 @@
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head.dmi'
 
-/obj/item/clothing/head/helmet/zijinguan //This one needs update. It should be a nose helmet.
+/obj/item/clothing/head/helmet/zijinguan
 	name = "footsoldier helmet" //This is actually a ming dynasty helmet
 	desc = "A cost-effective Myrmidon helmet from the age of guardianship, the current symbol of Abyssariad military culture for commoners."
 	icon_state = "zijinguan"
 	flags_inv = HIDEEARS
-	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
+	icon = 'modular/kaizoku/icons/clothingicon/head.dmi' // Remove the nose protection later.
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head64.dmi'
 	bloody_icon = 'icons/effects/blood64x64.dmi'
 	bloody_icon_state = "helmetblood_big"
@@ -236,8 +236,8 @@
 
 /obj/item/clothing/head/helmet/leather/malgai
 	name = "leather malgai"
-	desc = "A abyssariad leather helmet usually used by those who dwells \
-	on the center of Fog islands, where great steppes exists, or your common hunter."
+	desc = "Traditional dustwalker leather helmet for those who dwells \
+	on the center of Fog islands on horseback, where the great steppes exists."
 	icon_state = "malgai"
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head.dmi'
@@ -245,12 +245,12 @@
 /obj/item/clothing/head/helmet/leather/malgai/kaizoku
 	name = "kaizoku hat"
 	desc = "A distinguished hat with three sides of the brim turned up and laced, \
-	forming a triangle. Usually used by the Fog Island's privateer navy - or rich fellows on Heartfelt."
+	forming a triangle. Usually used by the Coastal people of Fog Islands - or rich fellows."
 	icon_state = "tricorn"
 
 /obj/item/clothing/head/helmet/leather/malgai/duulga //same changes of 'leather' to 'hide' has been brought over to this hat + mouth protection, because Mongol hat go brrtt
 	name = "abyssal leather helmet"
-	desc = "The thick, oil-boiled layered 'arisan duulga' used by Abyssariads Dustriders \
+	desc = "The thick, oil-boiled layered 'arisan duulga' used by Abyssariads Dustwalkers \
 	from the arid steppelands on the heart of the Fog Islands."
 	icon_state = "arisan_duulga"
 	armor = ARMOR_LEATHER_GOOD
@@ -275,19 +275,6 @@
 	sellprice = VALUE_CHEAP_IRON_HELMET
 	max_integrity = INTEGRITY_POOR
 */
-
-/obj/item/clothing/head/helmet/kettle/jingasa //the same as a Kettle. Just don't want the 64x64 bits.
-	name = "armored umbrella helmet"
-	desc = "The 'Jingasa, a metal gasa in conical shape. Mainly worn by Ashigarus, it has a wide brim to deflect projectiles and a gap within acting as a buffer zone."
-	icon_state = "jingasa"
-	flags_inv = HIDEEARS
-	smeltresult = /obj/item/fertilizer/ash
-	bloody_icon = 'icons/effects/blood.dmi'
-	bloody_icon_state = "itemblood"
-	worn_x_dimension = 32
-	worn_y_dimension = 32
-	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
-	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head.dmi'
 
 /obj/item/clothing/head/helmet/kaizoku/heartfelt
 	name = "heartfelt zunari kabuto"
@@ -337,7 +324,7 @@
 	name = "tengpai dou"
 	icon_state = "rattan_helmet"
 	desc = "A cheap abyssariad helmet made from stripped, oil boiled rattan and iron. \
-	Used only by militia and the humble LinYou raiders. Less protective, but can be easily repaired."
+	Often used by the humble LinYou warriors. Less protective, but can be easily repaired."
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head64.dmi'
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
 	bloody_icon = 'icons/effects/blood64x64.dmi'
@@ -408,10 +395,9 @@
 	qdel(src)
 
 /obj/item/clothing/head/helmet/visored/abyssalchampion //hounskull tier.
-	name = "winged abyssal helmet"
+	name = "winged helmet"
 	desc = "The traditional winged helmet of ancient design with a protective mask covering it. \
-	It has foundations on the ancient myrmidon guardian helmets. \
-	The mask can be lifted internally for higher visibility, but it leaves the eyes exposed."
+	It has foundations on the ancient myrmidon guardian helmets."
 	icon_state = "abyssal_champion"
 	item_state = "abyssal_champion"
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
@@ -424,7 +410,7 @@
 /obj/item/clothing/head/helmet/heavy/necked/soheidemon
 	name = "warpriest battle cowl"
 	desc = "A fabric blessed both in holy water and steel. A mask-like metal reinforcement \
-	covered with yellow silk protects the skull of these Sohei warriors."
+	covered with yellow silk protects the skull of these tideweaver warriors."
 	icon_state = "soheidemon"
 	item_state = "soheidemon"
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
@@ -522,7 +508,7 @@
 
 /obj/item/clothing/head/bardhat/bloodhunter
 	name = "scrapped hat"
-	desc = "A heartfeltean hat that has been scrapped with sharp tools and hardened in oil, \
+	desc = "An Coastal hat that has been scrapped with sharp tools and hardened in oil, \
 	meant to convey one's status to not only destroy such expensive piece - but to keep it raised like thorns."
 	icon_state = "bloodhunter"
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
@@ -655,9 +641,9 @@
 		return
 
 /obj/item/clothing/head/helmet/leather/paddedt
-	name = "heartfelt bearskin"
-	desc = "A furcap commonly used by islander grenadiers for identification became commonly used by others \
-	forces over centuries, usually ceremonial, with leather padding it becomes protective."
+	name = "grenadier bearskin"
+	desc = "A furcap that was commonly used by coastal grenadiers in the past, became commonly used by light \
+	soldiers over centuries, usually ceremonial, with leather padding it becomes protective."
 	icon_state = "paddedt"
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head64.dmi'
@@ -693,8 +679,8 @@
 	return extras
 
 /obj/item/clothing/head/helmet/leather/paddedt/alt
-	name = "foglander cresthelm"
-	desc = "Protective helmet with a padded leather cap and a crest, used by lowly members of Foglander's imperial court. \
+	name = "cresthelm"
+	desc = "Protective helmet with a padded leather cap and a crest, used by lowly members of Foglander's imperial retainers. \
 	Typically worn by scouts and light infantry aiding the main forces to keep unruly zamurais at bay."
 	icon_state = "paddedf"
 	worn_x_dimension = 64
@@ -702,7 +688,7 @@
 
 /obj/item/clothing/neck/bevor/crabstain
 	name = "crabstain bevor"
-	desc = "A crab-like throat and neck protector favored by coastal guards, with jagged lips similar to carcinized sea creatures. \
+	desc = "A crab-like throat and neck protector favored by Shuhen guards, with jagged lips similar to carcinized sea creatures. \
 			The ridged mechanisms can be opened with the tongue to allow the user to eat. With a Jingasa, it gives a crab-like look."
 	icon_state = "crabstain"
 	icon = 'modular/kaizoku/icons/clothingicon/neck.dmi'
@@ -738,8 +724,8 @@
 	alternate_worn_layer = MOUTH_LAYER
 
 /obj/item/clothing/cloak/raincloak/guardsman
-	name = "custodian capelet"
-	desc = "a shoulder-length cape used by heartfeltean duelists. Proper for distractions and hide blades under."
+	name = "coastal capelet"
+	desc = "a shoulder-length cape used by coastal duelists. Proper for distractions and hide blades under."
 	icon_state = "guardcloak"
 	body_parts_covered = CHEST|GROIN
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
@@ -756,31 +742,43 @@
 	else
 		color = CLOTHING_BLOOD_RED
 
-/obj/item/clothing/head/helmet/kettle/blasthammer
+/obj/item/clothing/head/helmet/kettle/kaizoku
 	name = "blasthammer kettle"
-	desc = "Custodian headgear specifically forged to quickly recognise firelancers on the battlefield, and protect their skull from fiery shrapnels."
+	desc = "A kettle based on the old Dustwalker blasthammer helmet but for the battlefield, from lava drops to fiery shrapnels and blows."
 	icon_state = "firelancer_kettle"
 	detail_tag = ""
 	detail_color = null
-	var/fractured = FALSE
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head64.dmi'
 
-/obj/item/clothing/head/helmet/kettle/blasthammer/hfs
-	name = "siege kettle"
-	desc = "Skull protector of heartfeltean design. Square-looking, it protects against blows from above, what you need during sieges."
+/obj/item/clothing/head/helmet/kettle/kaizoku/imperial
+	name = "imperial siege kettle"
+	desc = "Skull protector of Imperial design. It's square-like design deflect blows more predictably, most proper for maze warfare on the heavenly towers."
 	icon_state = "hfs_kettle"
 
-/obj/item/clothing/head/helmet/kettle/blasthammer/ffs
-	name = "imperial kettle"
-	desc = "Infantry headgear of Foglander design in a bowl-like silhouette, having a large brim protecting the eyes from the sun."
+/obj/item/clothing/head/helmet/kettle/kaizoku/coastal
+	name = "coastal pothat"
+	desc = "Infantry headgear of Coastal design in a bowl-like silhouette, having a large brim protecting the eyes from the sun."
 	icon_state = "ffs_kettle"
+
+/obj/item/clothing/head/helmet/kettle/kaizoku/shuhen //the same as a Kettle. Just don't want the 64x64 bits.
+	name = "armored umbrella helmet"
+	desc = "The 'Jingasa', a metal gasa in conical shape. Mainly worn by Shuhen ashigarus, it has a wide brim to deflect projectiles and a gap within acting as a buffer zone."
+	icon_state = "jingasa"
+	flags_inv = HIDEEARS
+	smeltresult = /obj/item/fertilizer/ash
+	bloody_icon = 'icons/effects/blood.dmi'
+	bloody_icon_state = "itemblood"
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
+	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head.dmi'
 
 /obj/item/clothing/head/helmet/guardsman
 	name = "imperial helmet"
-	desc = "Infantry headgear sourced from Foglander's courtmen with a spade covering the nose. Traditionally used with a plume."
+	desc = "Infantry headgear sourced from Foglander's imperial armies with a spade covering the nose. Traditionally used with a plume."
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head64.dmi'
 	icon_state = "ffm_helmet"
@@ -814,14 +812,14 @@
 		det.color = GLOB.lordprimary
 		add_overlay(det)
 
-/obj/item/clothing/head/helmet/guardsman/heartfelt
+/obj/item/clothing/head/helmet/guardsman/coastal
 	name = "housecarl helmet"
-	desc = "The headgear of a frontline Heartfeltean warrior, with an overlapping falcon-like protection for the eyes."
+	desc = "The headgear of a frontline Coastal warrior, with an overlapping falcon-like protection for the eyes."
 	icon_state = "hfm_helmet"
 
 /obj/item/clothing/head/helmet/guardsman/zinger
 	name = "zingersman helmet"
-	desc = "Important headgear of the zigmaster ronins, whom pays for their past mistakes with blood. The helmet ensures their head will not be stinged by their zingerboys."
+	desc = "Important headgear of the shuhen zigmaster ronins, whom pays for their past mistakes with blood."
 	icon_state = "zigmaster"
 
 /obj/item/clothing/head/helmet/guardsman/zinger/Initialize()
@@ -845,7 +843,7 @@
 
 /obj/item/clothing/head/helmet/visored/knight/custknight
 	name = "housecarl knight helmet"
-	desc = "Robust plated helmet that shields the loyal soul of an guardian of the helm, with the fate shared around the hearth and pledged in songs of the heartenlands. Its visor can be lifted for higher visibility at the cost of eye protection."
+	desc = "Robust plated helmet that shields the loyal soul of an coastal guardian. Its visor can be lifted for higher visibility at the cost of eye protection."
 	icon = 'modular/kaizoku/icons/clothingicon/head.dmi'
 	mob_overlay_icon = 'modular/kaizoku/icons/clothing/head64.dmi'
 	icon_state = "hfhcustodian"
@@ -873,5 +871,5 @@
 
 /obj/item/clothing/head/helmet/visored/knight/custknight/custzamurai
 	name = "plated zamurai helmet"
-	desc = "A plated kabuto to guard disciplined mind of honorable warriors, to honor the vows to one's lord in the eternal pursuit of the nautical oath. Its visor can be removed for higher visibility at the cost of eye protection."
+	desc = "A plated kabuto to guard the disciplined mind of an honorable Shuhen warrior. Its visor can be removed for higher visibility at the cost of eye protection."
 	icon_state = "ffhcustodian"

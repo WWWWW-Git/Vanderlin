@@ -30,7 +30,7 @@ var/global/list/cultures   = list()   // id => /datum/culture  path OR datum ins
 
 /datum/culture/muqian
 	id = "muqian"
-	name = "Muqian - Towerdwellers"
+	name = "Muqian - Imperials"
 	description = "Life in the great towers is orderly and safe, yet suffocating. \
 	Waking bells notify the daybreak as work starts, squeezed into \
 	narrow districts with people rotating through civic duties before drowning their nerves \
@@ -45,7 +45,7 @@ var/global/list/cultures   = list()   // id => /datum/culture  path OR datum ins
 
 /datum/culture/kaizoku
 	id = "kaizoku"
-	name = "Kaizoku - Sons of Kaizoku"
+	name = "Coastal - Sons of Kaizoku"
 	description = "The sons of Kaizoku live and die by the sea, calling them freebooters is no exaggeration. \
 	The youthful days are spent on docks, skiffs, and shore camps, gutting fish, climbing ropes, and learning \
 	to balance on deck before even daring to write anything. The mature ones handle the true dangerous work \
@@ -106,7 +106,7 @@ var/global/list/cultures   = list()   // id => /datum/culture  path OR datum ins
 
 /datum/culture/foreigner
 	id = "foreigner"
-	name = "Foreigner - Orbited Barbarian"
+	name = "Mainlander - Orbited Barbarian"
 	description = "You've arrived on these islands from elsewhere, still retaining \
 	your homeland's culture, either a refugee fleeing denmorian swarms, demonic \
 	incursions or religious orders, or maybe just an immigrant from Heartfelt \
@@ -129,7 +129,7 @@ var/global/list/cultures   = list()   // id => /datum/culture  path OR datum ins
 
 /datum/body_type/mt_kit
 	id = "mt_kit"
-	name = "Kit"
+	name = "Experimental Bigger"
 	limbs_icon_m = 'modular/kaizoku/icons/abyssariad_bodies/male/mt_kit.dmi'
 	limbs_icon_f = 'modular/kaizoku/icons/abyssariad_bodies/female/ft_kit.dmi'
 	offset_features_m = list(

@@ -1,5 +1,5 @@
 /datum/job/kaizoku/seamen
-	title = "Seamen" // hehehehe
+	title = "Imperial Seamen" // hehehehe
 	tutorial = "You are the lowest hand on the ship, still unproven and saltless. \
 	All you do is obey every command, clean the warship, handle the oars during \
 	emergencies and help the Quartermaster with the crates and trade. Many like \

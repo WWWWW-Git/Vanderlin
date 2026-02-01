@@ -1,6 +1,6 @@
-/obj/item/storage/backpack/satchel/ninja/PopulateContents()
-	new /obj/item/grenade/smoke_bomb(src)
-	new /obj/item/grenade/smoke_bomb/poison(src)
+/obj/item/storage/backpack/satchel/ninja/populate_contents()
+	new /obj/item/kaizoku/grenade/smoke_bomb(src)
+	new /obj/item/kaizoku/grenade/smoke_bomb/poison(src)
 	new /obj/item/throwing_star/ninja(src)
 
 /obj/item/clothing/cloak/raincloak/mino

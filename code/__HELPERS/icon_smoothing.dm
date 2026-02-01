@@ -160,9 +160,14 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 	#undef SET_ADJ_IN_DIR
 
+// Stonekeep Edit here!
 ///Changes the icon state based on the new junction bitmask.
 /atom/proc/set_smoothed_icon_state(new_junction)
-	icon_state = "[smoothing_icon]-[new_junction]"
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, new_junction)
+	smoothing_junction = new_junction
+	var/state = base_icon_state ? base_icon_state : smoothing_icon
+	icon_state = "[state]-[new_junction]"
+//End of Stonekeep Edit
 
 /turf/proc/set_neighborlays(new_junction)
 	remove_neighborlays()

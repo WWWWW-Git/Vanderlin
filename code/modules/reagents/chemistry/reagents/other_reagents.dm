@@ -24,6 +24,12 @@
 			else
 				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 
+	//Stonekeep Edit: Kaizoku Sunscorned
+	if(method == INGEST && iscarbon(L))
+		var/mob/living/carbon/C = L
+		if(C.dna?.species?.handle_blood_reagent_ingest(C, src, reac_volume, data))
+			return // Species handled it
+
 	if((method == INGEST) && L.clan)
 		L.adjust_bloodpool(reac_volume)
 		L.clan.handle_bloodsuck(BLOOD_PREFERENCE_FANCY)

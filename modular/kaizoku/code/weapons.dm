@@ -1,297 +1,4 @@
 // =================================================================
-// ========================		BOMBS	============================
-
-/obj/item/grenade
-	name = "grenade"
-	desc = ""
-	w_class = WEIGHT_CLASS_SMALL
-	throw_speed = 1
-	throw_range = 7
-	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
-	resistance_flags = FLAMMABLE
-	max_integrity = 40
-	var/active = 0
-	var/det_time = 50
-	var/display_timer = 1
-	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
-
-/obj/item/grenade/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/blank.ogg', 50, TRUE)
-	preprime(user, det_time)
-	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
-	sleep(det_time)//so you dont die instantly
-	return BRUTELOSS
-
-/obj/item/grenade/deconstruct(disassembled = TRUE)
-	if(!disassembled)
-		prime()
-	if(!QDELETED(src))
-		qdel(src)
-
-/obj/item/grenade/examine(mob/user)
-	. = ..()
-	if(display_timer)
-		if(det_time > 0)
-			. += "The timer is set to [DisplayTimeText(det_time)]."
-		else
-			. += "\The [src] is set for instant detonation."
-
-
-/obj/item/grenade/attack_self(mob/user)
-	if(!active)
-		preprime(user)
-
-/obj/item/grenade/proc/log_grenade(mob/user, turf/T)
-	log_bomber(user, "has primed a", src, "for detonation")
-
-/obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
-	var/turf/T = get_turf(src)
-	log_grenade(user, T) //Inbuilt admin procs already handle null users
-	if(user)
-		if(msg)
-			to_chat(user, "<span class='warning'>I prime [src]! [capitalize(DisplayTimeText(det_time))]!</span>")
-	playsound(src, 'sound/blank.ogg', volume, TRUE)
-	active = TRUE
-	icon_state = initial(icon_state) + "_active"
-	addtimer(CALLBACK(src, PROC_REF(prime)), isnull(delayoverride)? det_time : delayoverride)
-
-/obj/item/grenade/proc/prime()
-
-/obj/item/grenade/proc/update_mob()
-	if(ismob(loc))
-		var/mob/M = loc
-		M.dropItemToGround(src)
-
-/obj/item/grenade/proc/change_det_time(time) //Time uses real time.
-	. = TRUE
-	if(time != null)
-		if(time < 3)
-			time = 3
-		det_time = round(CLAMP(time * 10, 0, 50))
-	else
-		var/previous_time = det_time
-		switch(det_time)
-			if (0)
-				det_time = 30
-			if (30)
-				det_time = 50
-			if (50)
-				det_time = 0
-		if(det_time == previous_time)
-			det_time = 50
-
-/obj/item/grenade/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/projectile/P = hitby
-	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
-		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
-		var/turf/T = get_turf(src)
-		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(T)]")
-		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(T)]")
-		prime()
-		return TRUE //It hit the grenade, not them
-
-/obj/item/grenade/afterattack(atom/target, mob/user)
-	. = ..()
-	if(active)
-		user.throw_item(target)
-
-
-/obj/effect/particle_effect/smoke/bad/stupid
-	lifetime = 20
-	color = "#1b802c"
-	opaque = FALSE
-
-/obj/effect/particle_effect/smoke/bad/stupid/smoke_mob(mob/living/carbon/M)
-	if(..())
-		M.add_nausea(4)
-		M.adjustToxLoss(5, 0)
-		M.emote("cough")
-		return 1
-
-/datum/effect_system/smoke_spread/bad/stupid
-	effect_type = /obj/effect/particle_effect/smoke/bad/stupid
-
-
-/obj/item/grenade/smoke_bomb
-	name = "abyssariad smokebomb"
-	desc = "The stealth operation bomb made out of guano, sugar and nahcolite for shinobi usage."
-	icon = 'modular/kaizoku/icons/weapons/32.dmi'
-	icon_state = "smoke_bomb"
-	item_state = "smoke_bomb"
-	slot_flags = ITEM_SLOT_BELT
-
-/obj/item/grenade/smoke_bomb/attack_self(mob/user)
-	user.visible_message("<span class='warning'>[user]'s hand breaks the ceramic of the [src], releasing smoke!</span>", "<span class='notice'>I squeeze [src] down to release the inner compounds to the air.</span>")
-	prime()
-
-/obj/item/grenade/smoke_bomb/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
-	prime()
-
-/obj/item/grenade/smoke_bomb/prime()
-	update_mob()
-	playsound(src, 'sound/blank.ogg', 50, TRUE, -3)
-	var/datum/effect_system/smoke_spread/bad/smoke = new
-	smoke.set_up(4, src)
-	smoke.start()
-	qdel(src)
-
-/obj/item/grenade/smoke_bomb/poison
-	name = "abyssariad poisonbomb"
-	desc = "Ceramic sphere containing toxic composts from within, awaiting to be released."
-	icon = 'modular/kaizoku/icons/weapons/32.dmi'
-	icon_state = "poison_bomb"
-	item_state = "poison_bomb"
-	slot_flags = ITEM_SLOT_BELT
-
-/obj/item/grenade/smoke_bomb/poison/attack_self(mob/user)
-	user.visible_message("<span class='warning'>[user]'s hand breaks the ceramic of the [src], engulfing themselves on poisonous smoke.</span>", "<span class='notice'>I squeeze [src] down to release the inner compounds- like an IDIOT. RUN AWAY!</span>")
-	prime()
-
-/obj/item/grenade/smoke_bomb/poison/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
-	prime()
-
-/obj/item/grenade/smoke_bomb/poison/prime()
-	update_mob()
-	playsound(src, 'sound/blank.ogg', 50, TRUE, -3)
-	var/datum/effect_system/smoke_spread/bad/stupid/smoke = new
-	smoke.set_up(4, src)
-	smoke.start()
-	qdel(smoke)
-	qdel(src)
-
-/obj/item/zhentianlei
-	name = "thunder crash bomb"
-	desc = "a bomb made out of cast iron and ceramic, now filled with gunpowder to the brim. Usually, it takes five second before the fire on the fuse reaches the gunpowder."
-	icon_state = "zhentianlei"
-	icon = 'modular/kaizoku/icons/weapons/32.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
-	throwforce = 0
-	throw_speed = 0.5
-	slot_flags = ITEM_SLOT_HIP
-
-	var/lit = FALSE
-	var/active = FALSE
-	var/fuze = 50  // about five seconds
-	var/turf/ignited_turf = null
-	var/obj/item/ignited_by = null
-	var/initial_icon_state = "zhentianlei"
-	var/active_icon_state = "zhentianlei_rewinded"
-	var/prob2fail = 23  // chance of failure
-
-/obj/item/zhentianlei/spark_act()
-	ignite()
-
-/obj/item/zhentianlei/fire_act()
-	ignite()
-
-/obj/item/zhentianlei/ex_act()
-	if(!QDELETED(src))
-		lit = TRUE
-		trigger_explosion(TRUE)
-
-/obj/item/zhentianlei/New()
-	..()
-	icon_state = initial_icon_state
-
-/obj/item/zhentianlei/proc/ignite(atom/igniter = null)
-	if(!lit)
-		START_PROCESSING(SSfastprocess, src)  // Start the processing for the fuse
-		icon_state = active_icon_state
-		lit = TRUE
-		active = TRUE
-		ignited_by = igniter
-		playsound(src.loc, 'sound/items/firelight.ogg', 100)
-		to_chat(src.loc, "<span class='warning'>The [name] starts to fizzle!</span>")
-		if(ismob(src.loc))
-			var/mob/M = src.loc
-			M.update_inv_hands()
-
-/obj/item/zhentianlei/proc/stop_ignition()
-	if(lit)
-		lit = FALSE
-		active = FALSE
-		STOP_PROCESSING(SSfastprocess, src)
-		icon_state = initial_icon_state
-		ignited_by = null
-		playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
-		to_chat(src.loc, "<span class='notice'>\The [name] has been snuffed out.</span>")
-		if(ismob(src.loc))
-			var/mob/M = src.loc
-			M.update_inv_hands()
-
-/obj/item/zhentianlei/proc/trigger_explosion(skipprob = FALSE)
-	STOP_PROCESSING(SSfastprocess, src)  // Stop the processing for the fuse
-	var/turf/T = get_turf(src)
-	if(T)
-		if(lit && active)
-			var/prob_fail = prob2fail
-			if(ignited_by && istype(ignited_by, /obj/item))
-				var/obj/item/igniter = ignited_by
-				if(igniter.vars["prob2fail"])
-					prob_fail = igniter.vars["prob2fail"]
-			if(!skipprob && prob(prob_fail))
-				stop_ignition()
-			else
-				explosion(T, light_impact_range = 2, flame_range = 4, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
-		else
-			if(prob(prob2fail))
-				stop_ignition()
-			else
-				playsound(T, 'sound/items/firesnuff.ogg', 100)
-				new /obj/effect/decal/cleanable/debris/clay (T)
-	qdel(src)
-
-/obj/item/zhentianlei/proc/is_flammable(atom/target)
-	if(isturf(target))
-		return (target.vars["flags"] & FLAMMABLE) != 0
-	return FALSE
-
-/obj/item/zhentianlei/process()
-	if(active && lit)
-		fuze -= 1
-		if(fuze <= 0)
-			trigger_explosion(TRUE)
-	else if(active && !lit)
-		stop_ignition()
-
-/obj/item/zhentianlei/examine(mob/user)
-	var/inspect_text = ..()
-	if(active)
-		inspect_text += "The fuse is burning!"
-	else
-		inspect_text += "The fuse is not lit."
-	return inspect_text
-
-/obj/item/zhentianlei/attackby(obj/item/C, mob/living/user)
-	if(C.sharpness >= 1)
-		if(fuze > 30)
-			fuze = 30
-			to_chat(user, "<span class='warning'>You shorten [src]'s fuse.</span>")
-			playsound(src.loc, 'sound/items/sharpen_short2.ogg', 100)
-		if(fuze == 0)
-			to_chat(user, "<span class='danger'>The fuse is too small to be cut.</span>")
-			return
-		else
-			fuze = 0
-			to_chat(user, "<span class='danger'>You shorten [src]'s fuse, turning it into a booby trap!</span>")
-			playsound(src.loc, 'sound/items/sharpen_short2.ogg', 100)
-		return
-	if(istype(C, /obj/item/natural/cloth))
-		if(fuze < 30)
-			fuze = 30
-			to_chat(user, "<span class='danger'>You fully increase the [src]'s fuse with the cloth.</span>")
-		else
-			return
-
-
-// =================================================================
 // ========================		SHIELD	============================
 
 /obj/item/weapon/shield/wood/rattan //The description about the firearm projectiles protection is actually real for this shield, pretty neat thing to include here. It won't change gamewise tho
@@ -1274,11 +981,6 @@
 	icon = 'modular/kaizoku/icons/weapons/32.dmi'
 	icon_state = "uchigatana"
 	swingsound = ZATANA_WOOSH
-	pixel_y = -16
-	pixel_x = -16
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-	bigboy = TRUE
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/weapon/sword/uchigatana/Initialize()
@@ -1639,8 +1341,9 @@
 	mob_path = /mob/living/simple_animal/hostile/retaliate/fogbeast/tame
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/handcannon
-	name = "huochong handcannon"
-	desc = "Rather outdated weapon from fog islands brought to the trading docks, as the new innovations, such as the chongtong, are kept away from espionage."
+	name = "Lungsclap handcannon"
+	desc = "Mass forged foglander handcannon, cheaper version of raided dwarven schematics. \
+	Currently outdated by Barotrauma barkirons and Lungsnappers."
 	icon = 'modular/kaizoku/icons/mapset/tradesector64.dmi'
 	icon_state = "handcannon_ramrod"
 	item_state = "handcannon_ramrod"
@@ -1693,11 +1396,13 @@
 		if(inserted)
 			to_chat(user, "<span class='warning'>You attempt to put the projectile inside, but something hard already occupies the space.</span>")
 			return
-		inserted = TRUE
-		chambered = I
-		qdel(I)
-		to_chat(user, "<span class='info'>You hear the ball of lead bouncing inside the barrel until it meets cushioning blastpowder.</span>")
-		playsound(src.loc, 'sound/combat/Ranged/muskclick.ogg', 70)
+		var/loadtime = 5 - (user.get_skill_level(/datum/skill/combat/firearms) / 2)
+		if(do_after(user, loadtime SECONDS, src))
+			inserted = TRUE
+			chambered = I
+			I.forceMove(src)
+			to_chat(user, "<span class='info'>You hear the ball of lead bouncing inside the barrel until it meets cushioning blastpowder.</span>")
+			playsound(src.loc, 'sound/combat/Ranged/muskclick.ogg', 70)
 		return
 
 	else if(istype(I, /obj/item/reagent_containers/glass/bottle/aflask))
@@ -1708,10 +1413,12 @@
 			to_chat(user, "<span class='warning'>If you put more gunpowder than it already has, you risk exploding the barrel.</span>")
 			return
 		if(I.reagents.get_reagent_amount(/datum/reagent/blastpowder) >= 5)
-			I.reagents.remove_reagent(/datum/reagent/blastpowder, 5)
-			powdered = TRUE
-			to_chat(user, "<span class='info'>You pour gunpowder into the handcannon.</span>")
-			playsound(src.loc, 'sound/foley/gunpowder_fill.ogg', 70)
+			var/loadtime = 5 - (user.get_skill_level(/datum/skill/combat/firearms) / 2)
+			if(do_after(user, loadtime SECONDS, src))
+				I.reagents.remove_reagent(/datum/reagent/blastpowder, 5)
+				powdered = TRUE
+				to_chat(user, "<span class='info'>You pour gunpowder into the handcannon.</span>")
+				playsound(src.loc, 'sound/foley/gunpowder_fill.ogg', 70)
 			return
 		else
 			to_chat(user, "<span class='warning'>Not enough blastpowder to charge it.</span>")
@@ -1734,12 +1441,11 @@
 
 	else if(istype(I, /obj/item/flashlight/flare/torch) || istype(I, /obj/item/flint))
 		if(fuse_lit)
+			to_chat(user, "<span class='warning'>The fuse is already lit and spitting sparks!</span>")
 			return
-
-		if(!rammed)
+		if(!chambered || !rammed || !powdered || !inserted)
 			to_chat(user, "<span class='warning'>The contents are still loose.</span>")
 			return
-
 		fire(user)
 		return
 	..()
@@ -1784,22 +1490,34 @@
 	if(!chambered || !rammed || !powdered || !inserted)
 		to_chat(user, "<span class='warning'>The handcannon is not ready to fire.</span>")
 		return
+	if(fuse_lit)
+		to_chat(user, "<span class='warning'>The fuse is already lit.</span>")
+		return
+
+	fuse_lit = TRUE
 	to_chat(src.loc, "<span class='warning'>[user] positions the fuse near the ignition point.</span>")
 	playsound(src.loc, 'sound/items/firelight.ogg', 100)
 
-	var/random_delay = rand(20, 60) //Randomized time before you shoot. It is RnG based.
+	var/random_delay = rand(20, 60)
 
 	spawn(random_delay)
+		if(QDELETED(src))
+			return
+		if(QDELETED(user))
+			fuse_lit = FALSE
+			update_icon()
+			return
+
 		to_chat(src.loc, "<span class='danger'>The fuse loudly sparks and the handcannon roars to life!</span>")
 		playsound(src.loc, 'modular/kaizoku/sound/hwanchafire.ogg', 100)
 
 		for(var/mob/living/carbon/H in hearers(5, user))
 			shake_camera(H, 4, 3)
 			H.blur_eyes(3)
-			H.playsound_local(get_turf(H), 'sound/foley/tinnitus.ogg', 70) //Because this is actually required for the immersion. Eat your own ears, lad
-		step(user, get_dir(user, turn(user.dir, 180))) //shaaake.
+			H.playsound_local(get_turf(H), 'sound/foley/tinnitus.ogg', 70)
+		step(user, get_dir(user, turn(user.dir, 180)))
 
-		new /obj/effect/particle_effect/smoke(get_turf(user)) //Because smokescreen after shooting is a necessity as well.
+		new /obj/effect/particle_effect/smoke(get_turf(user))
 		var/turf/start = get_turf(user)
 		var/dir = user.dir
 		var/obj/projectile/bullet/reusable/bullet/random/shot = new /obj/projectile/bullet/reusable/bullet/random(start)
@@ -1813,20 +1531,21 @@
 			if(user.STAPER > 10)
 				shot.damage *= (user.STAPER / 10)
 
-		shot.damage *= damfactor //Include addition to the damage, proper for a handgonne that is difficult and risky to use.
+		shot.damage *= damfactor
 		shot.bonus_accuracy += (user.get_skill_level(/datum/skill/combat/firearms) * 2)
 
 		shot.fire(dir2angle(dir))
-	rammed = FALSE
-	powdered = FALSE
-	inserted = FALSE
-	chambered = null
-	fuse_lit = FALSE
-	update_icon()
 
-/obj/projectile/bullet/reusable/bullet/random/on_hit(atom/target, blocked = FALSE) //The bullet chooses a random limb. This is meant to portray inaccuracy of early firearms.
-	var/ret = ..(target, blocked)
+		if(chambered)
+			qdel(chambered)
+		chambered = null
+		rammed = FALSE
+		powdered = FALSE
+		inserted = FALSE
+		fuse_lit = FALSE
+		update_icon()
 
+/obj/projectile/bullet/reusable/bullet/random/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
 		var/list/limb_zones = list(
@@ -1839,8 +1558,10 @@
 		)
 		var/zone = pick(limb_zones)
 		L.apply_damage(damage, damage_type, zone, firer)
+		if(zone == BODY_ZONE_HEAD || zone == BODY_ZONE_CHEST)
+			L.Knockdown(3 SECONDS)
 
-	return ret
+	return TRUE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/chukonu
 	name = "repeating crossbow"

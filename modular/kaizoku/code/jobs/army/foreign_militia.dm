@@ -3,7 +3,7 @@
 //If you want Militia to have some 'minor work skills', talk with them and change their mind.
 
 /datum/job/kaizoku/militia // Replacement for 'Squires', most suitable because squires usually is implied, in irl terms, to be minors. This still functions as a beginner role.
-	title = "Militiaman"
+	title = "Custodian Militia"
 	flag = KZ_MILITIA
 	department_flag = FACTION_MILITARY
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
@@ -15,14 +15,14 @@
 	tutorial = "Fate has placed a weapon upon your foreigner hands as you volunteered \
 	your name upon a conscription roll, another non-citizen turned warrior under the lord's banner \
 	just to not use foglander blood. Still in training, you've been handed whatever left over equipment and income \
-	stability many dreams about. You do not have much expectations compared to the foreign guards, \
-	and must be trained by them."
+	stability many dreams about. You do not have much expectations compared to the Custodian mainlanders, \
+	and still require training."
 	outfit = /datum/outfit/job/kaizoku/militia
 	display_order = SQUIRE_ORDER
 	give_bank_account = TRUE
 	min_pq = -15
 	can_have_apprentices = FALSE
-	give_bank_account = 15 // Considered "Slightly Above minimal pay (10)"
+	give_bank_account = 15 // Considered "Slightly below average military pay(20), but higher than minimal pay (10)"
 	cmode_music = 'modular/stonekeep/sound/cmode/combat_quarte.ogg'
 
 /datum/outfit/job/kaizoku/militia/pre_equip(mob/living/carbon/human/H)

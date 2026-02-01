@@ -328,7 +328,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 	sleep(0)	//yes, 0, this'll let Reboot finish and prevent byond memes
 	qdel(src)	//shut it down
 
-/world/Reboot(reason = 0, fast_track = FALSE)
+/world/Reboot(reason = 0, fast_track = FALSE) //Stonekeep Edit: Remember to change here.
 	var/round_end_sound = pick('sound/roundend/knave.ogg',
 	'sound/roundend/twohours.ogg',
 	'sound/roundend/rest.ogg',
