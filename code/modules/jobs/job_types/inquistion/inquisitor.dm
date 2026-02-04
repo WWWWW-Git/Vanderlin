@@ -10,7 +10,8 @@
 		SPEC_ID_HUMEN,\
 		SPEC_ID_DWARF,\
 	)
-	allowed_patrons = list(/datum/patron/psydon) //You MUST have a Psydonite character to start. Just so people don't get japed into Oops Suddenly Psydon!
+	//You MUST have a Psydonite character to start. Just so people don't get japed into Oops Suddenly Psydon!
+	allowed_patrons = list(/datum/patron/psydon) // you have to keep the official church stance, no way an extremist psydonite could become inquisitor
 	tutorial = "This is the week. All your lessons have led to this moment. Your students follow you with eager steps and breathless anticipation. You’re to observe their hunt, and see if they can banish the evils haunting Psydonia, and rise up to become true inquisitors. A guide to them, a monster to others. You are the thing that goes bump in the night."
 	cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
 	selection_color = JCOLOR_INQUISITION
@@ -23,13 +24,16 @@
 	bypass_lastclass = TRUE
 	antag_role = /datum/antagonist/purishep
 
+	mind_traits = list(
+		TRAIT_KNOW_INQUISITION_DOORS
+	)
 	languages = list(/datum/language/oldpsydonic)
 	spells = list(
 		/datum/action/cooldown/spell/undirected/call_bird/inquisitor
 	)
 
 	exp_type = list(EXP_TYPE_INQUISITION)
-	exp_types_granted  = list(EXP_TYPE_INQUISITION, EXP_TYPE_COMBAT, EXP_TYPE_LEADERSHIP)
+	exp_types_granted = list(EXP_TYPE_INQUISITION, EXP_TYPE_COMBAT, EXP_TYPE_LEADERSHIP)
 	exp_requirements = list(
 		EXP_TYPE_INQUISITION = 900
 	)
@@ -81,7 +85,7 @@
 
 /mob/living/carbon/human/proc/torture_victim()
 	set name = "Extract Confession"
-	set category = "Inquisition"
+	set category = "RoleUnique"
 
 	var/obj/item/grabbing/I = get_active_held_item()
 	var/mob/living/carbon/human/H
@@ -136,7 +140,7 @@
 
 /mob/living/carbon/human/proc/faith_test()
 	set name = "Test Faith"
-	set category = "Inquisition"
+	set category = "RoleUnique"
 
 	var/obj/item/grabbing/I = get_active_held_item()
 	var/mob/living/carbon/human/H
@@ -244,6 +248,10 @@
 		false_confession_chance = 100 - (STAINT + STAEND) // Low willpower = higher chance to falsely confess
 		false_confession_chance = CLAMP(false_confession_chance, 20, 80) // Between 20-80%
 
+	if(HAS_TRAIT(src, TRAIT_TORTURED))
+		false_confession_chance = 0
+		resist_chance = 0
+
 	if(!prob(resist_chance))
 		var/list/confessions = list()
 		var/datum/antag_type = null
@@ -303,7 +311,7 @@
 						interrogator.add_stress(/datum/stress_event/torture_small_penalty)
 					else if(victim_patron.type == /datum/patron/godless/naivety)
 						interrogator.add_stress(/datum/stress_event/torture_small_penalty)
-					else if(victim_patron.type == /datum/patron/psydon)
+					else if(istype(victim_patron, /datum/patron/psydon))
 						interrogator.add_stress(/datum/stress_event/torture_large_penalty)
 
 		if(length(confessions))
@@ -364,7 +372,7 @@
 					if(/datum/antagonist/vampire/lord)
 						held_confession.bad_type = "THE BLOOD-LORD OF VANDERLIN"
 						held_confession.antag = initial(antag_type:name)
-					if(/datum/antagonist/vampire/lesser)
+					if(/datum/antagonist/vampire/lords_spawn)
 						held_confession.bad_type = "AN UNDERLING OF THE BLOOD-LORD"
 						held_confession.antag = initial(antag_type:name)
 					if(/datum/patron/inhumen/graggar)
@@ -414,4 +422,4 @@
 	return
 
 /datum/job/advclass/puritan
-	exp_types_granted  = list(EXP_TYPE_INQUISITION, EXP_TYPE_COMBAT, EXP_TYPE_LEADERSHIP)
+	exp_types_granted = list(EXP_TYPE_INQUISITION, EXP_TYPE_COMBAT, EXP_TYPE_LEADERSHIP)

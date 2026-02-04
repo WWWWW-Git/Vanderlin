@@ -21,24 +21,19 @@
 	antag_datum = /datum/antagonist/zizocultist
 
 	restricted_roles = list(
-		"Monarch",
-		"Consort",
-		"Hand",
-		"Captain",
-		"Prince",
-		"Priest",
-		"Merchant",
-		"Forest Warden",
-		"Inquisitor",
-		"Absolver",
-		"Confessor",
-		"Sacrestants",
-		"Adept",
-		"Royal Knight",
-		"Templar",
-		"Sheriff",	// STONEKEEP EDIT // Kaizoku Change
-		"Court Wizard",	// STONEKEEP EDIT
-		"Village Elder" // STONEKEEP EDIT
+		/datum/job/lord,
+		/datum/job/consort,
+		/datum/job/priest,
+		/datum/job/hand,
+		/datum/job/captain,
+		/datum/job/prince,
+		/datum/job/inquisitor,
+		/datum/job/absolver,
+		/datum/job/orthodoxist,
+		/datum/job/adept,
+		/datum/job/forestwarden,
+		/datum/job/royalknight,
+		/datum/job/templar,
 	)
 
 /datum/round_event/antagonist/solo/zizo_cultist

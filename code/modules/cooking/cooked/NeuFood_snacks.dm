@@ -35,7 +35,7 @@
 	faretype = FARE_NEUTRAL
 	modified = TRUE
 	rotprocess = SHELFLIFE_DECENT
-	bitesize = 5
+	bitesize = 4
 
 /obj/item/reagent_containers/food/snacks/cooked/frysteak_onion
 	name = "frysteak and onions"
@@ -68,7 +68,7 @@
 			return TRUE
 		mill.icon_state = "peppermill_grind"
 		to_chat(user, "You start rubbing the steak with black pepper.")
-		playsound(get_turf(user), 'sound/foley/peppermill.ogg', 100, TRUE, -1)
+		playsound(user, 'sound/foley/peppermill.ogg', 100, TRUE, -1)
 		if(do_after(user, 3 SECONDS, src))
 			if(!mill.reagents.has_reagent(/datum/reagent/consumable/blackpepper, 1))
 				to_chat(user, "There's not enough black pepper to make anything with.")
@@ -85,6 +85,7 @@
 			bitesize = initial(bitesize)
 			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.5)) // STONEKEEP EDIT
 			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
+			user.nobles_seen_servant_work()
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/cooked/herbsteak
@@ -421,7 +422,7 @@
 			return TRUE
 		mill.icon_state = "peppermill_grind"
 		to_chat(user, "You start rubbing the bird roast with black pepper.")
-		playsound(get_turf(user), 'sound/foley/peppermill.ogg', 100, TRUE, -1)
+		playsound(user, 'sound/foley/peppermill.ogg', 100, TRUE, -1)
 		if(do_after(user,3 SECONDS, src))
 			if(!mill.reagents.has_reagent(/datum/reagent/consumable/blackpepper, 1))
 				to_chat(user, "There's not enough black pepper to make anything with.")
@@ -437,4 +438,6 @@
 			modified = TRUE
 			user.adjust_experience(/datum/skill/craft/cooking, (user.STAINT*0.5)) // STONEKEEP EDIT
 			// user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
+			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
+			user.nobles_seen_servant_work()
 	return ..()

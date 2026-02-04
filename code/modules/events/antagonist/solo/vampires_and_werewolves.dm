@@ -16,30 +16,25 @@
 	maximum_antags = 4
 
 	earliest_start = 0 SECONDS
-	min_players = 45
+	min_players = 40
 	weight = 8
 	secondary_prob = 0
 	typepath = /datum/round_event/antagonist/solo/vampires_and_werewolves
 
 	restricted_roles = list(
-		"Monarch",
-		"Consort",
-		"Hand",
-		"Captain",
-		"Prince",
-		"Priest",
-		"Merchant",
-		"Forest Warden",
-		"Inquisitor",
-		"Absolver",
-		"Confessor",
-		"Sacrestants",
-		"Adept",
-		"Royal Knight",
-		"Templar",
-		"Sheriff",	// STONEKEEP EDIT // Kaizoku Change
-		"Court Wizard",	// STONEKEEP EDIT
-		"Village Elder" // STONEKEEP EDIT
+		/datum/job/lord,
+		/datum/job/consort,
+		/datum/job/priest,
+		/datum/job/hand,
+		/datum/job/captain,
+		/datum/job/prince,
+		/datum/job/inquisitor,
+		/datum/job/absolver,
+		/datum/job/orthodoxist,
+		/datum/job/adept,
+		/datum/job/forestwarden,
+		/datum/job/royalknight,
+		/datum/job/templar,
 	)
 
 /datum/round_event/antagonist/solo/vampires_and_werewolves
@@ -79,5 +74,5 @@
 			J?.adjust_current_positions(-1)
 			if(SSmapping.config.map_name != "Voyage")
 				antag_mind.current.unequip_everything()
-			antag_mind.add_antag_datum(/datum/antagonist/vampire/lesser)
+			antag_mind.add_antag_datum(/datum/antagonist/vampire/lords_spawn)
 		return

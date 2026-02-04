@@ -24,20 +24,9 @@
 	antag_datum = /datum/antagonist/lich
 
 	restricted_roles = list(
-		"Monarch",
-		"Consort",
-		"Hand",
-		"Captain",
-		"Prince",
-		"Priest",
-		"Merchant",
-		"Forest Warden",
-		"Inquisitor",
-		"Adept",
-		"Royal Knight",
-		"Templar",
-		"Sheriff",	// STONEKEEP EDIT // Kaizoku Change
-		"Court Wizard",	// STONEKEEP EDIT
+		/datum/job/lord,
+		/datum/job/consort,
+		/datum/job/priest,
 	)
 
 
