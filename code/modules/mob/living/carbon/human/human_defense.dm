@@ -66,10 +66,8 @@
 
 	if(used)
 		if(used.blocksound)
-			playsound(loc, get_armor_sound(used.blocksound, blade_dulling), 100)
-		var/endurance = used.armor.getRating("endurance") //Start of Stonekeep Edit: Kaizoku Kombat
-		if(damage > endurance - armor_penetration)
-			used.take_damage(damage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100) //End of Stonekeep Edit: Kaizoku Kombat
+			playsound(src, get_armor_sound(used.blocksound, blade_dulling), 100)
+		used.take_damage(damage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 
 	if(steam_boiler && def_zone == BODY_ZONE_CHEST)
 		steam_boiler.take_damage(boiler_damage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
@@ -283,12 +281,12 @@
 	if(M.used_intent.type == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I, silent = FALSE))
-			playsound(loc, 'sound/blank.ogg', 25, TRUE, -1)
+			playsound(src, 'sound/blank.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 							"<span class='danger'>[M] disarmed you!</span>", "<span class='hear'>I hear aggressive shuffling!</span>", null, M)
 			to_chat(M, "<span class='danger'>I disarm [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
-			playsound(loc, 'sound/blank.ogg', 25, TRUE, -1)
+			playsound(src, 'sound/blank.ogg', 25, TRUE, -1)
 			if(HAS_TRAIT(src, TRAIT_FLOORED) && !IsParalyzed())
 				Paralyze(40)
 				log_combat(M, src, "pinned")
@@ -347,6 +345,9 @@
 			return FALSE
 
 /mob/living/carbon/human/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
+	if(HAS_TRAIT(src, TRAIT_BOMBIMMUNE))
+		return
+
 	..()
 	if (!severity)
 		return

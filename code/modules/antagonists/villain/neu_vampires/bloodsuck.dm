@@ -127,7 +127,7 @@
 	src.on_blood_consumed(victim, blood_handle)
 	//Stonekeep Edit ending: Sunscorners
 
-	playsound(loc, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
+	playsound(src, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
 
 	victim.visible_message(span_danger("[src] drinks from [victim]'s [parse_zone(sublimb_grabbed)]!"), \
 					span_userdanger("[src] drinks from my [parse_zone(sublimb_grabbed)]!"), span_hear("..."), COMBAT_MESSAGE_RANGE, src)

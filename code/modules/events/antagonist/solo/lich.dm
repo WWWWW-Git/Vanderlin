@@ -23,21 +23,12 @@
 	typepath = /datum/round_event/antagonist/solo/lich
 	antag_datum = /datum/antagonist/lich
 
-	restricted_roles = list(
-		"Monarch",
-		"Consort",
-		"Hand",
-		"Captain",
-		"Prince",
-		"Priest",
-		"Merchant",
-		"Forest Warden",
-		"Inquisitor",
-		"Adept",
-		"Royal Knight",
-		"Templar",
-		"Sheriff",	// STONEKEEP EDIT // Kaizoku Change
-		"Court Wizard",	// STONEKEEP EDIT
+	restricted_roles = list( //Stonekeep TODO: Implement kaizoku roles here.
+	/*
+		/datum/job/lord,
+		/datum/job/consort,
+		/datum/job/priest,
+	*/
 	)
 
 

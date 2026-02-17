@@ -13,7 +13,7 @@
 #define JOB_UNAVAILABLE_SEX 7
 #define JOB_UNAVAILABLE_DEITY 8
 #define JOB_UNAVAILABLE_QUALITY 9
-#define JOB_UNAVAILABLE_PATREON 10
+//#define JOB_UNAVAILABLE_DONATOR 10 // Stonekeep Edit: Patreon Bullshit. Kaizoku will NEVER follow the same steps.
 #define JOB_UNAVAILABLE_LASTCLASS 11
 #define JOB_UNAVAILABLE_ACCOUNTAGE 12
 #define JOB_UNAVAILABLE_JOB_COOLDOWN 13
@@ -63,16 +63,14 @@
 #define FACTION_BUMS		"Bums"
 #define FACTION_MATTHIOS	"Matthios"
 
-#define NOBLEMEN		(1<<0)
-#define GARRISON		(1<<1)
-#define CHURCHMEN		(1<<2)
-#define SERFS			(1<<3)
-#define PEASANTS		(1<<4)
-#define APPRENTICES		(1<<5)
-#define YOUNGFOLK		(1<<6)
-#define OUTSIDERS		(1<<7)
-#define COMPANY			(1<<8)
-#define INQUISITION 	(1<<9)
+#define FACTION_GOVERNMENT		(1<<0) // Stonekeep Edit; Replaces NOBLEMEN
+#define FACTION_MILITARY		(1<<1) // Stonekeep Edit; Replaces GARRISON
+#define FACTION_IMPERIAL		(1<<2) // Stonekeep Edit; Replaces COMPANY
+#define FACTION_ABYSSANCTUM		(1<<3) // Stonekeep Edit; Replaces CHURCHMEN
+#define FACTION_MALEFACTORS		(1<<4) // Stonekeep Edit; New addition
+#define FACTION_CITIZENS		(1<<5) // Stonekeep Edit; Replaces SERFS/PEASANTS/APPRENTICES
+#define FACTIONLESS		(1<<6) // Stonekeep Edit; Outsiders.
+#define FACTION_VILLAIN		(1<<7) // Stonekeep Edit; Invaders, antags.
 
 #define UNDEAD			(1<<10)
 
@@ -134,7 +132,7 @@
 #define JDO_BAPP 22
 #define JDO_ARTIFICER 23
 
-#define JDO_MASON 24
+
 
 #define JDO_BUTLER 25
 #define JDO_SERVANT 26
@@ -148,10 +146,12 @@
 #define JDO_FISHER 28.3
 #define JDO_HUNTER 28.4
 #define JDO_CARPENTER 28.6
+#define JDO_MASON 28.61
 #define JDO_CHEESEMAKER 28.7
 #define JDO_MINER 28.8
 #define JDO_MATRON 28.9
 #define JDO_GRAVEMAN 29
+
 
 #define JDO_JESTER 30
 #define JDO_BARD 30.1

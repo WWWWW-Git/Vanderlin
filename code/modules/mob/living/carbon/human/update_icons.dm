@@ -47,6 +47,8 @@ There are several things that need to be remembered:
 
 
 */
+GLOBAL_LIST_INIT(no_child_icons, list(/obj/item/clothing/head, /obj/item/clothing/face, /obj/item/clothing/cloak, /obj/item/clothing/gloves, /obj/item/clothing/neck))
+GLOBAL_PROTECT(no_child_icons)
 
 /mob/living/carbon/proc/get_limbloss_index(limbr, limbl)
 	var/jazz = 1
@@ -745,8 +747,8 @@ There are several things that need to be remembered:
 		return
 
 	if(client && hud_used)
-		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1]
-		inv?.update_icon()
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1]
+		inv?.update_appearance(UPDATE_ICON)
 
 	if(wear_mask)
 		update_hud_wear_mask(wear_mask)
@@ -1446,7 +1448,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/index = I.icon_state
 	// var/mob/living/carbon/human/HM = src // Went unused
-	//if(istype(HM) && HM.age == AGE_CHILD) //Stonekeep Edit: Young Adult
+	//if(istype(HM) && HM.age == AGE_CHILD && !is_type_in_list(I, GLOB.no_child_icons)) //Stonekeep Edit: Young Adult
 		//index += "_child"
 	if(gender == FEMALE ^ dna.species.swap_female_clothes) //STONEKEEP edit
 		index += "_f"

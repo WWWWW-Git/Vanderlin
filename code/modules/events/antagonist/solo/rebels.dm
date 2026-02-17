@@ -20,21 +20,22 @@
 	min_players = 30
 	weight = 6
 
-	restricted_roles = list(
-		"Monarch",
-		"Consort",
-		"Hand",
-		"Captain",
-		"Prince",
-		"Priest",
-		"Inquisitor",
-		"Absolver",
-		"Confessor",
-		"Sacrestants",
-		"Adept",
-		"Sheriff",	// STONEKEEP EDIT // Kaizoku Change
-		"Court Wizard",	// STONEKEEP EDIT
-		"Village Elder" // STONEKEEP EDIT
+	restricted_roles = list( //Kaizoku Todo: Implement kaizoku roles here.
+	/*
+		/datum/job/lord,
+		/datum/job/consort,
+		/datum/job/priest,
+		/datum/job/hand,
+		/datum/job/captain,
+		/datum/job/prince,
+		/datum/job/inquisitor,
+		/datum/job/absolver,
+		/datum/job/orthodoxist,
+		/datum/job/adept,
+		/datum/job/forestwarden,
+		/datum/job/royalknight,
+		/datum/job/templar,
+	*/
 	)
 
 
